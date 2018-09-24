@@ -97,11 +97,12 @@ public class Financial_ReportsController implements Initializable {
     @FXML
     private void Daily_Report(ActionEvent event) {
          try {
-         if (!F_Tdate1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals("") &&!F_Tdate2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals("") ){
-            String qOut1="SELECT DISTINCT sale_date FROM sales WHERE sale_date >= '2018-09-20' AND sale_date <= '2018-09-24'";
-            //String qOut2="SELECT DISTINCT exp_date FROM expenses WHERE exp_date >= '2018-09-20' AND exp_date <= '2018-09-24'";
-            String q4="";
-            String q5="";
+         if (!F_Tdate1.getValue().equals("") &&!F_Tdate2.getValue().equals("") ){
+            String da1=F_Tdate1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            String da2=F_Tdate2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+             
+            String qOut1="SELECT DISTINCT sale_date FROM sales WHERE sale_date >= '"+da1+"' AND sale_date <= '"+da2+"'";
+            
             
             
             
@@ -207,6 +208,7 @@ public class Financial_ReportsController implements Initializable {
                     buy_Exp+=rs_Buy.getDouble("cost");
                 }
                 total_Exp=Shop_Expenses+buy_Exp;
+                profit=TotalQuan-total_Exp;
                 //cell 1
                 c1 = new PdfPCell(new Phrase(d,normal));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -231,8 +233,11 @@ public class Financial_ReportsController implements Initializable {
                 c1 = new PdfPCell(new Phrase(total_Exp+"",normal));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
+                //cell 7
+                c1 = new PdfPCell(new Phrase(profit+"",normal));
+                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(c1);
             }
-            
             
             document.add(table);
             // document.add(table2);
@@ -274,9 +279,10 @@ public class Financial_ReportsController implements Initializable {
     private void invoices(){    
 
          try {    
-             String qu="SELECT * FROM sales";
-             ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
+             String da1=F_Tdate1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+             String da2=F_Tdate2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
              
+             String qOut1="SELECT DISTINCT sale_date FROM sales WHERE sale_date >= '"+da1+"' AND sale_date <= '"+da2+"'"; 
              
              /**********Create Document******************/
              Document document =new Document(PageSize.A4);
@@ -364,17 +370,23 @@ public class Financial_ReportsController implements Initializable {
              try {
                  //int u=1;
                  //double y=rs.getDouble("sale_id");
+                 String dat="";
+                 ResultSet rs=DatabaseHandler.getInstance().execQuery(qOut1);
                  while(rs.next()){
 //               double y=rs.getDouble("sale_id"); 
                     //                if (y==x){
-                    String x1=rs.getString("product_name");
-                    double x2=rs.getDouble("unit_price");
-                    int x3=rs.getInt("current_qty");
-                    String x4=rs.getString("qty_kind");
-                    double x5=rs.getDouble("cost");
-                    int x6=rs.getInt("sale_id");
-                    String o="----------------------------------";
-                    System.out.println(x1+"  "+x2+" "+x3+"  "+x4+"  "+x5);
+                    
+                    dat=rs.getString("sale_date");
+                    String qIN1="SELECT * FROM sales WHERE sale_date = '"+dat+"'";
+                    ResultSet rs_Sales=DatabaseHandler.getInstance().execQuery(qIN1);
+                while(rs_Sales.next()){
+                    String x1=rs_Sales.getString("product_name");
+                    double x2=rs_Sales.getDouble("unit_price");
+                    int x3=rs_Sales.getInt("current_qty");
+                    String x4=rs_Sales.getString("qty_kind");
+                    double x5=rs_Sales.getDouble("cost");
+                    int x6=rs_Sales.getInt("sale_id");
+                
                     //cell 1
                     c1 = new PdfPCell(new Phrase(x1,normal));
                     c1.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -406,7 +418,7 @@ public class Financial_ReportsController implements Initializable {
                     //                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                     //                table2.addCell(c1);
                     //y++;
-                 }
+                 }}
                  preface.add("hhhhhhhhhhhhhhhlglgllglglglglg");
                  document.add(table);
                  // document.add(table2);
