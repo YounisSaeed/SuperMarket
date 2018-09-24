@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="loadPane" onKeyPressed="#A_N_B" prefHeight="697.0" prefWidth="1366.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="employees.sales.SalesController">
+    <stylesheets>
+        <URL value="@sales.css" />
+    </stylesheets>
+   <children>
+      <VBox layoutX="577.0" onKeyPressed="#A_N_B" prefHeight="697.0" prefWidth="196.0" styleClass="vbox" stylesheets="@sales.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <JFXButton fx:id="saveBill" onAction="#AddNewBill" onKeyPressed="#A_N_B" prefHeight="25.0" prefWidth="160.0" styleClass="jfx-button" stylesheets="@sales.css" text="جديد" textAlignment="JUSTIFY" textFill="WHITE">
+               <VBox.margin>
+                  <Insets left="18.0" top="60.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold Italic" size="25.0" />
+               </font>
+               <effect>
+                  <DropShadow height="6.0" radius="2.5" spread="1.0" width="6.0" />
+               </effect>
+            </JFXButton>
+            <JFXButton onAction="#cancelBill" prefHeight="25.0" prefWidth="160.0" styleClass="jfx-button" stylesheets="@sales.css" text="إلغاء" textAlignment="JUSTIFY" textFill="WHITE">
+               <VBox.margin>
+                  <Insets left="18.0" top="30.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold Italic" size="25.0" />
+               </font>
+               <effect>
+                  <DropShadow height="6.0" radius="2.5" spread="1.0" width="6.0" />
+               </effect>
+            </JFXButton>
+            <JFXButton onAction="#freezeBill" prefHeight="25.0" prefWidth="160.0" styleClass="jfx-button" stylesheets="@sales.css" text="تجميد" textFill="WHITE">
+               <VBox.margin>
+                  <Insets left="18.0" top="30.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+               <effect>
+                  <DropShadow height="6.0" radius="2.5" spread="1.0" width="6.0" />
+               </effect>
+            </JFXButton>
+            <JFXButton onAction="#PreviousProcess" prefHeight="25.0" prefWidth="160.0" styleClass="jfx-button" stylesheets="@sales.css" text="عملية سابقة" textAlignment="JUSTIFY" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+               <effect>
+                  <DropShadow height="8.0" radius="3.5" spread="1.0" width="8.0" />
+               </effect>
+               <VBox.margin>
+                  <Insets left="18.0" top="30.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton onAction="#NextProcess" prefHeight="25.0" prefWidth="160.0" styleClass="jfx-button" stylesheets="@sales.css" text="عملية تالية" textAlignment="JUSTIFY" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+               <effect>
+                  <DropShadow height="8.0" radius="3.5" spread="1.0" width="8.0" />
+               </effect>
+               <VBox.margin>
+                  <Insets left="18.0" top="30.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton fx:id="loadMain" onAction="#loadMainOfSales" prefHeight="25.0" prefWidth="160.0" styleClass="jfx-button" stylesheets="@sales.css" text="الرئيسية" textAlignment="JUSTIFY" textFill="WHITE">
+               <VBox.margin>
+                  <Insets left="18.0" top="30.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+               <effect>
+                  <DropShadow height="8.0" radius="3.5" spread="1.0" width="8.0" />
+               </effect>
+            </JFXButton>
+            <Button mnemonicParsing="false" onAction="#calcButton" styleClass="calc-button" stylesheets="@sales.css">
+               <graphic>
+                  <ImageView fitHeight="57.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../icons/calc.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets left="55.0" top="50.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </Button>
+         </children>
+      </VBox>
+      <Pane onKeyPressed="#A_N_B" prefHeight="697.0" prefWidth="1168.0" styleClass="pane" stylesheets="@sales.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="198.0" AnchorPane.topAnchor="0.0">
+         <children>
+
+            <JFXTextField fx:id="T_Search" accessibleRole="PARENT" alignment="CENTER_RIGHT" focusColor="#35889a" layoutX="340.0" layoutY="15.0" onKeyTyped="#S_Field" prefHeight="36.0" prefWidth="375.0" promptText="ادخل إسم المنتج .." styleClass="product-textfeild" stylesheets="@sales.css" unFocusColor="WHITE">
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </JFXTextField>
+            <TextField fx:id="Quntity" accessibleRoleDescription="PARENT" layoutX="733.0" layoutY="508.0" onKeyPressed="#Q_A_K" prefHeight="34.0" prefWidth="75.0" styleClass="textfield" stylesheets="@sales.css">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font></TextField>
+
+            <JFXButton accessibleRole="PARENT" layoutX="344.0" layoutY="59.0" onAction="#searchButton" prefHeight="42.0" prefWidth="120.0" text="بحث" textFill="WHITE">
+
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </JFXButton>
+            <JFXListView layoutX="338.0" layoutY="54.0" prefHeight="400.0" prefWidth="375.0" visible="false" />
+            <Label fx:id="date" accessibleRole="PARENT" alignment="CENTER" layoutX="14.0" layoutY="21.0" prefHeight="30.0" prefWidth="137.0" text="2018-08-06" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <effect>
+                  <DropShadow height="9.0" radius="1.75" spread="0.2" width="0.0" />
+               </effect>
+            </Label>
+            <Label accessibleRole="PARENT" alignment="CENTER" layoutX="1029.0" layoutY="29.0" text="رقم الفاتورة :" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <effect>
+                  <DropShadow height="9.14" radius="1.8450000000000002" width="0.24" />
+               </effect>
+            </Label>
+            <HBox accessibleRoleDescription="PARENT" alignment="CENTER_LEFT" layoutX="6.0" layoutY="106.0" onKeyPressed="#A_N_B" prefHeight="400.0" prefWidth="1155.0">
+               <children>
+                  <VBox prefHeight="369.0" prefWidth="640.0">
+                     <children>
+                        <TableView fx:id="SalesTabel" onKeyPressed="#D_I_T" prefHeight="293.0" prefWidth="297.0">
+                          <columns>
+                            <TableColumn fx:id="c_cost" prefWidth="75.0" text="التكلفة" />
+                            <TableColumn fx:id="c_quantityKind" prefWidth="75.0" text="ن.الكمية" />
+                              <TableColumn fx:id="c_quantity" prefWidth="75.0" text="الكمية" />
+                              <TableColumn fx:id="c_price" prefWidth="92.0" text="السعر" />
+                              <TableColumn fx:id="c_item" prefWidth="86.0" text="الصنف" />
+                              <TableColumn fx:id="c_num" maxWidth="113.0" minWidth="-1.0" prefWidth="85.0" text="ر.ف" />
+                              <TableColumn fx:id="c_bar" prefWidth="131.0" text="باركود" />
+                          </columns>
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </TableView>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="42.0" prefWidth="317.0">
+                           <children>
+                              <JFXButton onAction="#DeleteRow" prefHeight="44.0" prefWidth="131.0" text="مسح عنصر">
+                                 <font>
+                                    <Font name="System Bold Italic" size="20.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </JFXButton>
+                           </children>
+                           <padding>
+                              <Insets right="10.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox alignment="CENTER" maxHeight="312.0" prefHeight="312.0" prefWidth="380.0" styleClass="vboxsale" stylesheets="@sales.css">
+                     <HBox.margin>
+                        <Insets left="50.0" right="20.0" />
+                     </HBox.margin>
+                     <children>
+
+                        <Label fx:id="productBarcode" textFill="#343642">
+                           <font>
+                              <Font name="System Bold" size="40.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+
+                        </Label>
+                        <Label fx:id="productName" textFill="#343642">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="40.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="productPrice" layoutX="10.0" layoutY="27.0" textFill="#343642">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="40.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <Label accessibleRoleDescription="PARENT" alignment="CENTER" layoutX="978.0" layoutY="514.0" text="الكمية:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+               <effect>
+                  <DropShadow height="9.14" radius="4.07" width="9.14" />
+               </effect>
+            </Label>
+            <JFXComboBox fx:id="quntityComboBox" accessibleRoleDescription="PARENT" focusColor="#35889a" labelFloat="true" layoutX="819.0" layoutY="519.0" prefHeight="34.0" prefWidth="144.0" promptText="عنصر" styleClass="quntityComboBox" stylesheets="@sales.css" unFocusColor="WHITE" visibleRowCount="3">
+               <effect>
+                  <Glow level="0.0" />
+               </effect></JFXComboBox>
+            <JFXButton accessibleRoleDescription="PARENT" layoutX="733.0" layoutY="567.0" onAction="#AddQuantity" prefHeight="25.0" prefWidth="230.0" text="إدخال الكمية">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </JFXButton>
+            <Label accessibleRoleDescription="PARENT" alignment="CENTER" layoutX="329.0" layoutY="512.0" text="المدفوع:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+               <effect>
+                  <DropShadow height="9.14" radius="4.07" width="9.14" />
+               </effect>
+            </Label>
+            <TextField fx:id="paid" accessibleRoleDescription="PARENT" layoutX="80.0" layoutY="505.0" onKeyPressed="#E_P" prefHeight="34.0" prefWidth="230.0" styleClass="textfield">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font></TextField>
+            <JFXButton accessibleRoleDescription="PARENT" layoutX="80.0" layoutY="565.0" onAction="#AddPaid" prefHeight="25.0" prefWidth="230.0" text="إدخال المدفوع">
+               <font>
+                  <Font name="System Bold Italic" size="25.0" />
+               </font>
+            </JFXButton>
+            <Label accessibleRoleDescription="PARENT" alignment="CENTER" layoutX="978.0" layoutY="628.0" text="الإجمالى:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+               <effect>
+                  <DropShadow height="9.14" radius="4.07" width="9.14" />
+               </effect>
+            </Label>
+            <TextField fx:id="totalPrice" accessibleRoleDescription="PARENT" editable="false" layoutX="733.0" layoutY="626.0" prefHeight="34.0" prefWidth="230.0" styleClass="textfield-none" stylesheets="@sales.css">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font></TextField>
+            <Label accessibleRoleDescription="PARENT" alignment="CENTER" layoutX="325.0" layoutY="627.0" text="الباقى:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+               <effect>
+                  <DropShadow height="9.14" radius="4.07" width="9.14" />
+               </effect>
+            </Label>
+            <TextField fx:id="rest" accessibleRoleDescription="PARENT" editable="false" layoutX="80.0" layoutY="626.0" onKeyPressed="#A_N_B" prefHeight="34.0" prefWidth="230.0" styleClass="textfield-none" stylesheets="@sales.css">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font></TextField>
+            <TextField fx:id="billNumber" accessibleRole="PARENT" alignment="CENTER" disable="true" editable="false" layoutX="930.0" layoutY="23.0" prefHeight="36.0" prefWidth="82.0" styleClass="textfield-none" stylesheets="@sales.css">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font></TextField>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

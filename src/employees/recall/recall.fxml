@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="loadPane" prefHeight="697.0" prefWidth="1366.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="employees.recall.RecallController">
+    <stylesheets>
+        <URL value="@recall.css" />
+    </stylesheets>
+   <children>
+      <VBox layoutX="577.0" layoutY="-1.0" prefHeight="697.0" prefWidth="196.0" styleClass="vbox" stylesheets="@recall.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <JFXButton onAction="#AddRecall" prefHeight="25.0" prefWidth="160.0" stylesheets="@recall.css" text="حفظ" textAlignment="JUSTIFY" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="25.0" />
+               </font>
+               <effect>
+                  <DropShadow height="6.0" radius="2.5" spread="1.0" width="6.0" />
+               </effect>
+               <VBox.margin>
+                  <Insets left="18.0" top="80.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton onAction="#cancelRecall" prefHeight="25.0" prefWidth="160.0" stylesheets="@recall.css" text="إلغاء" textAlignment="JUSTIFY" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="25.0" />
+               </font>
+               <effect>
+                  <DropShadow height="6.0" radius="2.5" spread="1.0" width="6.0" />
+               </effect>
+               <VBox.margin>
+                  <Insets left="18.0" top="30.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton prefHeight="25.0" prefWidth="160.0" stylesheets="@recall.css" text="طباعة تقرير" textAlignment="JUSTIFY" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+               <effect>
+                  <DropShadow height="6.0" radius="2.5" spread="1.0" width="6.0" />
+               </effect>
+               <VBox.margin>
+                  <Insets left="18.0" top="30.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton onAction="#loadMainOfRecall" prefHeight="25.0" prefWidth="160.0" stylesheets="@recall.css" text="الرئيسية" textAlignment="JUSTIFY" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+               <effect>
+                  <DropShadow height="8.0" radius="3.5" spread="1.0" width="8.0" />
+               </effect>
+               <VBox.margin>
+                  <Insets left="18.0" top="160.0" />
+               </VBox.margin>
+            </JFXButton>
+            <Button mnemonicParsing="false" onAction="#calcButton" styleClass="calc-button" stylesheets="@recall.css">
+               <graphic>
+                  <ImageView fitHeight="57.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../icons/calc.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets left="55.0" top="70.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+      <Pane layoutX="-14.0" prefHeight="697.0" prefWidth="1184.0" styleClass="pane" stylesheets="@recall.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-14.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="date" layoutX="34.0" layoutY="33.0" prefHeight="36.0" prefWidth="140.0" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+               <effect>
+                  <DropShadow height="9.0" radius="1.75" spread="0.2" width="0.0" />
+               </effect>
+            </Label>
+            <JFXTextField fx:id="R_SearchField" alignment="CENTER_RIGHT" focusColor="#35889a" layoutX="354.0" layoutY="31.0" onKeyTyped="#R_SearchField" prefHeight="36.0" prefWidth="391.0" promptText="ادخل إسم المنتج .." styleClass="product-textfeild" stylesheets="@recall.css" unFocusColor="WHITE">
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </JFXTextField>
+            <TextField fx:id="Quntity" layoutX="772.0" layoutY="619.0" onKeyPressed="#Add_REC" prefHeight="54.0" prefWidth="108.0" styleClass="textfield" stylesheets="@recall.css">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </TextField>
+            <JFXListView layoutX="355.0" layoutY="68.0" prefHeight="376.0" prefWidth="391.0" visible="false" />
+            <JFXButton layoutX="222.0" layoutY="24.0" onAction="#R_SearchButton" prefHeight="54.0" prefWidth="120.0" styleClass="jfx-button" stylesheets="@recall.css" text="بحث" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </JFXButton>
+
+            
+            <JFXRadioButton fx:id="R_FCustomer" contentDisplay="RIGHT" layoutX="976.0" layoutY="33.0" onMouseClicked="#AllowSuppliersCombobox" selected="true" text="من العميل" textFill="WHITE">
+
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+               <effect>
+                  <DropShadow height="9.14" radius="4.07" width="9.14" />
+               </effect>
+               <toggleGroup>
+                  <ToggleGroup fx:id="RecallFrom" />
+               </toggleGroup>
+            </JFXRadioButton>
+
+            <JFXRadioButton fx:id="R_ToCampany" contentDisplay="RIGHT" layoutX="850.0" layoutY="33.0" onMouseClicked="#AllowSuppliersCombobox" text="للشركة" textFill="WHITE" toggleGroup="$RecallFrom">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+               <effect>
+                  <DropShadow height="9.14" radius="4.07" width="9.14" />
+               </effect>
+            </JFXRadioButton>
+            <JFXComboBox fx:id="SuppliersComboBox" focusColor="#35889a" layoutX="847.0" layoutY="78.0" prefHeight="36.0" prefWidth="102.0" promptText="شركة" styleClass="quntityComboBox" stylesheets="@recall.css" unFocusColor="WHITE" visibleRowCount="3" />
+            <HBox alignment="CENTER_LEFT" layoutX="6.0" layoutY="155.0" prefHeight="441.0" prefWidth="1159.0">
+               <children>
+                  <TableView fx:id="R_table" onKeyPressed="#D_R_REC" prefHeight="397.0" prefWidth="675.0">
+                     <columns>
+
+                        <TableColumn fx:id="t_cost" prefWidth="75.0" text="تكلفة" />
+                        <TableColumn fx:id="t_kquan" prefWidth="75.0" text="ن.كمية" />
+                        <TableColumn fx:id="t_quan" prefWidth="75.0" text="كمية" />
+                        <TableColumn fx:id="t_price" prefWidth="95.0" text="سعر" />
+                        <TableColumn fx:id="t_cate" prefWidth="121.0" text="صنف" />
+                        <TableColumn fx:id="t_bar" prefWidth="123.0" text="باركود" />
+                        <TableColumn fx:id="t_source" prefWidth="110.0" text="المصدر" />
+                     </columns>
+                     <HBox.margin>
+                        <Insets left="30.0" right="30.0" />
+                     </HBox.margin>
+                  </TableView>
+                  <VBox alignment="CENTER" maxHeight="308.0" prefHeight="308.0" prefWidth="333.0" styleClass="vboxrecall" stylesheets="@recall.css">
+                     <HBox.margin>
+                        <Insets left="30.0" right="30.0" />
+                     </HBox.margin>
+                     <children>
+                        <Label fx:id="productBarcode" textFill="#343642">
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="35.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="productName" layoutX="10.0" layoutY="10.0" textFill="#343642">
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="35.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="productPrice" layoutX="10.0" layoutY="27.0" textFill="#343642">
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="35.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <Label layoutX="1006.0" layoutY="622.0" text="الكمية :" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="35.0" />
+               </font>
+               <effect>
+                  <DropShadow height="9.14" radius="4.07" width="9.14" />
+               </effect>
+            </Label>
+            <JFXComboBox fx:id="quntityComboBox" focusColor="#35889a" layoutX="887.0" layoutY="619.0" prefHeight="54.0" prefWidth="108.0" promptText="عنصر" styleClass="quntityComboBox" stylesheets="@recall.css" unFocusColor="WHITE" visibleRowCount="3" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

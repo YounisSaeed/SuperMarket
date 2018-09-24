@@ -1,0 +1,29 @@
+
+.mainFxmlClass {
+    -fx-background-color: #343642;
+}
+
+.jfx-button
+{
+    -fx-background-color: #35889a;
+    -fx-text-fill: #FFF;
+    -fx-cursor: hand;
+}
+
+.jfx-button:hover
+{
+    -fx-background-color: #4aabc0;
+    -fx-text-fill: #FFF;
+    -fx-cursor: hand;
+}
+
+.jfx-button-manger
+{
+    -fx-background-color: #343642;
+    -fx-cursor: hand;
+}
+.jfx-button-manger:hover
+{
+    -fx-background-color: #757575;
+    -fx-cursor: hand;
+}

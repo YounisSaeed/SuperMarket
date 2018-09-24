@@ -1,0 +1,65 @@
+.jfx-button
+{
+    -fx-background-color: #35889a;
+    -fx-text-fill: #FFF;
+    -fx-cursor: hand;
+}
+
+.jfx-button:hover
+{
+    -fx-background-color: #4aabc0;
+    -fx-cursor: hand;
+}
+
+.vbox
+{
+    -fx-background-color: #989c9d;
+}
+
+.vboxbuy
+
+{
+    -fx-background-color: #fff;
+}
+
+.pane
+{
+    -fx-background-color: #343642;
+}
+
+.quntityComboBox{
+    -fx-background-color: #fff;
+}
+
+
+.product-textfeild{
+    -fx-background-color: #FFF;
+    -fx-text-fill: #343642;
+}
+
+.calc-button
+{
+    -fx-background-color: #35889a;
+    -fx-text-fill: #FFF;
+    -fx-cursor: hand;
+    -fx-background-radius: 50px;
+}
+
+.calc-button:hover
+{
+    -fx-background-color: #4aabc0;
+    -fx-cursor: hand;
+    -fx-background-radius: 50px;
+}
+
+.textfield:focused
+{
+    -fx-faint-focus-color: #4aabc0;
+}
+
+.textfield-none:focused
+{
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: rgba(74,171,192,0.2);
+
+}
