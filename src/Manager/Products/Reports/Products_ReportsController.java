@@ -121,7 +121,7 @@ public class Products_ReportsController implements Initializable {
                 
         
          /**********Create Document******************/
-        Document document =new Document(PageSize.A4); 
+        Document document =new Document(PageSize.A3); 
         System.out.println("Document Created");
         /***********Method to calculate Date******/
              Date date=new Date();
@@ -158,7 +158,7 @@ public class Products_ReportsController implements Initializable {
                 "" + ft.format(date),normal));
                 
         addEmptyLine(preface, 1); //add line space
-        preface.add("----------------------------------------------------------------------------------------------------------------------------------");
+        preface.add("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         addEmptyLine(preface, 2);
         document.add(preface);   // Add paragraph of name preface to document
         
@@ -211,7 +211,11 @@ public class Products_ReportsController implements Initializable {
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
                 //cell 4
-                c1 = new PdfPCell(new Phrase(String.valueOf( x4/(x2*x3) ),normal));
+                if(rs.getString("pro_box").equals("يوجد"))
+                    c1 = new PdfPCell(new Phrase(String.valueOf( x4/(x2*x3) ),normal));
+                else if(!rs.getString("pro_box").equals("يوجد"))
+                    c1 = new PdfPCell(new Phrase("لا يوجد",normal));
+            
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
             }
@@ -227,10 +231,10 @@ public class Products_ReportsController implements Initializable {
         // close document
         document.close();
         System.out.println("Document Closed");
-
-
     }
     
+    
+        
     
     
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -281,7 +285,7 @@ public class Products_ReportsController implements Initializable {
                 "" + ft.format(date),normal));
                 
         addEmptyLine(preface, 1); //add line space
-        preface.add("----------------------------------------------------------------------------------------------------------------------------------");
+        preface.add("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         addEmptyLine(preface, 2);
         document.add(preface);   // Add paragraph of name preface to document
         
