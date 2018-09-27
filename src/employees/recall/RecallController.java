@@ -144,7 +144,7 @@ public class RecallController extends NewSerial implements Initializable {
     }
     private void searrch(){
         pri=new Price();
-        DataHelper.fillSalesWithInfoOfProduct(R_SearchField.getText(),productBarcode,productName,productPrice,pri);
+        DataHelper.fillSalesWithInfoOfProduct(R_SearchField.getText(),productBarcode,productName,productPrice,pri,quntityComboBox);
         // fill Search Field with barcodes of all products in market
         // pri : initialize price of item,packet,box of specific product you search about
         System.out.println(pri.getItemPrice());  

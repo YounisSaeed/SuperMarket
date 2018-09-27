@@ -92,10 +92,9 @@ public class BuyingController  extends NewSerial implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         ObservableList<String> list= FXCollections.observableArrayList("قطعة","علبة","كرتونة");
-        ObservableList<String> list2= FXCollections.observableArrayList("اتش","ياسر","ليدا");
         quntityComboBox.setItems(list);
-        quntityComboBox.setValue("قطعة");
-        supplier.setItems(list2);
+        quntityComboBox.setValue("كرتونة");
+        supplier.setItems(DataHelper.checkDataSupp());
         date.setText(gettDate());
         setSalesSerial(DataHelper.getLastSerialTodayBuying(gettDate()));
         billNumber.setText(getSalesSerial()+"");
@@ -125,7 +124,7 @@ public class BuyingController  extends NewSerial implements Initializable {
     }
     private void searrch(){
         pri=new Price();
-        DataHelper.fillSalesWithInfoOfProduct(B_searchField.getText(),productBarcode,productName,productPrise,pri);// 
+        DataHelper.fillSalesWithInfoOfProduct(B_searchField.getText(),productBarcode,productName,productPrise,pri,quntityComboBox);// 
         // fill Search Field with barcodes of all products in market
         // pri : initialize price of item,packet,box of specific product you search about
         System.out.println(pri.getItemPrice());  

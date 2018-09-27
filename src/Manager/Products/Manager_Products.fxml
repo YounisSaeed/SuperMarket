@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -167,7 +168,7 @@
                </padding>
             </TextField>
 
-            <TextField fx:id="Q_packet" alignment="CENTER" layoutX="860.0" layoutY="394.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="36.0" prefWidth="50.0" promptText="باكت" styleClass="textfield" stylesheets="@Manager_Products.css">
+            <TextField fx:id="Q_packet" alignment="CENTER" layoutX="870.0" layoutY="394.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="36.0" prefWidth="50.0" promptText="باكت" styleClass="textfield" stylesheets="@Manager_Products.css">
                <font>
                   <Font size="15.0" />
                </font>
@@ -175,15 +176,7 @@
                   <Insets bottom="-3.0" left="1.0" right="1.0" top="-3.0" />
                </padding>
             </TextField>
-
-            <TextField fx:id="Q_box" alignment="CENTER" editable="false" layoutX="787.0" layoutY="394.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="36.0" prefWidth="63.0" promptText="كرتونة" styleClass="textfield" stylesheets="@Manager_Products.css">
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <padding>
-                  <Insets bottom="-3.0" left="1.0" right="1.0" top="-3.0" />
-               </padding>
-            </TextField>
+            <ComboBox fx:id="Q_box" layoutX="789.0" layoutY="394.0" prefHeight="36.0" prefWidth="73.0" promptText="كرتونة" style="-fx-background-color: #fff;" />
             <TextField fx:id="P_TUprice" alignment="CENTER" layoutX="788.0" layoutY="445.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="36.0" prefWidth="196.0" styleClass="textfield" stylesheets="@Manager_Products.css">
                <font>
                   <Font size="25.0" />
@@ -223,15 +216,16 @@
             </JFXButton>
             <TableView fx:id="P_table" layoutX="14.0" layoutY="130.0" onMouseClicked="#selectFromTable" prefHeight="553.0" prefWidth="743.0">
               <columns>
-                <TableColumn fx:id="t_minimum_Q" prefWidth="73.0" text="حد ادنى" />
-                  <TableColumn fx:id="t_p_box" prefWidth="78.0" text="س.كرتونة" />
-                  <TableColumn fx:id="t_p_packet" prefWidth="79.0" text="س.علبة" />
-                  <TableColumn fx:id="t_p_item" text="س.وحدة" />
-                  <TableColumn fx:id="t_q_packet" prefWidth="73.0" text="عدد الباكيت" />
-                  <TableColumn fx:id="t_q_item" minWidth="0.0" prefWidth="57.0" text="عدد القطع" />
-                  <TableColumn fx:id="t_cate" prefWidth="88.0" text="تصنيف" />
-                  <TableColumn fx:id="t_code" minWidth="0.0" prefWidth="85.0" text="كود" />
-                  <TableColumn fx:id="t_name" minWidth="0.0" prefWidth="129.0" text="اسم" />
+                <TableColumn fx:id="t_minimum_Q" prefWidth="46.999969482421875" text="حد ادنى" />
+                  <TableColumn fx:id="t_p_box" prefWidth="69.0" text="س.كرتونة" />
+                  <TableColumn fx:id="t_p_packet" prefWidth="59.0" text="س.علبة" />
+                  <TableColumn fx:id="t_p_item" prefWidth="60.0" text="س.وحدة" />
+                  <TableColumn fx:id="t_q_box" prefWidth="51.0" text="الكراتين" />
+                  <TableColumn fx:id="t_q_packet" prefWidth="64.0" text="عدد الباكيت" />
+                  <TableColumn fx:id="t_q_item" minWidth="0.0" prefWidth="63.0" text="عدد القطع" />
+                  <TableColumn fx:id="t_cate" prefWidth="93.0" text="تصنيف" />
+                  <TableColumn fx:id="t_code" minWidth="0.0" prefWidth="133.0" text="كود" />
+                  <TableColumn fx:id="t_name" minWidth="0.0" prefWidth="104.0" text="اسم" />
               </columns>
                
                   </TableView>

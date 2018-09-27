@@ -17,7 +17,7 @@ public class Goods{
     
     public Goods(){}
 
-    public Goods(String productName, String productBarCode, String productCategory, String productSupplier, int itemsInPacket, int PacketsInBox, double itemPrice, double packetPrice, double boxPrice, int productMinQuantity) {
+    public Goods(String productName, String productBarCode, String productCategory, String productSupplier, int itemsInPacket, int PacketsInBox, String box,double itemPrice, double packetPrice, double boxPrice, int productMinQuantity) {
         this.productName = productName;
         this.productBarCode = productBarCode;
         this.productCategory = productCategory;
@@ -28,12 +28,25 @@ public class Goods{
         this.packetPrice = packetPrice;
         this.boxPrice = boxPrice;
         this.productMinQuantity = productMinQuantity;
+        this.box=box;
         //this.productExpirationdate = productExpirationdate;
     }
     //private Price productPrice;
     //private Quantity productQuantity;
     private int itemsInPacket;
     private int PacketsInBox;
+    private String box;
+
+    public String getBox() {
+        return box;
+    }
+
+    public void setBox(String box) {
+        this.box = box;
+    }
+    
+
+    
     private double itemPrice;
     private double packetPrice;
     private double boxPrice;
