@@ -3,12 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Manager/Financial/Reports/Financial_ReportsController.java</file>
             <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Database/DataHelper.java</file>
             <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Manager/Financial/Reports/Main.java</file>
             <file>file:/D:/walid/Last2/Supermarket_Management_System/src/resources/tables.xml</file>
             <file>file:/D:/walid/Last2/Supermarket_Management_System/src/employees/sales/SalesController.java</file>
             <file>file:/D:/walid/Last2/Supermarket_Management_System/src/employees/sales/Sales_Main.java</file>
+=======
+            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/employees/account/MainAccount.java</file>
+            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Manager/Products/Manager_ProductsController.java</file>
+            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/employees/account/AccountController.java</file>
+>>>>>>> 7d4bd0f5ac8c17f31d94d35988bd594e9447f989
         </group>
     </open-files>
 </project-private>

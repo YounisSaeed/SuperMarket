@@ -95,6 +95,8 @@ public class BuyingController  extends NewSerial implements Initializable {
         quntityComboBox.setItems(list);
         quntityComboBox.setValue("كرتونة");
         supplier.setItems(DataHelper.checkDataSupp());
+        ObservableList<String> list2= FXCollections.observableArrayList("اتش","ياسر","ليدا");
+        supplier.setItems(list2);
         date.setText(gettDate());
         setSalesSerial(DataHelper.getLastSerialTodayBuying(gettDate()));
         billNumber.setText(getSalesSerial()+"");
@@ -192,7 +194,7 @@ public class BuyingController  extends NewSerial implements Initializable {
     private void cancelBuying(ActionEvent event) {
         if(Alerts.ConfirmAlert("هل تريد مسج جميع عناصر فاتورة الشراء؟",""))
         {
-            
+         clear();   
         }
     }
     ////////////// ???????????????????????????????????????
@@ -228,6 +230,7 @@ public class BuyingController  extends NewSerial implements Initializable {
             clear();
             if(result){
                 Alerts.showInfoAlert("تم اضافة الفاتورة رقم  بنجاح !!");
+                clear();
             }
             else
                 Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى");
@@ -314,7 +317,7 @@ public class BuyingController  extends NewSerial implements Initializable {
                     totalPrice.setText(TOTAL+"");
                     
                 } else {
-                    Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى");
+                    Alerts.showErrorAlert("لم تتم العملية بشكل صحيح ");
                 }
             }
         }

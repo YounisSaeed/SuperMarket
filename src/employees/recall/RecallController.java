@@ -199,6 +199,8 @@ public class RecallController extends NewSerial implements Initializable {
 
     
     /********************************************* addRecall _________*/
+    
+    
     private void addRecall(){
         if(!Quntity.getText().equals("") && !productBarcode.getText().equals("")){
             Recalls R=new Recalls();
@@ -241,9 +243,10 @@ public class RecallController extends NewSerial implements Initializable {
                 if(result){
                     R_table.getItems().add(R);
                     Alerts.showInfoAlert("تمت الاضافة !!");
+                    clear();
                 }
                 else
-                Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى");
+                Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. ");
             }
             }catch(NumberFormatException e){Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة ");}
         }
@@ -251,6 +254,19 @@ public class RecallController extends NewSerial implements Initializable {
             Alerts.showErrorAlert("لم يتم ادخال البيانات بشكل صحيح ! .. يرجى التأكد من ملئ جميع الحقول المطلوبه");
     
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     /************************************CLEAR DATA FROM FIELDS _________*/
     private void CancelRecall(){

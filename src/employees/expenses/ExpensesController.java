@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package employees.expenses;
 
 
@@ -135,6 +131,16 @@ public class ExpensesController extends NewSerial implements Initializable {
     }
     
     
+    
+  @FXML
+    private void Key_pressed(KeyEvent event) {
+            try{
+        if(event.getCode().equals(KeyCode.CONTROL)){  // Save when Pressing Control
+          this.AddValue(); }
+      
+    }catch(Exception e){}
+       
+    }
     //Method to clear Data from Text Fields
     private void clear(){
         value.clear();

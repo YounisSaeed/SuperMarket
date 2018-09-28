@@ -461,7 +461,7 @@ public class SalesController extends NewSerial implements Initializable {
                         SalesTabel.getItems().add(S);
                         TOTAL+=S.getCost();
                         totalPrice.setText(TOTAL+"");
-                        Alerts.showInfoAlert("تمت الاضافة !!");
+                     //   Alerts.showInfoAlert("تمت الاضافة !!");
                     }
                     else
                         Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى");

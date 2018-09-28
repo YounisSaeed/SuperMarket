@@ -136,6 +136,9 @@ public class Manager_EmployeeController implements Initializable {
     
     /////////////////////////////////////////////////// Buttons Methods//////////////////////////////////////////////////////////////////
     
+    
+    
+    
      String qu="SELECT emp_id FROM employee1 "; 
                ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
     
@@ -151,11 +154,11 @@ public class Manager_EmployeeController implements Initializable {
              if (Double.parseDouble(E_Tsalary.getText())>0  ){ //to make sure that salary is  a posutive number
                    
                     Employee E =new Employee();
-                    E.setEmployeeName(E_Tname.getText());
-                    E.setEmployeeId(E_Tcode.getText());
-                    E.setEmployeePhone(E_Tphone.getText());
-                    E.setEmployeeSalaryHours(Double.parseDouble(E_Tsalary.getText()));
-                    E.setEmployeeAddress(E_Taddress.getText());
+                    E.setEmployeeName(E_Tname.getText().trim());
+                    E.setEmployeeId(E_Tcode.getText().trim());
+                    E.setEmployeePhone(E_Tphone.getText().trim());
+                    E.setEmployeeSalaryHours(Double.parseDouble(E_Tsalary.getText().trim()));
+                    E.setEmployeeAddress(E_Taddress.getText().trim());
                     boolean result = DataHelper.insertNewemployee(E);
                     
                     if(result){
@@ -164,7 +167,7 @@ public class Manager_EmployeeController implements Initializable {
                         clear();
                         
                     }
-             }else{  Alerts.showErrorAlert("لم يتم تسجيل الموظف "+E_Tname.getText()+" ");  }
+             }else{  Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة!! ");  }
                 
              
             } catch (NumberFormatException es){ Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة !!"); }
@@ -194,19 +197,19 @@ public class Manager_EmployeeController implements Initializable {
              && !E_Taddress.getText().equals("") && !E_Tsalary.getText().equals("")  ){   //TO check of text fields is empty
             
              //TO ckef if there another Employee with same ID 
-               while(rs.next()){
-                    String x1=rs.getString("emp_id"); 
-                   if (E_Tcode.getText().trim().equals(x1)){
-                       Alerts.showErrorAlert("يوجد موظف اخر بنفس الكود");
-                   }}
+//               while(rs.next()){
+//                    String x1=rs.getString("emp_id"); 
+//                   if (E_Tcode.getText().trim().equals(x1)){
+//                       Alerts.showErrorAlert("يوجد موظف اخر بنفس الكود");
+//                   }}
                
                
             try{   
             if (Double.parseDouble(E_Tsalary.getText())>0  ){
-                 String name=E_Tname.getText();
-                  String phone=E_Tphone.getText();
-                  String id =E_Tcode.getText();
-                  String address=E_Taddress.getText();
+                 String name=E_Tname.getText().trim();
+                  String phone=E_Tphone.getText().trim();
+                  String id =E_Tcode.getText().trim();
+                  String address=E_Taddress.getText().trim();
                   double salary=Double.parseDouble(E_Tsalary.getText());
       
                  Employee e = new Employee(id,name,phone,address,salary);
@@ -215,9 +218,10 @@ public class Manager_EmployeeController implements Initializable {
                 if(result){
                     Alerts.showInfoAlert("تم تعديل بيانات :"+e.getEmployeeName());
                     DataHelper.loadEmployeesData(E_tables);
+                    clear();
                     
                     
-                }else  { Alerts.showInfoAlert("لم تتم العملية بشكل صحيح "); }
+                } else{ Alerts.showErrorAlert("لقد أدخلت قيما غير صحيحة"); }
 
                }  else{ Alerts.showErrorAlert("لقد أدخلت قيما غير صحيحة"); }   
                         

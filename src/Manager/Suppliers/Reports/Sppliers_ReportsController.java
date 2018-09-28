@@ -133,7 +133,7 @@ public class Sppliers_ReportsController implements Initializable {
             int id=0;
             double TotalPrice=0;
             while(rs.next()){
-               dat=rs.getString("sale_date");
+               dat=rs.getString("buy_date");
                String qOut2="SELECT * FROM buy_bills WHERE bill_date = '"+dat+"'";
                ResultSet rs_S=DatabaseHandler.getInstance().execQuery(qOut2);
 
