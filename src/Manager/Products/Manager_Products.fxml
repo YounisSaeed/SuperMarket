@@ -120,7 +120,7 @@
                   <Font name="System Bold" size="25.0" />
                </font>
             </Label>
-            <Label fx:id="P_Quantity" alignment="TOP_RIGHT" contentDisplay="RIGHT" layoutX="1074.0" layoutY="394.0" minWidth="-Infinity" prefHeight="36.0" prefWidth="73.0" text="كمية :" textAlignment="RIGHT" textFill="WHITE">
+            <Label fx:id="P_Quantity" alignment="TOP_RIGHT" contentDisplay="RIGHT" layoutX="1034.0" layoutY="394.0" minWidth="-Infinity" prefHeight="36.0" prefWidth="113.0" text="العدد فى :" textAlignment="RIGHT" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font>
