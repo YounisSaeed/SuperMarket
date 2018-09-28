@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="Suppliers_Reports" prefHeight="697.0" prefWidth="1366.0" style="-fx-background-color: #343642;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Manager.Supplier.Reports.Sppliers_ReportsController">
+<AnchorPane id="AnchorPane" fx:id="Suppliers_Reports" prefHeight="697.0" prefWidth="1366.0" style="-fx-background-color: #343642;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Manager.Suppliers.Reports.Sppliers_ReportsController">
    <children>
       <Label fx:id="S_name" alignment="CENTER" layoutX="833.0" layoutY="115.0" prefHeight="45.0" prefWidth="153.0" text="اسم المورد :" textFill="WHITE">
          <font>

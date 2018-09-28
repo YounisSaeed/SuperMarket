@@ -31,6 +31,7 @@
                         pro_supplier_name varchar(200),
                         pro_qty_item int,
                         pro_qty_packet int,
+                        pro_box varchar(20),
                         pro_All_qty int,
                         pro_price_item double,
                         pro_price_packet double,
@@ -76,7 +77,7 @@
 
     <table-entry name="buy_bills" col-data="
                         tab int ,
-                         bill_id int,
+                        bill_id int,
                         bill_date date,
                         t_time TIME,
                         supplier_name varchar(100),

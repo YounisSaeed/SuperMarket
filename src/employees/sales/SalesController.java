@@ -187,7 +187,7 @@ public class SalesController extends NewSerial implements Initializable {
     
     private void searrch(){
         pri=new Price();
-        DataHelper.fillSalesWithInfoOfProduct(T_Search.getText(),productBarcode,productName,productPrice,pri);
+        DataHelper.fillSalesWithInfoOfProduct(T_Search.getText(),productBarcode,productName,productPrice,pri,quntityComboBox);
         System.out.println(pri.getItemPrice());  
     }
     /**************************************************************************/
@@ -315,6 +315,29 @@ public class SalesController extends NewSerial implements Initializable {
     @FXML
     private void NextProcess(ActionEvent event) {
         
+            String q2="SELECT sale_id FROM bills WHERE sale_date = '2018-09-25'";
+            
+            ResultSet rs2=DatabaseHandler.getInstance().execQuery(q2);
+            int id=0;
+        try {
+            while(rs2.next()){
+                id=rs2.getInt("sale_id");
+                System.out.println("\n"+"Bill no. "+id);
+                String q1="SELECT * FROM sales WHERE sale_id="+id+" AND sale_date = '2018-09-25'";
+                ResultSet rs=DatabaseHandler.getInstance().execQuery(q1);
+                while(rs.next()){
+                        String x1=rs.getString("product_name");
+                        double x2=rs.getDouble("unit_price");
+                        
+                        System.out.println("product_name:  "+x1+"\n"+"unit_price:  "+x2);
+                }
+            }
+            
+            
+            
+            
+        } catch (SQLException ex) {
+        }
     }
     /**************************************************************************/
     
@@ -438,7 +461,7 @@ public class SalesController extends NewSerial implements Initializable {
                         SalesTabel.getItems().add(S);
                         TOTAL+=S.getCost();
                         totalPrice.setText(TOTAL+"");
-                        Alerts.showInfoAlert("تمت الاضافة !!");
+                     //   Alerts.showInfoAlert("تمت الاضافة !!");
                     }
                     else
                         Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى");

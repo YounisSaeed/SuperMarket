@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
+import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -102,10 +103,12 @@ public class Manager_ProductsController implements Initializable {
     @FXML
     private TextField Q_packet;
     @FXML
-    private TextField Q_box;    
+    private ComboBox<String> Q_box;    
     
     private static String oldBar=""; // this var used foe edit .. when you focus on any row it take the barcode of the product from table
     DatabaseHandler databaseHandler;
+    @FXML
+    private TableColumn<Goods, String> t_q_box;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -113,7 +116,8 @@ public class Manager_ProductsController implements Initializable {
         initTableViewCols();
         ObservableList<String> list1= FXCollections.observableArrayList("أخرى","منظفات","معلبات","مجمدات","عصائر","شيكولاتات","شيبسي وحلويات","شاي وبن","سمنة وزيوت","جبن","ايس كريم","ألبان");
         P_Ctype.setItems(list1);
-        Q_box.setText("1");
+        Q_box.setItems(FXCollections.observableArrayList("يوجد","لا يوجد"));
+        
         DataHelper.loadProductsData(P_table,P_TSearch);
     } 
     private void initTableViewCols(){
@@ -122,6 +126,7 @@ public class Manager_ProductsController implements Initializable {
         t_cate.setCellValueFactory(new PropertyValueFactory<>("productCategory"));
         t_q_item.setCellValueFactory(new PropertyValueFactory<>("itemsInPacket"));
         t_q_packet.setCellValueFactory(new PropertyValueFactory<>("PacketsInBox"));
+        t_q_box.setCellValueFactory(new PropertyValueFactory<>("box"));
         t_p_item.setCellValueFactory(new PropertyValueFactory<>("itemPrice"));
         t_p_packet.setCellValueFactory(new PropertyValueFactory<>("packetPrice"));
         t_p_box.setCellValueFactory(new PropertyValueFactory<>("boxPrice"));
@@ -186,6 +191,7 @@ public class Manager_ProductsController implements Initializable {
                 G.setProductCategory((String) P_Ctype.getValue());
                 G.setItemsInPacket(Integer.parseInt(Q_item.getText()));
                 G.setPacketsInBox(Integer.parseInt(Q_packet.getText()));
+                G.setBox(Q_box.getValue());
                 G.setItemPrice(Double.parseDouble(P_TUprice.getText()));
                 G.setPacketPrice(Double.parseDouble(P_TBprice.getText()));
                 G.setBoxPrice(Double.parseDouble(P_TCprice.getText()));
@@ -204,7 +210,7 @@ public class Manager_ProductsController implements Initializable {
         }
         else 
              Alerts.showErrorAlert("برجاء ملىء جميع الحقول المطلوبة");
-    }
+    } 
 
     
 
@@ -220,12 +226,14 @@ public class Manager_ProductsController implements Initializable {
                 String cate=(String) P_Ctype.getValue();
                 int it=Integer.parseInt(Q_item.getText());
                 int pa=Integer.parseInt(Q_packet.getText());
+                String bo=Q_box.getValue();
+                
                 double Pi=Double.parseDouble(P_TUprice.getText());
                 double Pp=Double.parseDouble(P_TBprice.getText());
                 double Pb=Double.parseDouble(P_TCprice.getText());
                 int mP=Integer.parseInt(P_Tminimun.getText());
 
-                Goods G=new Goods(name, bar, cate, "", it, pa, Pi, Pp, Pb, mP);
+                Goods G=new Goods(name, bar, cate, "", it, pa,bo, Pi, Pp, Pb, mP);
 
                 boolean result=DataHelper.updateProductInfo(G,oldBar);
                 if(result){
@@ -233,7 +241,7 @@ public class Manager_ProductsController implements Initializable {
                     clear();
                     DataHelper.loadProductsData(P_table,P_TSearch);
                 }
-            }catch (NumberFormatException e) {Alerts.showErrorAlert("لقد ادخللت قيمة غير صحيحة");}
+            }catch (NumberFormatException e) {Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة");}
         }
         else
             Alerts.showErrorAlert("برجاء ملىء جميع الحقول المطلوبة"); 
@@ -289,6 +297,7 @@ public class Manager_ProductsController implements Initializable {
         P_Tcode.setText(good.getProductBarCode());
         Q_item.setText(good.getItemsInPacket()+"");
         Q_packet.setText(good.getPacketsInBox()+"");
+        Q_box.setValue(good.getBox());
         P_TUprice.setText(good.getItemPrice()+"");
         P_TBprice.setText(good.getPacketPrice()+"");
         P_TCprice.setText(good.getBoxPrice()+"");

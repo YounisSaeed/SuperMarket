@@ -92,9 +92,10 @@ public class BuyingController  extends NewSerial implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         ObservableList<String> list= FXCollections.observableArrayList("قطعة","علبة","كرتونة");
-        ObservableList<String> list2= FXCollections.observableArrayList("اتش","ياسر","ليدا");
         quntityComboBox.setItems(list);
-        quntityComboBox.setValue("قطعة");
+        quntityComboBox.setValue("كرتونة");
+        supplier.setItems(DataHelper.checkDataSupp());
+        ObservableList<String> list2= FXCollections.observableArrayList("اتش","ياسر","ليدا");
         supplier.setItems(list2);
         date.setText(gettDate());
         setSalesSerial(DataHelper.getLastSerialTodayBuying(gettDate()));
@@ -125,7 +126,7 @@ public class BuyingController  extends NewSerial implements Initializable {
     }
     private void searrch(){
         pri=new Price();
-        DataHelper.fillSalesWithInfoOfProduct(B_searchField.getText(),productBarcode,productName,productPrise,pri);// 
+        DataHelper.fillSalesWithInfoOfProduct(B_searchField.getText(),productBarcode,productName,productPrise,pri,quntityComboBox);// 
         // fill Search Field with barcodes of all products in market
         // pri : initialize price of item,packet,box of specific product you search about
         System.out.println(pri.getItemPrice());  
@@ -193,7 +194,7 @@ public class BuyingController  extends NewSerial implements Initializable {
     private void cancelBuying(ActionEvent event) {
         if(Alerts.ConfirmAlert("هل تريد مسج جميع عناصر فاتورة الشراء؟",""))
         {
-            
+         clear();   
         }
     }
     ////////////// ???????????????????????????????????????
@@ -229,6 +230,7 @@ public class BuyingController  extends NewSerial implements Initializable {
             clear();
             if(result){
                 Alerts.showInfoAlert("تم اضافة الفاتورة رقم  بنجاح !!");
+                clear();
             }
             else
                 Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى");
@@ -315,7 +317,7 @@ public class BuyingController  extends NewSerial implements Initializable {
                     totalPrice.setText(TOTAL+"");
                     
                 } else {
-                    Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى");
+                    Alerts.showErrorAlert("لم تتم العملية بشكل صحيح ");
                 }
             }
         }

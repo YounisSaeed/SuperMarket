@@ -5,6 +5,7 @@
  */
 package Manager.Products.Reports;
 
+import Classes.Alerts;
 import Manager.Main.HomeController;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -120,7 +121,7 @@ public class Products_ReportsController implements Initializable {
                 
         
          /**********Create Document******************/
-        Document document =new Document(PageSize.A4); 
+        Document document =new Document(PageSize.A3); 
         System.out.println("Document Created");
         /***********Method to calculate Date******/
              Date date=new Date();
@@ -157,7 +158,7 @@ public class Products_ReportsController implements Initializable {
                 "" + ft.format(date),normal));
                 
         addEmptyLine(preface, 1); //add line space
-        preface.add("----------------------------------------------------------------------------------------------------------------------------------");
+        preface.add("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         addEmptyLine(preface, 2);
         document.add(preface);   // Add paragraph of name preface to document
         
@@ -193,6 +194,8 @@ public class Products_ReportsController implements Initializable {
                 int x2=rs.getInt("pro_qty_item");
                 int x3=rs.getInt("pro_qty_packet");
                 int x4=rs.getInt("pro_All_qty");
+                
+                
                 System.out.println(x1+"  "+x2+"  "+x3+"  "+x4);
                 //cell 1
                 c1 = new PdfPCell(new Phrase(x1,normal));
@@ -200,15 +203,19 @@ public class Products_ReportsController implements Initializable {
                 c1.setRunDirection(RUN_DIRECTION_RTL);
                 table.addCell(c1);
                 //cell 1
-                c1 = new PdfPCell(new Phrase(String.valueOf(x2),normal));
+                c1 = new PdfPCell(new Phrase(String.valueOf(x4),normal));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
                 //cell 3
-                c1 = new PdfPCell(new Phrase(String.valueOf(x3),normal));
+                c1 = new PdfPCell(new Phrase(String.valueOf( (x4/x2) ),normal));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
                 //cell 4
-                c1 = new PdfPCell(new Phrase(String.valueOf(x4),normal));
+                if(rs.getString("pro_box").equals("يوجد"))
+                    c1 = new PdfPCell(new Phrase(String.valueOf( x4/(x2*x3) ),normal));
+                else if(!rs.getString("pro_box").equals("يوجد"))
+                    c1 = new PdfPCell(new Phrase("لا يوجد",normal));
+            
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
             }
@@ -216,10 +223,7 @@ public class Products_ReportsController implements Initializable {
             document.add(table);
  
             /////////////////ِTo show that pdf is printed///////////////
-            Alert AT=new Alert(Alert.AlertType.INFORMATION);
-            AT.setHeaderText(null);
-            AT.setContentText("تمت طباعة التقرير");
-            AT.showAndWait();
+            Alerts.showInfoAlert("تمت طباعة التقرير");
             
                    } catch(Exception e){
             System.out.println(e);
@@ -227,10 +231,10 @@ public class Products_ReportsController implements Initializable {
         // close document
         document.close();
         System.out.println("Document Closed");
-
-
     }
     
+    
+        
     
     
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -281,7 +285,7 @@ public class Products_ReportsController implements Initializable {
                 "" + ft.format(date),normal));
                 
         addEmptyLine(preface, 1); //add line space
-        preface.add("----------------------------------------------------------------------------------------------------------------------------------");
+        preface.add("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         addEmptyLine(preface, 2);
         document.add(preface);   // Add paragraph of name preface to document
         
@@ -290,18 +294,21 @@ public class Products_ReportsController implements Initializable {
         /************************Start of content*********/
  
         /*****Creat table has 4 column*******/
-        PdfPTable table = new PdfPTable(2);
+        PdfPTable table = new PdfPTable(3);
         table.setRunDirection(RUN_DIRECTION_RTL);//To Make arabic works well
         
           /***Header of table*****/
-        PdfPCell c1 = new PdfPCell(new Phrase("الاسم",normal));
+        PdfPCell c1 = new PdfPCell(new Phrase("باركود",normal));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        c1.setRunDirection(RUN_DIRECTION_RTL);
+        table.addCell(c1);
+        c1 = new PdfPCell(new Phrase("الاسم",normal));
         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
         c1.setRunDirection(RUN_DIRECTION_RTL);
         table.addCell(c1);
         c1 = new PdfPCell(new Phrase("الكمية",normal));
         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(c1);
-        
         table.setHeaderRows(1);
         
         /***********retrive data from database and but them in cells***************/
@@ -309,15 +316,20 @@ public class Products_ReportsController implements Initializable {
             while(rs.next()){
           
                 String x1=rs.getString("product_name");        
+                String x3=rs.getString("d_bar");        
                 int x2=rs.getInt("current_qty");
-                ;
+                
                 System.out.println(x1+"  "+x2);
                 //cell 1
-                c1 = new PdfPCell(new Phrase(x1,normal));
+                c1 = new PdfPCell(new Phrase(x3,normal));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 c1.setRunDirection(RUN_DIRECTION_RTL);
                 table.addCell(c1);
                 //cell 2
+                c1 = new PdfPCell(new Phrase(String.valueOf(x1),normal));
+                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(c1);
+                //cell 3
                 c1 = new PdfPCell(new Phrase(String.valueOf(x2),normal));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
@@ -327,10 +339,7 @@ public class Products_ReportsController implements Initializable {
             document.add(table);
  
             /////////////////ِTo show that pdf is printed///////////////
-            Alert AT=new Alert(Alert.AlertType.INFORMATION);
-            AT.setHeaderText(null);
-            AT.setContentText("تمت طباعة التقرير");
-            AT.showAndWait();
+            Alerts.showInfoAlert("تمت طباعة التقرير");
             
                    } catch(Exception e){
             System.out.println(e);

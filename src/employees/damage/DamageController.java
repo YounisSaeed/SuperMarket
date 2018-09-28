@@ -107,7 +107,7 @@ public class DamageController extends NewSerial implements Initializable {
     
     private void searrch(){
         pri=new Price();
-        DataHelper.fillSalesWithInfoOfProduct(SearchField.getText(),productBarcode,productName,productPrice,pri);
+        DataHelper.fillSalesWithInfoOfProduct(SearchField.getText(),productBarcode,productName,productPrice,pri,quntityComboBox);
         // fill Search Field with barcodes of all products in market
         // pri : initialize price of item,packet,box of specific product you search about
         System.out.println(pri.getItemPrice());  
@@ -217,7 +217,7 @@ public class DamageController extends NewSerial implements Initializable {
     {
         if(Alerts.ConfirmAlert("هل تريد مسح كل العناصر",""))
         {
-            //yoooooour cooooode
+           clear();
         }
     }
     

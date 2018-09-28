@@ -144,10 +144,11 @@ public class Manager_Product_QuantityController implements Initializable {
                   else if(R_packet.isSelected()){
                       DataHelper.QuickEditQuantity(pa*inp,P_TSearch.getText()); Alerts.showInfoAlert("تم التعديل");
                   }
-                  else if(R_box.isSelected()){
+                  else if(R_box.isSelected() && Integer.parseInt(P_CQuantity.getText()) != 0 ){
                       DataHelper.QuickEditQuantity(bo*pnb*inp,P_TSearch.getText()); Alerts.showInfoAlert("تم التعديل");
                   }
                   //P_Search();
+                  DataHelper.ProductQuantity(P_TSearch.getText(),P_UQuantity,P_BQuantity,P_CQuantity,LName);
               }
               else
                   Alerts.showErrorAlert("لم يتم تحديد خلية محددة");

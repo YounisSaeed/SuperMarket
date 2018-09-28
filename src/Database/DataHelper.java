@@ -2,6 +2,7 @@ package database;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import Classes.*;
+import com.jfoenix.controls.JFXComboBox;
 import employees.sales.SalesController;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -32,18 +33,19 @@ public class DataHelper {
         try {
             PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
                     "INSERT INTO product(pro_bar,pro_name,pro_category,"
-                    + "pro_qty_item,pro_qty_packet,pro_All_qty,pro_price_item,pro_price_packet,"
-                    + "pro_price_box,pro_minimum) VALUES(?,?,?,?,?,?,?,?,?,?)");
+                    + "pro_qty_item,pro_qty_packet,pro_box,pro_All_qty,pro_price_item,pro_price_packet,"
+                    + "pro_price_box,pro_minimum) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
             statement.setString(1, go.getProductBarCode());
             statement.setString(2, go.getProductName());
             statement.setString(3, go.getProductCategory());
             statement.setInt(4, go.getItemsInPacket());
             statement.setInt(5, go.getPacketsInBox());
-            statement.setLong(6, go.getAllQuantity());
-            statement.setDouble(7, go.getItemPrice());
-            statement.setDouble(8, go.getPacketPrice());
-            statement.setDouble(9, go.getBoxPrice());
-            statement.setInt(10, go.getProductMinQuantity());
+            statement.setString(6, go.getBox());
+            statement.setLong(7, go.getAllQuantity());
+            statement.setDouble(8, go.getItemPrice());
+            statement.setDouble(9, go.getPacketPrice());
+            statement.setDouble(10, go.getBoxPrice());
+            statement.setInt(11, go.getProductMinQuantity());
             return statement.executeUpdate() > 0;
         } catch (SQLException ex) {}
         return false;
@@ -54,7 +56,7 @@ public class DataHelper {
             
             PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
                     "UPDATE product SET  pro_bar=?,pro_name=?,pro_category=?,"
-                            + "pro_qty_item=?,pro_qty_packet=?,pro_All_qty=?,pro_price_item=?,"
+                            + "pro_qty_item=?,pro_qty_packet=?,pro_box=?,pro_All_qty=?,pro_price_item=?,"
                             + "pro_price_packet=?,pro_price_box=?,pro_minimum=?  WHERE pro_bar= '"+bar+"' ");
             
             statement.setString(1, go.getProductBarCode());
@@ -62,11 +64,12 @@ public class DataHelper {
             statement.setString(3, go.getProductCategory());
             statement.setInt(4, go.getItemsInPacket());
             statement.setInt(5, go.getPacketsInBox());
-            statement.setLong(6, go.getAllQuantity());
-            statement.setDouble(7, go.getItemPrice());
-            statement.setDouble(8, go.getPacketPrice());
-            statement.setDouble(9, go.getBoxPrice());
-            statement.setInt(10, go.getProductMinQuantity());
+            statement.setString(6, go.getBox());
+            statement.setLong(7, go.getAllQuantity());
+            statement.setDouble(8, go.getItemPrice());
+            statement.setDouble(9, go.getPacketPrice());
+            statement.setDouble(10, go.getBoxPrice());
+            statement.setInt(11, go.getProductMinQuantity());
             return statement.executeUpdate() > 0;
         }
         catch (SQLException ex) {}
@@ -156,12 +159,13 @@ public class DataHelper {
                 String sup=rs.getString("pro_supplier_name");
                 int it=rs.getInt("pro_qty_item");
                 int pa=rs.getInt("pro_qty_packet");
+                String box=rs.getString("pro_box");
                 double Pi=rs.getDouble("pro_price_item");
                 double Pp=rs.getDouble("pro_price_packet");
                 double Pb=rs.getDouble("pro_price_box");
                 int mP=rs.getInt("pro_minimum");
                 int aq=rs.getInt("pro_All_qty");
-                list.add(new Goods(name, bar, cate, sup, it, pa, Pi, Pp, Pb, mP));
+                list.add(new Goods(name, bar, cate, sup, it, pa,box, Pi, Pp, Pb, mP));
                 list2.add(bar);
             }
         } catch (SQLException ex) {
@@ -182,12 +186,13 @@ public class DataHelper {
                 String sup=rs.getString("pro_supplier_name");
                 int it=rs.getInt("pro_qty_item");
                 int pa=rs.getInt("pro_qty_packet");
+                String box=rs.getString("pro_box");
                 double Pi=rs.getDouble("pro_price_item");
                 double Pp=rs.getDouble("pro_price_packet");
                 double Pb=rs.getDouble("pro_price_box");
                 int mP=rs.getInt("pro_minimum");
                 int aq=rs.getInt("pro_All_qty");
-                list.add(new Goods(name, bar, cate, sup, it, pa, Pi, Pp, Pb, mP));
+                list.add(new Goods(name, bar, cate, sup, it, pa,box, Pi, Pp, Pb, mP));
             }
         } catch (SQLException ex) {
             Alerts.showInfoAlert("لا يوجد اصناف");
@@ -196,14 +201,21 @@ public class DataHelper {
     }
     
     public static void ProductQuantity(String bar,TextField TI,TextField TP,TextField TB,Label name){
-        String qu = "SELECT pro_All_qty,pro_qty_item,pro_qty_packet,pro_name FROM product WHERE pro_bar= '"+bar+"'";
+        String qu = "SELECT pro_All_qty,pro_qty_item,pro_qty_packet,pro_name,pro_box FROM product WHERE pro_bar= '"+bar+"'";
         ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
         
         try {
             if(rs.next()){
+                
                 TI.setText(rs.getInt("pro_All_qty")+"");
                 TP.setText( (rs.getInt("pro_All_qty")/rs.getInt("pro_qty_item")) + "");
-                TB.setText((rs.getInt("pro_All_qty")/(rs.getInt("pro_qty_item")*rs.getInt("pro_qty_packet"))) + "");
+                if(rs.getString("pro_box").equals("يوجد")){
+                    TB.setDisable(false);
+                    System.out.println(",,,,,,,,,,,,,,,,,,,,,,,,,,,mmmmmm");
+                    TB.setText((rs.getInt("pro_All_qty")/(rs.getInt("pro_qty_item")*rs.getInt("pro_qty_packet"))) + "");}
+                else if(!rs.getString("pro_box").equals("يوجد")){
+                    TB.setText("0");
+                    TB.setDisable(true);}
                 name.setText(rs.getString("pro_name"));
             }
         } catch (SQLException ex) {
@@ -637,7 +649,7 @@ public static boolean isEmployeeisEXits(String id) {
     public static boolean insertNewSale(Sales sal){
         try {
             PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "INSERT INTO sales (number,sale_id,sale_date,product_name,qty_kind,unit_price,current_qty,cost,t_time) VALUES(?,?,?,?,?,?,?,?,?)");
+                    "INSERT INTO sales (number,sale_id,sale_date,product_name,qty_kind,unit_price,current_qty,cost,t_time,s_bar) VALUES(?,?,?,?,?,?,?,?,?,?)");
             statement.setLong(1, sal.getNumber());
             statement.setInt(2,sal.getSerial());
             statement.setDate(3,sal.getDate() );
@@ -647,6 +659,7 @@ public static boolean isEmployeeisEXits(String id) {
             statement.setInt(7,sal.getCurrentQuantity());
             statement.setDouble(8,sal.getCost());
             statement.setTime(9, sal.getTime());
+            statement.setString(10,sal.getBarcodfiled());
             
             return statement.executeUpdate() > 0;
         } catch (SQLException ex) {
@@ -771,8 +784,8 @@ public static boolean isEmployeeisEXits(String id) {
         TextFields.bindAutoCompletion(TX, list);
     }
     
-    public static void fillSalesWithInfoOfProduct(String bar,Label PBar,Label PName,Label PPrice,Price pra){ // 
-        String qu="SELECT pro_bar,pro_name,pro_price_item,pro_price_packet,pro_price_box FROM product WHERE pro_bar='"+bar+"'"; 
+    public static void fillSalesWithInfoOfProduct(String bar,Label PBar,Label PName,Label PPrice,Price pra,JFXComboBox T){ // 
+        String qu="SELECT pro_bar,pro_name,pro_price_item,pro_price_packet,pro_price_box,pro_box FROM product WHERE pro_bar='"+bar+"'"; 
         ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
         try {
             if(rs.next()){
@@ -782,6 +795,10 @@ public static boolean isEmployeeisEXits(String id) {
                 pra.setItemPrice(rs.getDouble("pro_price_item"));
                 pra.setPacketPrice(rs.getDouble("pro_price_packet"));
                 pra.setBoxPrice(rs.getDouble("pro_price_box"));
+                if(rs.getString("pro_box").equals("يوجد"))
+                    T.setItems(FXCollections.observableArrayList("قطعة","علبة","كرتونة"));
+                else
+                    T.setItems(FXCollections.observableArrayList("قطعة","علبة"));
             }       
         } catch (SQLException ex) {
             Logger.getLogger(SalesController.class.getName()).log(Level.SEVERE, null, ex);
@@ -1010,6 +1027,25 @@ public static boolean isEmployeeisEXits(String id) {
         }
         return false;
     }
+    
+    public static ObservableList<String> checkDataSupp(){
+        ObservableList<String> list = FXCollections.observableArrayList();
+        list= FXCollections.observableArrayList();
+        String qu="SELECT sup_company_name FROM suppliers1"; 
+        ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
+        try {
+            while(rs.next()){
+                String barcode=rs.getString("sup_company_name");
+                list.add(barcode);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(SalesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    
     /*******************************************END OF BUYING********************************************************/
     /****************************************************************************************************************/
     /****************************************************************************************************************/

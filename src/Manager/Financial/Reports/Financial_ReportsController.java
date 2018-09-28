@@ -7,10 +7,14 @@ import static Manager.Products.Reports.Products_ReportsController.normal;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
+import static com.itextpdf.text.Element.ALIGN_LEFT;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -97,16 +101,17 @@ public class Financial_ReportsController implements Initializable {
     @FXML
     private void Daily_Report(ActionEvent event) {
          try {
-         if (!F_Tdate1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals("") &&!F_Tdate2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals("") ){
-            String qOut1="SELECT DISTINCT sale_date FROM sales WHERE sale_date >= '2018-09-20' AND sale_date <= '2018-09-24'";
-            //String qOut2="SELECT DISTINCT exp_date FROM expenses WHERE exp_date >= '2018-09-20' AND exp_date <= '2018-09-24'";
-            String q4="";
-            String q5="";
+         if (!F_Tdate1.getValue().equals("") &&!F_Tdate2.getValue().equals("") ){
+            String da1=F_Tdate1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            String da2=F_Tdate2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+             
+            String qOut1="SELECT DISTINCT sale_date FROM sales WHERE sale_date >= '"+da1+"' AND sale_date <= '"+da2+"'";
+            
             
             
             
             /**********Create Document******************/
-             Document document =new Document(PageSize.A4);
+             Document document =new Document(PageSize.A3);
              System.out.println("Document Created");
              /***********Method to calculate Date******/
              Date date=new Date();
@@ -136,7 +141,7 @@ public class Financial_ReportsController implements Initializable {
                      "" + ft.format(date),normal));
              
              addEmptyLine(preface, 1); //add line space
-             preface.add("----------------------------------------------------------------------------------------------------------------------------------");
+             preface.add("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
              addEmptyLine(preface, 2);
              document.add(preface);   // Add paragraph of name preface to document
              
@@ -207,6 +212,7 @@ public class Financial_ReportsController implements Initializable {
                     buy_Exp+=rs_Buy.getDouble("cost");
                 }
                 total_Exp=Shop_Expenses+buy_Exp;
+                profit=TotalQuan-total_Exp;
                 //cell 1
                 c1 = new PdfPCell(new Phrase(d,normal));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -231,8 +237,11 @@ public class Financial_ReportsController implements Initializable {
                 c1 = new PdfPCell(new Phrase(total_Exp+"",normal));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
+                //cell 7
+                c1 = new PdfPCell(new Phrase(profit+"",normal));
+                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(c1);
             }
-            
             
             document.add(table);
             // document.add(table2);
@@ -274,12 +283,14 @@ public class Financial_ReportsController implements Initializable {
     private void invoices(){    
 
          try {    
-             String qu="SELECT * FROM sales";
-             ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
+             String da1=F_Tdate1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+             String da2=F_Tdate2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+             
+             String qOut1="SELECT DISTINCT sale_date FROM sales WHERE sale_date >= '"+da1+"' AND sale_date <= '"+da2+"'"; 
              
              
              /**********Create Document******************/
-             Document document =new Document(PageSize.A4);
+             Document document =new Document(PageSize.A3);
              System.out.println("Document Created");
              /***********Method to calculate Date******/
              Date date=new Date();
@@ -287,14 +298,9 @@ public class Financial_ReportsController implements Initializable {
                      new SimpleDateFormat (" yyyy.MM.dd ");
              
              /***************The Name of Pdf************/
-             try {
-                 
-                 PdfWriter.getInstance(document, new FileOutputStream("الفواتير"+ft.format(date)+".pdf"));
-             } catch (DocumentException ex) {
-                 Logger.getLogger(Financial_ReportsController.class.getName()).log(Level.SEVERE, null, ex);
-             } catch (FileNotFoundException ex) {
-                 Logger.getLogger(Financial_ReportsController.class.getName()).log(Level.SEVERE, null, ex);
-             }
+             
+             PdfWriter.getInstance(document, new FileOutputStream("الفواتير"+ft.format(date)+".pdf"));
+             
              System.out.println("Writrer insrance Created");
              document.open();  // Open the document to append in it .
              System.out.println("Document Opened");
@@ -318,7 +324,7 @@ public class Financial_ReportsController implements Initializable {
                      "" + ft.format(date),normal));
              
              addEmptyLine(preface, 1); //add line space
-             preface.add("----------------------------------------------------------------------------------------------------------------------------------");
+             preface.add("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
              addEmptyLine(preface, 2);
              document.add(preface);   // Add paragraph of name preface to document
              
@@ -326,91 +332,158 @@ public class Financial_ReportsController implements Initializable {
              
              /************************Start of content*********/
              
-             /*****Creat table has 4 column*******/
-             PdfPTable table = new PdfPTable(6);
-             table.setRunDirection(RUN_DIRECTION_RTL);//To Make arabic works well
-             preface.add("----------------------------------------------------------------------------------------------------------------------------------");
-             addEmptyLine(preface, 2);
-             PdfPTable table2 = new PdfPTable(1);
-             table.setRunDirection(RUN_DIRECTION_RTL);//To Make arabic works well
              
-             /***Header of table*****/
-             PdfPCell c1 = new PdfPCell(new Phrase("الاسم",normal));
-             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-             c1.setRunDirection(RUN_DIRECTION_RTL);
-             table.addCell(c1);
-             c1 = new PdfPCell(new Phrase("السعر",normal));
-             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-             table.addCell(c1);
-             c1 = new PdfPCell(new Phrase("الكمية",normal));
-             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-             table.addCell(c1);
-             c1 = new PdfPCell(new Phrase("نوع الكمية",normal));
-             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-             table.addCell(c1);
-             c1 = new PdfPCell(new Phrase("التكلفة",normal));
-             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-             table.addCell(c1);
-             c1 = new PdfPCell(new Phrase("تسلسل ",normal));
-             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-             table.addCell(c1);
-             PdfPCell d = new PdfPCell(new Phrase("---------------------------------------------",normal));
-             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-             c1.setRunDirection(RUN_DIRECTION_RTL);
-             table2.addCell(d);
-             table.setHeaderRows(1);
              
              /***********retrive data from database and but them in cells***************/
              try {
+                 
                  //int u=1;
                  //double y=rs.getDouble("sale_id");
+                 String dat="", tim="";
+                 int id=0;
+                 double TotalPrice=0;
+                 double Paid=0;
+                 double Remind=0;
+                 ResultSet rs=DatabaseHandler.getInstance().execQuery(qOut1);
                  while(rs.next()){
-//               double y=rs.getDouble("sale_id"); 
-                    //                if (y==x){
-                    String x1=rs.getString("product_name");
-                    double x2=rs.getDouble("unit_price");
-                    int x3=rs.getInt("current_qty");
-                    String x4=rs.getString("qty_kind");
-                    double x5=rs.getDouble("cost");
-                    int x6=rs.getInt("sale_id");
-                    String o="----------------------------------";
-                    System.out.println(x1+"  "+x2+" "+x3+"  "+x4+"  "+x5);
-                    //cell 1
-                    c1 = new PdfPCell(new Phrase(x1,normal));
-                    c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-                    c1.setRunDirection(RUN_DIRECTION_RTL);
-                    table.addCell(c1);
-                    //cell 2
-                    c1 = new PdfPCell(new Phrase(String.valueOf(x2),normal));
-                    c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-                    table.addCell(c1);
-                    //cell 3
-                    c1 = new PdfPCell(new Phrase(String.valueOf(x3),normal));
-                    c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-                    table.addCell(c1);
-                    //cell 4
-                    c1 = new PdfPCell(new Phrase(x4,normal));
-                    c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-                    c1.setRunDirection(RUN_DIRECTION_RTL);
-                    table.addCell(c1);
-                    //cell 5
-                    c1 = new PdfPCell(new Phrase(String.valueOf(x5),normal));
-                    c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-                    table.addCell(c1);
-                    //cell 5
-                    c1 = new PdfPCell(new Phrase(String.valueOf(x6),normal));
-                    c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-                    table.addCell(c1);
-                    // Add table to document
-                    //               c1 = new PdfPCell(new Phrase(o,normal));
-                    //                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-                    //                table2.addCell(c1);
-                    //y++;
-                 }
-                 preface.add("hhhhhhhhhhhhhhhlglgllglglglglg");
-                 document.add(table);
-                 // document.add(table2);
-            
+                    dat=rs.getString("sale_date");
+                    String qOut2="SELECT * FROM bills WHERE sale_date = '"+dat+"'";
+                    ResultSet rs_S=DatabaseHandler.getInstance().execQuery(qOut2);
+                    
+                    
+                    
+                    PdfPTable t2 = new PdfPTable(1);
+                    PdfPCell cell2 = new PdfPCell();
+                    Paragraph p2=new Paragraph("فواتير بتاريخ  "+dat, normal);
+                    p2.setAlignment(PdfPCell.ALIGN_LEFT);
+                    cell2.addElement(p2);
+                    cell2.setBorder(Rectangle.NO_BORDER);
+                    cell2.setRunDirection(RUN_DIRECTION_RTL); //To Make arabic works well
+                    t2.addCell(cell2);
+                    document.add(t2);
+                    
+                    Paragraph preface4 = new Paragraph();
+                    addEmptyLine(preface4, 2);
+                    document.add(preface4);
+                    while(rs_S.next()){
+                        id=rs_S.getInt("sale_id");
+                        TotalPrice=rs_S.getDouble("total_price");
+                        Paid=rs_S.getDouble("paid_money");
+                        Remind=rs_S.getDouble("reminder_money");
+                        tim=rs_S.getString("t_time");
+                        /********************************/
+                                        //Paragraph preface5 = new Paragraph("فاتورة رقم : "+id + "         التوقيت:    "+tim,normal);   
+
+                        PdfPTable t3 = new PdfPTable(1);
+                        PdfPCell cell3 = new PdfPCell();
+                        Paragraph p3=new Paragraph("فاتورة رقم : "+id + "         التوقيت:    "+tim,normal);
+                        p3.setAlignment(PdfPCell.ALIGN_LEFT);
+                        cell3.addElement(p3);
+                        cell3.setBorder(Rectangle.NO_BORDER);
+                        cell3.setRunDirection(RUN_DIRECTION_RTL); //To Make arabic works well
+                        t3.addCell(cell3);
+                        document.add(t3);
+                        Paragraph preface6 = new Paragraph();
+                        addEmptyLine(preface6, 1);
+                        document.add(preface6);
+                         /*****Creat table has 4 column*******/
+                         PdfPTable table = new PdfPTable(6);
+                         table.setRunDirection(RUN_DIRECTION_RTL);//To Make arabic works well
+                                    /***Header of table*****/
+                         PdfPCell c1;
+                         c1 = new PdfPCell(new Phrase("باركود ",normal));
+                         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                         table.addCell(c1);
+                         c1= new PdfPCell(new Phrase("الاسم",normal));
+                         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                         c1.setRunDirection(RUN_DIRECTION_RTL);
+                         table.addCell(c1);
+                         c1 = new PdfPCell(new Phrase("السعر",normal));
+                         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                         table.addCell(c1);
+                         c1 = new PdfPCell(new Phrase("الكمية",normal));
+                         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                         table.addCell(c1);
+                         c1 = new PdfPCell(new Phrase("نوع الكمية",normal));
+                         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                         table.addCell(c1);
+                         c1 = new PdfPCell(new Phrase("التكلفة",normal));
+                         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                         table.addCell(c1);
+                         
+                         table.setHeaderRows(1);
+             
+                        
+                        
+                        /********************************/
+                        String qIN1="SELECT * FROM sales WHERE sale_id= "+id+" AND sale_date = '"+dat+"'";
+                        ResultSet rs_Sales=DatabaseHandler.getInstance().execQuery(qIN1);
+                        while(rs_Sales.next()){
+                            String x1=rs_Sales.getString("s_bar");
+                            String x2=rs_Sales.getString("product_name");
+                            double x3=rs_Sales.getDouble("unit_price");
+                            int x4=rs_Sales.getInt("current_qty");
+                            String x5=rs_Sales.getString("qty_kind");
+                            double x6=rs_Sales.getDouble("cost");
+                            
+
+                            //cell 1
+                            c1 = new PdfPCell(new Phrase(x1,normal));
+                            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                            c1.setRunDirection(RUN_DIRECTION_RTL);
+                            table.addCell(c1);
+                            //cell 2
+                            c1 = new PdfPCell(new Phrase(String.valueOf(x2),normal));
+                            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                            table.addCell(c1);
+                            //cell 3
+                            c1 = new PdfPCell(new Phrase(String.valueOf(x3),normal));
+                            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                            table.addCell(c1);
+                            //cell 4
+                            c1 = new PdfPCell(new Phrase(x4+"",normal));
+                            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                            c1.setRunDirection(RUN_DIRECTION_RTL);
+                            table.addCell(c1);
+                            //cell 5
+                            c1 = new PdfPCell(new Phrase(String.valueOf(x5),normal));
+                            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                            table.addCell(c1);
+                            //cell 5
+                            c1 = new PdfPCell(new Phrase(String.valueOf(x6),normal));
+                            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                            table.addCell(c1);
+                        }
+                        document.add(table);
+                        
+                        PdfPTable t5 = new PdfPTable(1);
+                        PdfPCell cell5 = new PdfPCell();
+                        Paragraph p5=new Paragraph("الاجمالى :  "+TotalPrice+"    المدفوع:  "+Paid+"   الباقى:   "+Remind,normal);
+                        p5.setAlignment(PdfPCell.ALIGN_LEFT);
+                        cell5.addElement(p5);
+                        cell5.setBorder(Rectangle.NO_BORDER);
+                        cell5.setRunDirection(RUN_DIRECTION_RTL); //To Make arabic works well
+                        t5.addCell(cell5);
+                        addEmptyLine(p5, 2);
+                        document.add(t5);
+                        
+                        
+                        Paragraph preface2 = new Paragraph();
+                        preface2.setAlignment(Element.ALIGN_RIGHT);
+                        preface2.add("--------------------------------------------------                     ");
+                        addEmptyLine(preface2, 1);
+                        document.add(preface2);
+                    }   
+                    
+                    Paragraph preface3 = new Paragraph();
+                    
+                    addEmptyLine(preface3, 2); //add line space
+                    preface3.add("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    addEmptyLine(preface3, 2);
+                    document.add(preface3);   // Add paragraph of name preface to document
+                    
+                }
+                
                 /////////////////ِTo show that pdf is printed///////////////
                 Alerts.showInfoAlert("تمت طباعة التقرير");
 
@@ -424,7 +497,9 @@ public class Financial_ReportsController implements Initializable {
              
          } catch (DocumentException ex) {
              Logger.getLogger(Financial_ReportsController.class.getName()).log(Level.SEVERE, null, ex);
-         }
+         } catch (FileNotFoundException ex) {
+            Logger.getLogger(Financial_ReportsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
 
     }
@@ -438,9 +513,17 @@ public class Financial_ReportsController implements Initializable {
     
     //String startDate ,String endDate,String name
     private void expences() throws FileNotFoundException, DocumentException{
-        String qu="SELECT * FROM expenses Right OUTER JOIN buy_bills on  expenses.tab=buy_bills.tab ";  
-        ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
-                
+            Font normal=FontFactory.getFont("C:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, 16, Font.BOLD);
+            String da1=F_Tdate1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            String da2=F_Tdate2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+            String qOut1="SELECT cost FROM sales WHERE sale_date >= '"+da1+"' AND sale_date <= '"+da2+"'"; 
+            String qOut2="SELECT cost FROM buying WHERE buy_date >= '"+da1+"' AND buy_date <= '"+da2+"'"; 
+            String qOut3="SELECT e_cost FROM expenses WHERE exp_date >= '"+da1+"' AND exp_date <= '"+da2+"'"; 
+            ResultSet rs1=DatabaseHandler.getInstance().execQuery(qOut1);
+            ResultSet rs2=DatabaseHandler.getInstance().execQuery(qOut2);
+            ResultSet rs3=DatabaseHandler.getInstance().execQuery(qOut3);
+            double TotalSales=0,TotalBuying=0,Expenses=0,Profit;
         
          /**********Create Document******************/
         Document document =new Document(PageSize.A4); 
@@ -453,7 +536,7 @@ public class Financial_ReportsController implements Initializable {
         /***************The Name of Pdf************/
          try {
          
-             PdfWriter.getInstance(document, new FileOutputStream("أجر الموظف"+ft.format(date)+".pdf"));
+             PdfWriter.getInstance(document, new FileOutputStream("أرباح شامل"+ft.format(date)+".pdf"));
          } catch (DocumentException ex) {
              Logger.getLogger(Financial_ReportsController.class.getName()).log(Level.SEVERE, null, ex);
          }
@@ -467,7 +550,7 @@ public class Financial_ReportsController implements Initializable {
         
         PdfPTable t = new PdfPTable(1);
          PdfPCell cell = new PdfPCell();
-        Paragraph p=new Paragraph("أجر الموظف", normal);
+        Paragraph p=new Paragraph("ارباح شامل/ مصروفات ", normal);
         p.setAlignment(PdfPCell.ALIGN_CENTER);
         cell.addElement(p);
         cell.setBorder(Rectangle.NO_BORDER);
@@ -481,85 +564,69 @@ public class Financial_ReportsController implements Initializable {
                 
         addEmptyLine(preface, 1); //add line space
         preface.add("----------------------------------------------------------------------------------------------------------------------------------");
-        addEmptyLine(preface, 2);
+        addEmptyLine(preface, 4);
         document.add(preface);   // Add paragraph of name preface to document
         
         
         
         /************************Start of content*********/
  
-        /*****Creat table has 4 column*******/
-        PdfPTable table = new PdfPTable(5);
-        table.setRunDirection(RUN_DIRECTION_RTL);//To Make arabic works well
         
-          /***Header of table*****/
-        PdfPCell c1 = new PdfPCell(new Phrase("مصاريف المحل",normal));
-        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-        c1.setRunDirection(RUN_DIRECTION_RTL);
-        table.addCell(c1);
-        c1 = new PdfPCell(new Phrase("مصاريف الشراء",normal));
-        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(c1);
-//        c1 = new PdfPCell(new Phrase("الأجر ",normal));
-//        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-//        table.addCell(c1);
-//        c1 = new PdfPCell(new Phrase("المصاريف ",normal));
-//        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-//        table.addCell(c1);
-//        c1 = new PdfPCell(new Phrase("صافي المرتب ",normal));
-//        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-//        table.addCell(c1);
-//        
-        table.setHeaderRows(1);
+        PdfPTable t5 = new PdfPTable(1);
+        PdfPCell cell5 = new PdfPCell();
+        Paragraph p5=new Paragraph("الفترة من  :  "+da1+"    الى:  "+da2,normal);
+        p5.setAlignment(PdfPCell.ALIGN_LEFT);
+        cell5.addElement(p5);
+        cell5.setBorder(Rectangle.NO_BORDER);
+        cell5.setRunDirection(RUN_DIRECTION_RTL); //To Make arabic works well
+        t5.addCell(cell5);
+        addEmptyLine(p5, 2);
+        document.add(t5);
+
+        
+        Paragraph preface2 = new Paragraph();
+        preface2.setAlignment(Element.ALIGN_RIGHT);
+        //preface2.add("--------------------------------------------------              ");
+        addEmptyLine(preface2, 3);
+        document.add(preface2);
         
         /***********retrive data from database and but them in cells***************/
         try {
             
-            double z=0,y=0;
-            while(rs.next()){
-          
-                double x1 =rs.getDouble("e_cost");
-                double x2 =rs.getDouble("total_price");
-                 z=z+x1;
-                 y=y+x2;
-                 System.out.println(x1+"  "+x2);
-                }
+            while(rs1.next()){
+                    TotalSales+=rs1.getDouble("cost");
+            }
+            while(rs2.next()){
+                    TotalBuying+=rs1.getDouble("cost");
+            }
+            while(rs3.next()){
+                    Expenses+=rs1.getDouble("e_cost");
+            }
             
-                 
-                
-                
-               
-                //cell 2
-                c1 = new PdfPCell(new Phrase(String.valueOf(z),normal));
-                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-                c1.setRunDirection(RUN_DIRECTION_RTL);
-                table.addCell(c1);
-                 //cell 2
-                c1 = new PdfPCell(new Phrase(String.valueOf(y),normal));
-                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-                c1.setRunDirection(RUN_DIRECTION_RTL);
-                table.addCell(c1);
-                
-                
-                
+            Profit=TotalSales-(TotalBuying+Expenses);
+        /**************************************************************************/    
             
-            // Add table to document
-            document.add(table);
- 
+            PdfPTable t3 = new PdfPTable(1);
+            PdfPCell cell3 = new PdfPCell();
+            Paragraph p3=new Paragraph("اجمالى قيمة المبيعات:    "+TotalSales +"\n\n"+
+                    "اجمالى قيمة المصروفات:     "+(TotalBuying+Expenses)+"\n\n"+
+                    "صافى الربح:     "+Profit,normal);
+            p3.setAlignment(PdfPCell.ALIGN_LEFT);
+            cell3.addElement(p3);
+            cell3.setBorder(Rectangle.NO_BORDER);
+            cell3.setRunDirection(RUN_DIRECTION_RTL); //To Make arabic works well
+            t3.addCell(cell3);
+            document.add(t3);
+            
             /////////////////ِTo show that pdf is printed///////////////
-            Alert AT=new Alert(Alert.AlertType.INFORMATION);
-            AT.setHeaderText(null);
-            AT.setContentText("تمت طباعة التقرير");
-            AT.showAndWait();
+            Alerts.showInfoAlert("تمت طباعة التقرير");
             
-                   } catch(Exception e){
+        } catch(Exception e){
             System.out.println(e);
         }
         // close document
         document.close();
         System.out.println("Document Closed");
-
-
     }
 
     

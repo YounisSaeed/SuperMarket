@@ -48,6 +48,7 @@ public class AccountController implements Initializable {
         //loadWindow("/employees/main/employees.fxml");
         x.loadwindow(loadPane,"/employees/main/employees.fxml");
     }
+<<<<<<< HEAD
 /*
     private void loadAccount(ActionEvent event) {
        // loadWindow("/employees/account/accepted/accountaccept.fxml");
@@ -56,6 +57,15 @@ public class AccountController implements Initializable {
   */
     /*
     void loadWindow()
+=======
+
+//    private void loadAccount(ActionEvent event) {
+//       // loadWindow("/employees/account/accepted/accountaccept.fxml");
+//        x.loadwindow(loadPane,"/employees/account/accepted/accountaccept.fxml");
+//    }
+    
+    /*void loadWindow(String loc)
+>>>>>>> ddddd22311a4a4397c781f601ff993f363fd9946
     {
         try {
             AnchorPane pane = FXMLLoader.load(getClass().getResource("/employees/account/accepted/accountaccept.fxml"));
