@@ -1,6 +1,7 @@
 
-package employees.account.accepted;
+package employees.rackshortages;
 
+import employees.rackshortages.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import static javafx.application.Application.launch;
@@ -9,16 +10,16 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-public class MainAccountAccept extends Application {
+public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("acoountaccept.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("rackshortages.fxml"));
         
         Scene scene = new Scene(root);
         Image icon = new Image("/icons/supermarket.png");
         stage.getIcons().add(icon);
-        stage.setTitle("حسابى");
+        stage.setTitle("مرتجع");
         stage.setScene(scene);
         stage.show();
     }

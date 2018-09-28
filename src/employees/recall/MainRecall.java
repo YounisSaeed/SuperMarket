@@ -16,7 +16,7 @@ public class MainRecall extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("recall.fxml"));
         
         Scene scene = new Scene(root);
-        Image icon = new Image("/icons/my_account.png");
+        Image icon = new Image("/icons/supermarket.png");
         stage.getIcons().add(icon);
         stage.setTitle("مرتجع");
         stage.setScene(scene);

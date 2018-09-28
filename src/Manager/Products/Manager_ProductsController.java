@@ -356,5 +356,10 @@ public class Manager_ProductsController implements Initializable {
         }
     } 
 
+    @FXML
+    private void Product_Date(ActionEvent event) {
+        x.loadwindow(Manager_Products, "/Manager/date/date.fxml");
+    }
+
    
 }

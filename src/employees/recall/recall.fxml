@@ -100,7 +100,7 @@
                   <DropShadow height="9.0" radius="1.75" spread="0.2" width="0.0" />
                </effect>
             </Label>
-            <JFXTextField fx:id="R_SearchField" alignment="CENTER_RIGHT" focusColor="#35889a" layoutX="354.0" layoutY="31.0" onKeyTyped="#R_SearchField" prefHeight="36.0" prefWidth="391.0" promptText="ادخل إسم المنتج .." styleClass="product-textfeild" stylesheets="@recall.css" unFocusColor="WHITE">
+            <JFXTextField fx:id="R_SearchField" alignment="CENTER_RIGHT" focusColor="#35889a" layoutX="354.0" layoutY="31.0" onKeyTyped="#R_SearchField" prefHeight="36.0" prefWidth="391.0" promptText="ادخل كود المنتج .." styleClass="product-textfeild" stylesheets="@recall.css" unFocusColor="WHITE">
                <padding>
                   <Insets left="5.0" right="5.0" />
                </padding>

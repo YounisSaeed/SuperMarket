@@ -35,15 +35,9 @@ public class Manager_Product_QuantityController implements Initializable {
     
     @FXML
     private AnchorPane Product_Quantity;
-    @FXML
-    private Label P_Quantity;
-    @FXML
     private JFXTextField P_TSearch;
-    @FXML
     private JFXTextField P_CQuantity;
-    @FXML
     private JFXTextField P_BQuantity;
-    @FXML
     private JFXTextField P_UQuantity;
     @FXML
     private RadioButton R_packet;
@@ -87,7 +81,6 @@ public class Manager_Product_QuantityController implements Initializable {
             
     }    
 
-    @FXML
     private void P_Search(ActionEvent event) {
          
         if (!P_TSearch.getText().equals(""))
@@ -100,7 +93,6 @@ public class Manager_Product_QuantityController implements Initializable {
     private void AutoCompSearch(KeyEvent event) {
         P_Search();
     }
-    @FXML
     private void Edit_Product(ActionEvent event) {
         this.Edit_Product();
     }
@@ -110,7 +102,6 @@ public class Manager_Product_QuantityController implements Initializable {
         x.loadwindow(Product_Quantity, "/Manager/Products/Manager_Products.fxml");
     }
 
-    @FXML
     private void Manager_Home(ActionEvent event) {
         x.loadwindow(Product_Quantity, "/Manager/Main/Home.fxml");
     }
@@ -182,7 +173,6 @@ public class Manager_Product_QuantityController implements Initializable {
     }
 
 
-    @FXML
     private void EditByKey(KeyEvent event) {
         
         if(P_UQuantity.isFocused() && !R_item.isSelected()){
@@ -219,6 +209,8 @@ public class Manager_Product_QuantityController implements Initializable {
         }
         
     }
+
+
 }
 /*try{
         if(event.getCode().equals(KeyCode.ENTER)) {

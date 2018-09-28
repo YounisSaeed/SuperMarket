@@ -27,7 +27,7 @@
    <children>
       <VBox layoutX="577.0" prefHeight="697.0" prefWidth="196.0" styleClass="vbox" stylesheets="@damage.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <JFXButton onAction="#saveDamage" prefHeight="25.0" prefWidth="160.0" styleClass="jfx-button" stylesheets="@damage.css" text="جديد" textAlignment="JUSTIFY" textFill="WHITE">
+            <JFXButton onAction="#saveDamage" prefHeight="25.0" prefWidth="160.0" styleClass="jfx-button" stylesheets="@damage.css" text="إضافة" textAlignment="JUSTIFY" textFill="WHITE">
                <font>
                   <Font name="System Bold Italic" size="25.0" />
                </font>
@@ -93,7 +93,7 @@
                </font>
             </JFXButton>
             <JFXListView layoutX="376.0" layoutY="54.0" prefHeight="390.0" prefWidth="363.0" visible="false" />
-            <JFXTextField fx:id="SearchField" alignment="CENTER_RIGHT" focusColor="#35889a" layoutX="376.0" layoutY="19.0" onKeyTyped="#D_SearchField" prefHeight="35.0" prefWidth="363.0" promptText="ادخل إسم المنتج .." styleClass="product-textfeild" stylesheets="@damage.css" unFocusColor="#f1ebc7">
+            <JFXTextField fx:id="SearchField" alignment="CENTER_RIGHT" focusColor="#35889a" layoutX="376.0" layoutY="19.0" onKeyTyped="#D_SearchField" prefHeight="35.0" prefWidth="363.0" promptText="ادخل كود المنتج .." styleClass="product-textfeild" stylesheets="@damage.css" unFocusColor="WHITE">
                <padding>
                   <Insets left="5.0" right="5.0" />
                </padding>
@@ -103,19 +103,31 @@
             </JFXTextField>
             <HBox alignment="CENTER" layoutX="6.0" layoutY="126.0" prefHeight="423.0" prefWidth="1154.0" styleClass="pane" stylesheets="@../buying/buying.css">
                <children>
-                  <TableView fx:id="D_table" prefHeight="423.0" prefWidth="606.0">
-                     <columns>
-                        <TableColumn fx:id="t_cost" prefWidth="75.0" text="التكلفة" />
-                        <TableColumn fx:id="t_kquan" prefWidth="70.0" text="ن.كمية" />
-                        <TableColumn fx:id="t_quan" text="كمية" />
-                        <TableColumn fx:id="t_price" prefWidth="78.0" text="سعر" />
-                        <TableColumn fx:id="t_cate" prefWidth="153.0" text="الصنف" />
-                        <TableColumn fx:id="t_bar" prefWidth="149.0" text="باركود" />
-                     </columns>
-                     <HBox.margin>
-                        <Insets left="60.0" right="60.0" />
-                     </HBox.margin>
-                  </TableView>
+                  <VBox alignment="TOP_RIGHT" prefHeight="423.0" prefWidth="607.0">
+                     <children>
+                        <TableView fx:id="D_table" prefHeight="423.0" prefWidth="606.0">
+                           <columns>
+                              <TableColumn fx:id="t_cost" prefWidth="75.0" text="التكلفة" />
+                              <TableColumn fx:id="t_kquan" prefWidth="70.0" text="ن.كمية" />
+                              <TableColumn fx:id="t_quan" text="كمية" />
+                              <TableColumn fx:id="t_price" prefWidth="78.0" text="سعر" />
+                              <TableColumn fx:id="t_cate" prefWidth="153.0" text="الصنف" />
+                              <TableColumn fx:id="t_bar" prefWidth="149.0" text="باركود" />
+                           </columns>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </TableView>
+                        <JFXButton onAction="#DeleteItemButton" prefHeight="54.0" prefWidth="153.0" styleClass="jfx-button" stylesheets="@damage.css" text="مسح عنصر" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="25.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </JFXButton>
+                     </children>
+                  </VBox>
                   <VBox alignment="CENTER" maxHeight="298.0" prefHeight="298.0" prefWidth="297.0" styleClass="vboxdamage" stylesheets="@damage.css">
                      <HBox.margin>
                         <Insets left="60.0" right="60.0" />
@@ -151,18 +163,13 @@
             </HBox>
          </children>
       </Pane>
-      <TextField fx:id="Quntity" layoutX="694.0" layoutY="561.0" onKeyPressed="#A_Q" prefHeight="54.0" prefWidth="94.0" styleClass="textfield" stylesheets="@damage.css">
+      <TextField fx:id="Quntity" layoutX="694.0" layoutY="591.0" onKeyPressed="#A_Q" prefHeight="54.0" prefWidth="94.0" styleClass="textfield" stylesheets="@damage.css">
          <font>
             <Font name="System Bold" size="25.0" />
          </font>
       </TextField>
-      <JFXComboBox fx:id="quntityComboBox" focusColor="#35889a" layoutX="798.0" layoutY="561.0" prefHeight="54.0" prefWidth="126.0" promptText="عنصر" styleClass="quntityComboBox" stylesheets="@damage.css" unFocusColor="WHITE" visibleRowCount="3" />
-      <JFXButton layoutX="694.0" layoutY="621.0" onAction="#addQuntity" prefHeight="25.0" prefWidth="230.0" text="إدخال الكمية">
-         <font>
-            <Font name="System Bold" size="25.0" />
-         </font>
-      </JFXButton>
-      <Label layoutX="951.0" layoutY="567.0" text="الكمية :" textFill="WHITE">
+      <JFXComboBox fx:id="quntityComboBox" focusColor="#35889a" layoutX="798.0" layoutY="591.0" prefHeight="54.0" prefWidth="126.0" promptText="عنصر" styleClass="quntityComboBox" stylesheets="@damage.css" unFocusColor="WHITE" visibleRowCount="3" />
+      <Label layoutX="951.0" layoutY="597.0" text="الكمية :" textFill="WHITE">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
