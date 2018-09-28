@@ -85,6 +85,8 @@ public class Manager_SuppliersController implements Initializable {
         DataHelper.loadSuppliersData(S_Table);
         DataHelper.checkDataSupNames(S_TSearch);
          }    
+    
+    
     /**************************************Buttons to move to another Page*************************************/
     @FXML
     private void Suppliers_Reports(ActionEvent event) {                                               // Suuplier Reports Page
@@ -153,6 +155,7 @@ public class Manager_SuppliersController implements Initializable {
                     if(result){
                         S_Table.getItems().add(s);
                         Alerts.showInfoAlert("تم الاضافة");
+                        clear();
                     }
                     else 
                         Alerts.showErrorAlert("خطأ فى الاضافة");
@@ -273,17 +276,7 @@ public class Manager_SuppliersController implements Initializable {
 ); 
     }
 
-    @FXML
-    private void Key_Pressed(KeyEvent event) {
-         try{
-        if(event.getCode().equals(KeyCode.S)){
-          this.AddSupplier(); }
-        else if (event.getCode().equals(KeyCode.DELETE)){
-             this.Delete_Supplier();
-        }
-    }catch(Exception e){}
-       
-    }
+   
     
     ObservableList<Suppliers> list= FXCollections.observableArrayList();    
     FilteredList filter=new FilteredList(list,e->true);
@@ -333,6 +326,22 @@ public class Manager_SuppliersController implements Initializable {
     */
     
     
+    
+    
+    
+     @FXML
+    private void Key_Pressed(KeyEvent event) {
+         try{
+        if(event.getCode().equals(KeyCode.CONTROL)){
+          this.AddSupplier(); 
+        
+        }
+        else if (event.getCode().equals(KeyCode.DELETE)){
+             this.Delete_Supplier();
+        }
+    }catch(Exception e){}
+       
+    }
     /***************************************************TO clear what in TextFields*************************************************/
     
     private void clear()

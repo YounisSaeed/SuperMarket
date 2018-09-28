@@ -217,7 +217,7 @@ public class DamageController extends NewSerial implements Initializable {
     {
         if(Alerts.ConfirmAlert("هل تريد مسح كل العناصر",""))
         {
-            //yoooooour cooooode
+           clear();
         }
     }
     
