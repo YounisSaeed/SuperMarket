@@ -3,8 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/NOUR/Desktop/Supermarket2/SuperMarket/src/Manager/Products/Manager_ProductsController.java</file>
             <file>file:/C:/Users/NOUR/Desktop/Supermarket2/SuperMarket/src/employees/account/accept/attendence/attendence.css</file>
+=======
+            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/employees/buying/BuyingController.java</file>
+            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/employees/personalexpenses/PersonalexpensesController.java</file>
+            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/employees/account/accept/attendence/MainAccountAttendence.java</file>
+            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/employees/recall/MainRecall.java</file>
+            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/employees/recall/RecallController.java</file>
+            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/employees/account/accept/attendence/AttendenceController.java</file>
+            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/employees/personalexpenses/MainPersonalExpenses.java</file>
+>>>>>>> 4b7dc2b5bc29b65652e57690c45a66f472fb1b31
         </group>
     </open-files>
 </project-private>

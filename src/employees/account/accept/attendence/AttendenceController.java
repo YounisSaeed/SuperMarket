@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package employees.account.accept.attendence;
 
 import Classes.Alerts;
@@ -68,7 +64,7 @@ public class AttendenceController implements Initializable {
     @FXML
     private void loadBack(ActionEvent event) {
         //loadWindow("/employees/account/accepted/accountaccept.fxml");
-        x.loadwindow(loadPane,"/employees/account/accepted/accountaccept.fxml");
+        x.loadwindow(loadPane,"/employees/account/accepted/acoountaccept.fxml");
     }
     
     /*void loadWindow(String loc)
