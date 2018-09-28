@@ -48,7 +48,7 @@ public class AccountController implements Initializable {
         //loadWindow("/employees/main/employees.fxml");
         x.loadwindow(loadPane,"/employees/main/employees.fxml");
     }
-<<<<<<< HEAD
+
 /*
     private void loadAccount(ActionEvent event) {
        // loadWindow("/employees/account/accepted/accountaccept.fxml");

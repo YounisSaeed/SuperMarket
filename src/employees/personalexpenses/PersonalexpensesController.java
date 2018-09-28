@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package employees.personalexpenses;
 
 import Classes.Employee;
@@ -26,6 +22,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -71,11 +69,11 @@ public class PersonalexpensesController extends NewSerial implements Initializab
 
     @FXML
     private void loadBack(ActionEvent event) {
-        //loadWindow("/employees/account/accepted/acoountaccept.fxml");
-        x.loadwindow(loadPane,"/employees/account/accepted/accountaccept.fxml");
+        x.loadwindow(loadPane,"/employees/account/accepted/acoountaccept.fxml");
+        //x.loadwindow(loadPane,"/employees/account/accepted/accountaccept.fxml");
     }
     
-  /*  void loadWindow(String loc)
+  /* void loadWindow(String loc)
     {
         try {
             AnchorPane pane = FXMLLoader.load(getClass().getResource(loc));
@@ -99,6 +97,7 @@ public class PersonalexpensesController extends NewSerial implements Initializab
                     AT.setHeaderText(null);
                     AT.setContentText("تم اضافة المصاريف الشخصية");
                     AT.showAndWait();
+                    clear();
                     return;
                 }
             }
@@ -107,4 +106,18 @@ public class PersonalexpensesController extends NewSerial implements Initializab
         this.add();
     }
     
-}
+     private void clear(){
+      value.setText("");
+      reason.setText("");
+     }
+     
+   @FXML
+    private void Key_pressed(KeyEvent event) {
+            try{
+        if(event.getCode().equals(KeyCode.CONTROL)){  // Save when Pressing Control
+          this.add();
+        }
+       
+    }catch(Exception e){}
+    }  
+    }
