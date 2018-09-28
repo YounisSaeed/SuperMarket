@@ -77,7 +77,7 @@
 
     <table-entry name="buy_bills" col-data="
                         tab int ,
-                         bill_id int,
+                        bill_id int,
                         bill_date date,
                         t_time TIME,
                         supplier_name varchar(100),
