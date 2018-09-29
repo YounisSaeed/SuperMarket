@@ -95,8 +95,6 @@ public class BuyingController  extends NewSerial implements Initializable {
         quntityComboBox.setItems(list);
         quntityComboBox.setValue("كرتونة");
         supplier.setItems(DataHelper.checkDataSupp());
-        ObservableList<String> list2= FXCollections.observableArrayList("اتش","ياسر","ليدا");
-        supplier.setItems(list2);
         date.setText(gettDate());
         setSalesSerial(DataHelper.getLastSerialTodayBuying(gettDate()));
         billNumber.setText(getSalesSerial()+"");
@@ -244,7 +242,7 @@ public class BuyingController  extends NewSerial implements Initializable {
     /********************************************* addQuntity _________*/
     private void addQuntity()
     {
-        if(!Quntity.getText().equals("") && !productBarcode.getText().equals(""))
+        if(!Quntity.getText().equals("") && !productBarcode.getText().equals("") && !supplier.getValue().equals(""))
         {
             Buying B=new Buying();
             try{
@@ -267,6 +265,7 @@ public class BuyingController  extends NewSerial implements Initializable {
             B.setUintPrice(pri.getBoxPrice());
             B.setCost(B.CalcCostOfSoldItem(pri.getBoxPrice(),Double.parseDouble(Quntity.getText())));
             }
+            
             long k=DataHelper.getLastOrderNumberBuying();
             B.setNumber(k);
             boolean result =DataHelper.insertBuyGoods(B);

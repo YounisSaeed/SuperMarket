@@ -5,28 +5,12 @@
  */
 package employees.recall;
 
-import com.jfoenix.controls.JFXRadioButton;
-
-
-
-import com.jfoenix.controls.JFXRadioButton;
-
-
-
-import com.jfoenix.controls.JFXRadioButton;
-
-
-
-
-import com.jfoenix.controls.JFXRadioButton;
 
 
 import Classes.Alerts;
 import Classes.Price;
 import Classes.Recalls;
 import Serial_dinamic.NewSerial;
-import com.jfoenix.controls.JFXRadioButton;
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
@@ -37,18 +21,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -117,9 +95,8 @@ public class RecallController extends NewSerial implements Initializable {
         // TODO
         databasehandeler=DatabaseHandler.getInstance();
         ObservableList<String> list= FXCollections.observableArrayList("قطعة","علبة","كرتونة");
-        ObservableList<String> list2= FXCollections.observableArrayList("باندا","عبورلاند","جهينة");
         quntityComboBox.setItems(list);
-        SuppliersComboBox.setItems(list2);
+        SuppliersComboBox.setItems(DataHelper.checkDataSupp());
         quntityComboBox.setValue("قطعة");
         date.setText(gettDate());
         DataHelper.checkDataBar(R_SearchField); // get barcode of all products
@@ -229,7 +206,7 @@ public class RecallController extends NewSerial implements Initializable {
             R.setUintPrice(pri.getBoxPrice());
             R.setCost(R.CalcCostOfSoldItem(pri.getBoxPrice(),Double.parseDouble(Quntity.getText())));
             }
-            long k=DataHelper.getLastOrderNumberDamage();
+            long k=DataHelper.getLastOrderNumberRecall();
             R.setNumber(k);
             boolean result=DataHelper.insertNewRecall(R);
             int qty=Integer.parseInt(Quntity.getText());

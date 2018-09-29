@@ -29,17 +29,12 @@
       <JFXComboBox fx:id="S_Cname" focusColor="#35889a" layoutX="482.0" layoutY="127.0" prefHeight="30.0" prefWidth="324.0" style="-fx-background-color: #FFF;" unFocusColor="WHITE" />
       <JFXDatePicker fx:id="S_TData1" defaultColor="#35889a" layoutX="482.0" layoutY="208.0" prefHeight="30.0" prefWidth="324.0" style="-fx-background-color: #FFF;" />
       <JFXDatePicker fx:id="S_TDate2" defaultColor="#35889a" layoutX="482.0" layoutY="280.0" prefHeight="30.0" prefWidth="324.0" style="-fx-background-color: #FFF;" />
-      <JFXButton layoutX="894.0" layoutY="424.0" onAction="#Suppliers_Invoices" prefHeight="65.0" prefWidth="198.0" stylesheets="@Suppliers_Reports.css" text="الفواتير" textFill="WHITE">
+      <JFXButton layoutX="806.0" layoutY="424.0" onAction="#Suppliers_Invoices" prefHeight="65.0" prefWidth="198.0" stylesheets="@Suppliers_Reports.css" text="الفواتير" textFill="WHITE">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="549.0" layoutY="424.0" onAction="#Supplier_Financial" prefHeight="65.0" prefWidth="198.0" stylesheets="@Suppliers_Reports.css" text="الحساب" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-      </JFXButton>
-      <JFXButton layoutX="229.0" layoutY="424.0" onAction="#Supplier_Returns" prefHeight="65.0" prefWidth="198.0" stylesheets="@Suppliers_Reports.css" text="المرتجعات" textFill="WHITE">
+      <JFXButton layoutX="284.0" layoutY="424.0" onAction="#Supplier_Returns" prefHeight="65.0" prefWidth="198.0" stylesheets="@Suppliers_Reports.css" text="المرتجعات" textFill="WHITE">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>

@@ -109,7 +109,6 @@
                         number BIGINT not null primary key
     "/>
     <table-entry name="recalls" col-data="
-                        
                         rec_date date,
                         product_name varchar(200),
                         qty_kind varchar(200),
@@ -120,7 +119,6 @@
                         r_bar varchar(200),
                         source varchar(200),
                         number BIGINT not null primary key
-                        
     "/>
     
     <table-entry name="expenses" col-data="
