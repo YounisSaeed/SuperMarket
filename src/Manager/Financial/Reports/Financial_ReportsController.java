@@ -7,7 +7,6 @@ import static Manager.Products.Reports.Products_ReportsController.normal;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
-import static com.itextpdf.text.Element.ALIGN_LEFT;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.PageSize;

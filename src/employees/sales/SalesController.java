@@ -6,7 +6,9 @@
 package employees.sales;
 
 import Serial_dinamic.*;
-import Classes.*;
+import Classes.Sales;
+import Classes.Alerts;
+import Classes.Price;
 import static Serial_dinamic.NewSerial.getSalesSerial;
 import static Serial_dinamic.NewSerial.increment_Sales;
 import database.*;
@@ -20,7 +22,6 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,26 +32,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import static org.controlsfx.control.WorldMapView.Country.TF;
-import org.controlsfx.control.textfield.TextFields;
 
 /**
  * FXML Controller class

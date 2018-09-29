@@ -6,8 +6,6 @@
 package Manager.Account;
 
 import Manager.Main.HomeController;
-import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;

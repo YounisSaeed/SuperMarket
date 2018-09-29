@@ -8,21 +8,13 @@ package employees.account;
 import Classes.Alerts;
 import database.DataHelper;
 import employees.main.EmployeesController;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
-
 /**
  * FXML Controller class
  *
@@ -48,10 +40,7 @@ public class AccountController implements Initializable {
         //loadWindow("/employees/main/employees.fxml");
         x.loadwindow(loadPane,"/employees/main/employees.fxml");
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> 4b7dc2b5bc29b65652e57690c45a66f472fb1b31
 /*
     private void loadAccount(ActionEvent event) {
        // loadWindow("/employees/account/accepted/accountaccept.fxml");

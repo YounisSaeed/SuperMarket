@@ -23,8 +23,20 @@ public class Alerts extends Throwable{
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("رسالة تأكيد");
         alert.setContentText(content);
-        alert.showAndWait();
-        return;
+        Thread thread = new Thread(() -> {
+            try {
+                // Wait for 5 secs
+                Thread.sleep(1400);
+                if (alert.isShowing()) {
+                    Platform.runLater(() -> alert.close());
+                }
+            } catch (Exception exp) {
+                exp.printStackTrace();
+            }
+        });
+        thread.setDaemon(true);
+        thread.start();
+        Optional<ButtonType> result = alert.showAndWait();
     }
     public static void showErrorAlert(String content){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -33,7 +45,7 @@ public class Alerts extends Throwable{
             Thread thread = new Thread(() -> {
             try {
                 // Wait for 5 secs
-                Thread.sleep(1400);
+                Thread.sleep(1500);
                 if (alert.isShowing()) {
                     Platform.runLater(() -> alert.close());
                 }
@@ -53,24 +65,28 @@ public class Alerts extends Throwable{
         Optional<ButtonType> answer = alert.showAndWait();
         return answer.get() == ButtonType.OK;
     }
+    
     public static void showWorningAlert(String content){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("رسالة تأكيد");
         alert.setContentText(content);
-        alert.showAndWait();
+        Thread thread = new Thread(() -> {
+            try {
+                // Wait for 5 secs
+                Thread.sleep(1500);
+                if (alert.isShowing()) {
+                    Platform.runLater(() -> alert.close());
+                }
+            } catch (Exception exp) {
+                exp.printStackTrace();
+            }
+        });
+        thread.setDaemon(true);
+        thread.start();
+        Optional<ButtonType> result = alert.showAndWait();
         
     }
-    
-//    Alert alert = new Alert(Alert.AlertType.NONE);
-//            alert.setTitle("خطأ");
-//            alert.setContentText("لم يتم ادخال بيانات الفاتورة بشكل صحيح!!");
-//            alert.setHeaderText(null);
-//            alert.setResult(ButtonType.CLOSE);
-//            alert.show();
-//            PauseTransition delay = new PauseTransition(javafx.util.Duration.seconds(1.5));
-//            delay.setOnFinished( event -> alert.close() );
-//            delay.play();
-}
+ }
 /*
     private void deleteAllRows(){
         Sales S=new Sales();
