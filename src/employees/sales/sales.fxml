@@ -114,7 +114,7 @@
       <Pane onKeyPressed="#A_N_B" prefHeight="697.0" prefWidth="1168.0" styleClass="pane" stylesheets="@sales.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="198.0" AnchorPane.topAnchor="0.0">
          <children>
 
-            <JFXTextField fx:id="T_Search" accessibleRole="PARENT" alignment="CENTER_RIGHT" focusColor="#35889a" layoutX="340.0" layoutY="15.0" onKeyTyped="#S_Field" prefHeight="36.0" prefWidth="375.0" promptText="ادخل إسم المنتج .." styleClass="product-textfeild" stylesheets="@sales.css" unFocusColor="WHITE">
+            <JFXTextField fx:id="T_Search" accessibleRole="PARENT" alignment="CENTER_RIGHT" focusColor="#35889a" layoutX="340.0" layoutY="15.0" onKeyTyped="#S_Field" prefHeight="36.0" prefWidth="375.0" promptText="ادخل كود المنتج .." styleClass="product-textfeild" stylesheets="@sales.css" unFocusColor="WHITE">
                <padding>
                   <Insets left="5.0" right="5.0" />
                </padding>
