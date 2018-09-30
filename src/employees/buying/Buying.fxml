@@ -95,7 +95,7 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </JFXTextField>
-            <TextField fx:id="Quntity" layoutX="685.0" layoutY="499.0" onKeyPressed="#AddQuanPress" prefHeight="30.0" prefWidth="101.0" styleClass="textfield" stylesheets="@buying.css">
+            <TextField fx:id="Quntity" layoutX="684.0" layoutY="494.0" onKeyPressed="#AddQuanPress" prefHeight="30.0" prefWidth="101.0" styleClass="textfield" stylesheets="@buying.css">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font></TextField>
@@ -175,8 +175,8 @@
                   <Font name="System Bold Italic" size="20.0" />
                </font>
             </JFXButton>
-            <JFXComboBox fx:id="quntityComboBox" focusColor="#35889a" layoutX="799.0" layoutY="502.0" prefHeight="51.0" prefWidth="113.0" promptText="عنصر" styleClass="quntityComboBox" stylesheets="@buying.css" unFocusColor="WHITE" visibleRowCount="3" />
-            <Label layoutX="941.0" layoutY="504.0" text="الكمية :" textFill="WHITE">
+            <JFXComboBox fx:id="quntityComboBox" focusColor="#35889a" layoutX="799.0" layoutY="496.0" prefHeight="51.0" prefWidth="113.0" promptText="عنصر" styleClass="quntityComboBox" stylesheets="@buying.css" unFocusColor="WHITE" visibleRowCount="3" />
+            <Label layoutX="969.0" layoutY="499.0" text="الكمية :" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
@@ -184,25 +184,38 @@
                   <DropShadow height="9.14" radius="4.07" width="9.14" />
                </effect>
             </Label>
-            <JFXButton layoutX="684.0" layoutY="561.0" onAction="#addQuntity" prefHeight="54.0" prefWidth="230.0" text="إدخال الكمية">
+            <JFXButton layoutX="684.0" layoutY="623.0" onAction="#addQuntity" prefHeight="54.0" prefWidth="224.0" text="إدخال الكمية">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font>
             </JFXButton>
-            <TextField fx:id="totalPrice" editable="false" layoutX="684.0" layoutY="624.0" prefHeight="30.0" prefWidth="230.0" styleClass="textfield-none" stylesheets="@buying.css">
+            <TextField fx:id="totalPrice" editable="false" layoutX="223.0" layoutY="623.0" prefHeight="54.0" prefWidth="224.0" styleClass="textfield-none" stylesheets="@buying.css">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font></TextField>
+            <Label layoutX="464.0" layoutY="632.0" text="الإجمالى :" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+               <effect>
+                  <DropShadow height="9.14" radius="4.07" width="9.14" />
+               </effect>
+            </Label>
+            <TextField fx:id="BuuPrice" editable="false" layoutX="685.0" layoutY="561.0" prefHeight="54.0" prefWidth="224.0" styleClass="textfield-none" stylesheets="@buying.css">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </TextField>
+            <Label layoutX="913.0" layoutY="570.0" text="سعر الشراء :" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+               <effect>
+                  <DropShadow height="9.14" radius="4.07" width="9.14" />
+               </effect>
+            </Label>
          </children>
       </Pane>
-      <Label layoutX="931.0" layoutY="625.0" text="الإجمالى :" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-         <effect>
-            <DropShadow height="9.14" radius="4.07" width="9.14" />
-         </effect>
-      </Label>
       <TextField fx:id="billNumber" disable="true" editable="false" layoutX="866.0" layoutY="22.0" prefHeight="30.0" prefWidth="149.0">
          <font>
             <Font name="System Bold" size="20.0" />

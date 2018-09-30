@@ -88,6 +88,8 @@ public class BuyingController  extends NewSerial implements Initializable {
      */
     Price pri;
     private static double TOTAL=0; // TOTAL is global var represents TotalPrice and it back to ZERO with new bill generated
+    @FXML
+    private TextField BuuPrice;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -129,6 +131,7 @@ public class BuyingController  extends NewSerial implements Initializable {
         // pri : initialize price of item,packet,box of specific product you search about
         System.out.println(pri.getItemPrice());  
     }
+    
 
     @FXML
     private void B_SearchField(KeyEvent event) {
@@ -242,7 +245,7 @@ public class BuyingController  extends NewSerial implements Initializable {
     /********************************************* addQuntity _________*/
     private void addQuntity()
     {
-        if(!Quntity.getText().equals("") && !productBarcode.getText().equals("") && !supplier.getValue().equals(""))
+        if(!Quntity.getText().equals("") && !productBarcode.getText().equals("") && !supplier.getValue().equals("") && !BuuPrice.getText().equals(""))
         {
             Buying B=new Buying();
             try{
@@ -253,18 +256,9 @@ public class BuyingController  extends NewSerial implements Initializable {
             B.setBarcodfiled(productBarcode.getText());
             B.setName(productName.getText());
             B.setQuantityKind(quntityComboBox.getValue());
-            if(quntityComboBox.getValue().equals("قطعة")){
-            B.setUintPrice(pri.getItemPrice());
-            B.setCost(B.CalcCostOfSoldItem(pri.getItemPrice(),Double.parseDouble(Quntity.getText())));
-            }
-            else if(quntityComboBox.getValue().equals("علبة")){
-            B.setUintPrice(pri.getPacketPrice());
-            B.setCost(B.CalcCostOfSoldItem(pri.getPacketPrice(),Double.parseDouble(Quntity.getText())));
-            }
-            else if(quntityComboBox.getValue().equals("كرتونة")){
-            B.setUintPrice(pri.getBoxPrice());
-            B.setCost(B.CalcCostOfSoldItem(pri.getBoxPrice(),Double.parseDouble(Quntity.getText())));
-            }
+            
+            B.setUintPrice(Double.parseDouble(BuuPrice.getText()));
+            B.setCost(B.CalcCostOfSoldItem(Double.parseDouble(BuuPrice.getText()),Double.parseDouble(Quntity.getText())));
             
             long k=DataHelper.getLastOrderNumberBuying();
             B.setNumber(k);
@@ -356,3 +350,62 @@ public class BuyingController  extends NewSerial implements Initializable {
     
     /***************************_____________THE END______________********************************/    
 }
+
+
+
+
+ /******** @@@@ _____ Old add quantity mechanism _____ @@@@ ********/
+/*
+    private void addQuntity()
+    {
+        if(!Quntity.getText().equals("") && !productBarcode.getText().equals("") && !supplier.getValue().equals(""))
+        {
+            Buying B=new Buying();
+            try{
+            B.setCurrentQuantity(Integer.parseInt(Quntity.getText()));
+            B.setSerial(Integer.parseInt(billNumber.getText()));
+            Date JDBC_Date = Date.valueOf(this.date.getText()); // JDBC_Date: this var take value of date in "Date"data type to pass it to Date column in database
+            B.setDate(JDBC_Date);
+            B.setBarcodfiled(productBarcode.getText());
+            B.setName(productName.getText());
+            B.setQuantityKind(quntityComboBox.getValue());
+            if(quntityComboBox.getValue().equals("قطعة")){
+            B.setUintPrice(pri.getItemPrice());
+            B.setCost(B.CalcCostOfSoldItem(pri.getItemPrice(),Double.parseDouble(Quntity.getText())));
+            }
+            else if(quntityComboBox.getValue().equals("علبة")){
+            B.setUintPrice(pri.getPacketPrice());
+            B.setCost(B.CalcCostOfSoldItem(pri.getPacketPrice(),Double.parseDouble(Quntity.getText())));
+            }
+            else if(quntityComboBox.getValue().equals("كرتونة")){
+            B.setUintPrice(pri.getBoxPrice());
+            B.setCost(B.CalcCostOfSoldItem(pri.getBoxPrice(),Double.parseDouble(Quntity.getText())));
+            }
+            
+            long k=DataHelper.getLastOrderNumberBuying();
+            B.setNumber(k);
+            boolean result =DataHelper.insertBuyGoods(B);
+          
+            int qty=Integer.parseInt(Quntity.getText());
+            boolean s= DataHelper.InterAction_B_Sales__Products_DeleteQuan(productBarcode.getText(),qty,quntityComboBox.getValue());
+            if(s){
+                if(result){
+                    TOTAL+=B.getCost();
+                    totalPrice.setText(TOTAL+"");
+                    B_table.getItems().add(B);
+                    Alerts.showInfoAlert("تمت الاضافة !!");
+                }
+                else
+                Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى");
+            }
+            
+            }catch(NumberFormatException es){
+                Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة !!");
+            }
+            
+        }
+        else
+            Alerts.showErrorAlert("يرجى ادخال الكمية");
+    }
+    
+*/

@@ -36,7 +36,8 @@
                         pro_price_item double,
                         pro_price_packet double,
                         pro_price_box double,
-                        pro_minimum int
+                        pro_minimum int,
+                        expire_date date
     "/>
     
     <table-entry name="suppliers1" col-data="

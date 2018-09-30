@@ -3,10 +3,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import Classes.*;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDatePicker;
 import employees.sales.SalesController;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static javafx.application.Platform.exit;
@@ -1348,8 +1350,28 @@ public static boolean isEmployeeisEXits(String id) {
         
     ///////////////*********************************************************************\\\\\\\\\\\\\\\
 
+    /******************************* DATE PACKAGE   */
+    public static void fillSalesWithInfoOfProduct(String bar,Label PName,Label D_Dat){ // 
+        String qu="SELECT pro_name,expire_date FROM product WHERE pro_bar='"+bar+"'"; 
+        ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
+        try {
+            if(rs.next()){
+                PName.setText(rs.getString("pro_name"));
+                D_Dat.setText(rs.getString("expire_date"));
+                              
+            }       
+        } catch (SQLException ex) {
+            Logger.getLogger(SalesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     
+    public static boolean updateExpireDate(String bar,String dat) {
+        String qu="UPDATE product SET expire_date= '"+dat+"' WHERE pro_bar= '"+bar+"'";
+        return DatabaseHandler.getInstance().execAction(qu);
+    }
+    
+    /*************************************************/
     
     /***********************************************Reports********************************************************/
     
