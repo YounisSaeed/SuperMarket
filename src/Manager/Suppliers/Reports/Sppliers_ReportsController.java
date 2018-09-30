@@ -81,7 +81,7 @@ public class Sppliers_ReportsController implements Initializable {
          try {
          if (!S_TData1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals("") &&!S_TDate2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals("") && !S_Cname.getValue().equals("") ){
                        
-             
+          if (S_TData1.getValue().compareTo(S_TDate2.getValue())<0){   //To make sure that end date is after start date
              String da1=S_TData1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
              String da2=S_TDate2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
              String sup=S_Cname.getValue();
@@ -234,10 +234,12 @@ public class Sppliers_ReportsController implements Initializable {
             ////////////////ِTo show that pdf is printed///////////////
             Alerts.showInfoAlert("تمت طباعة التقرير");
             document.close();
-         }
+         }else {
+              Alerts.showErrorAlert("تاريخ النهاية يسبق تاريخ البداية");
+          }
          
          }
-        catch(NullPointerException e){
+         }catch(NullPointerException e){
                  Alerts.showErrorAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة");
                  } catch (DocumentException ex) { 
             Logger.getLogger(Sppliers_ReportsController.class.getName()).log(Level.SEVERE, null, ex);
@@ -259,7 +261,7 @@ public class Sppliers_ReportsController implements Initializable {
         try {
          if (!S_TData1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals("") &&!S_TDate2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals("") && !S_Cname.getValue().equals("") ){
             
-             
+             if (S_TData1.getValue().compareTo(S_TDate2.getValue())<0){   //To make sure that end date is after start date
              String da1=S_TData1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
              String da2=S_TDate2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
              
@@ -438,7 +440,10 @@ public class Sppliers_ReportsController implements Initializable {
              System.out.println("Document Closed");
             
          }
-         }
+             else {
+              Alerts.showErrorAlert("تاريخ النهاية يسبق تاريخ البداية");
+          }
+         }}
         catch(NullPointerException e){
                  Alerts.showErrorAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة");
                  } catch (DocumentException ex) {

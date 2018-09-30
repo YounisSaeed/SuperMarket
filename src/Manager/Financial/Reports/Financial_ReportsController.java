@@ -101,6 +101,7 @@ public class Financial_ReportsController implements Initializable {
     private void Daily_Report(ActionEvent event) {
          try {
          if (!F_Tdate1.getValue().equals("") &&!F_Tdate2.getValue().equals("") ){
+           if (F_Tdate1.getValue().compareTo(F_Tdate2.getValue())<0){   //To make sure that end date is after start date
             String da1=F_Tdate1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             String da2=F_Tdate2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
              
@@ -249,6 +250,10 @@ public class Financial_ReportsController implements Initializable {
             Alerts.showInfoAlert("تمت طباعة التقرير");
             document.close();
          }
+           else {
+              Alerts.showErrorAlert("تاريخ النهاية يسبق تاريخ البداية");
+          }
+         }
          }
         catch(NullPointerException e){
                  Alerts.showErrorAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة");
@@ -281,7 +286,8 @@ public class Financial_ReportsController implements Initializable {
     //private void invoices(String startDate ,String endDate) throws FileNotFoundException, DocumentException{
     private void invoices(){    
 
-         try {    
+         try { 
+              if (F_Tdate1.getValue().compareTo(F_Tdate1.getValue())<0){   //To make sure that end date is after start date
              String da1=F_Tdate1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
              String da2=F_Tdate2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
              
@@ -493,7 +499,12 @@ public class Financial_ReportsController implements Initializable {
              document.close();
              System.out.println("Document Closed");
              
-             
+          
+              }
+        else {
+              Alerts.showErrorAlert("تاريخ النهاية يسبق تاريخ البداية");
+          }
+            
          } catch (DocumentException ex) {
              Logger.getLogger(Financial_ReportsController.class.getName()).log(Level.SEVERE, null, ex);
          } catch (FileNotFoundException ex) {
@@ -512,7 +523,9 @@ public class Financial_ReportsController implements Initializable {
     
     //String startDate ,String endDate,String name
     private void expences() throws FileNotFoundException, DocumentException{
+        
             Font normal=FontFactory.getFont("C:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, 16, Font.BOLD);
+             if (F_Tdate1.getValue().compareTo(F_Tdate2.getValue())<0){   //To make sure that end date is after start date
             String da1=F_Tdate1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             String da2=F_Tdate2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
@@ -619,14 +632,23 @@ public class Financial_ReportsController implements Initializable {
             
             /////////////////ِTo show that pdf is printed///////////////
             Alerts.showInfoAlert("تمت طباعة التقرير");
+         
             
+
+         
+         
         } catch(Exception e){
             System.out.println(e);
         }
+            
         // close document
         document.close();
         System.out.println("Document Closed");
-    }
+    
+              } else {
+              Alerts.showErrorAlert("تاريخ النهاية يسبق تاريخ البداية");
+          }
+             }
 
     
     

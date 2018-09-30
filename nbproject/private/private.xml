@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Manager/Employee/Reports/Employee_ReportsController.java</file>
             <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Manager/Suppliers/Manager_SuppliersController.java</file>
             <file>file:/D:/walid/Last2/Supermarket_Management_System/src/employees/account/accepted/AcoountacceptController.java</file>
@@ -28,6 +29,13 @@
             <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Manager/date/DateController.java</file>
             <file>file:/D:/walid/Last2/Supermarket_Management_System/src/employees/sales/SalesController.java</file>
             <file>file:/D:/walid/Last2/Supermarket_Management_System/src/employees/expenses/ExpensesController.java</file>
+=======
+            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Manager/Employee/Reports/Employee_ReportsController.java</file>
+            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Manager/Suppliers/Reports/Sppliers_ReportsController.java</file>
+            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/resources/tables.xml</file>
+            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Manager/Employee/Reports/Main.java</file>
+            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Manager/Financial/Reports/Financial_ReportsController.java</file>
+>>>>>>> b67465272629959e70c5da2879a1509f795d8e85
         </group>
     </open-files>
 </project-private>

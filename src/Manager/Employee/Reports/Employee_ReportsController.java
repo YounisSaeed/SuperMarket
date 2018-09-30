@@ -123,7 +123,7 @@ public class Employee_ReportsController implements Initializable {
         try {
          if (!E_field_date1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals("") &&!E_field_date2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals("") && !E_cname.getValue().equals("")){
             System.out.println("غلطططططط "); // yoooooooooour code
-            this.attendance(E_field_date1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), E_field_date2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+              this.attendance();
          }
          }
         catch(NullPointerException e){
@@ -192,130 +192,291 @@ public static void fillComboBox(ComboBox C1){
 
 
 /******************************************* Attendance******************************************************************/
-    
-    private void attendance(String startDate ,String endDate) throws FileNotFoundException, DocumentException{
-        String qu="SELECT * FROM employee1  RIGHT OUTER JOIN employee2 on  employee1.emp_id = employee1.emp_id BETWEEN '"+startDate+"'AND '"+endDate+"'";  
-        ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
-                
-        
-         /**********Create Document******************/
-        Document document =new Document(PageSize.A4); 
-        System.out.println("Document Created");
-        /***********Method to calculate Date******/
-             Date date=new Date();
-            SimpleDateFormat ft = 
-            new SimpleDateFormat (" yyyy.MM.dd ");
-            
-        /***************The Name of Pdf************/
+
+
+
+
+    @FXML
+    private void attendance () {
          try {
-         
-             PdfWriter.getInstance(document, new FileOutputStream("مصاريف الموظف "+ft.format(date)+".pdf"));
-         } catch (DocumentException ex) {
-             Logger.getLogger(Employee_ReportsController.class.getName()).log(Level.SEVERE, null, ex);
-         }
-        System.out.println("Writrer insrance Created");
-        document.open();  // Open the document to append in it .
-        System.out.println("Document Opened");
-        /************Title of Document*************/
-      
-        Paragraph preface = new Paragraph();
-        addEmptyLine(preface, 1);
+     //    if (!E_field_date1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals("") &&!E_field_date2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals("")  ){
+              if (E_field_date1.getValue().compareTo(E_field_date2.getValue())<0){   //To make sure that end date is after start date          
+             
+             String da1=E_field_date1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+             String da2=E_field_date1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+             String sup=E_cname.getValue();
+             String qOut1="SELECT * FROM employee2 RIGHT OUTER JOIN employee1 on  employee1.emp_id = employee2.emp_id   WHERE (emp_date >= '"+da1+"' AND emp_date <= '"+da2+"') AND (emp_name='"+sup+"') "; 
+             
+             /**********Create Document******************/
+             Document document =new Document(PageSize.A3);
+             System.out.println("Document Created");
+             /***********Method to calculate Date******/
+             Date date=new Date();
+             SimpleDateFormat ft =
+                     new SimpleDateFormat (" yyyy.MM.dd ");
+             
+             /***************The Name of Pdf************/
+             
+             PdfWriter.getInstance(document, new FileOutputStream("حضور موظف"+ft.format(date)+".pdf"));
+             
+             System.out.println("Writrer insrance Created");
+             document.open();  // Open the document to append in it .
+             System.out.println("Document Opened");
+             /************Title of Document*************/
+             
+             Paragraph preface = new Paragraph();
+             addEmptyLine(preface, 1);
+             
+             PdfPTable t = new PdfPTable(1);
+             PdfPCell cell = new PdfPCell();
+             Paragraph p=new Paragraph("حضور موظف", normal);
+             p.setAlignment(PdfPCell.ALIGN_CENTER);
+             cell.addElement(p);
+             cell.setBorder(Rectangle.NO_BORDER);
+             cell.setRunDirection(RUN_DIRECTION_RTL); //To Make arabic works well
+             t.addCell(cell);
+             document.add(t);
+             
+             /************Date  of Document*************/
+             preface.add(new Paragraph(
+                     "" + ft.format(date),normal));
+             
+             addEmptyLine(preface, 1); //add line space
+             preface.add("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+             addEmptyLine(preface, 2);
+             document.add(preface);   // Add paragraph of name preface to document
+             
+             
         
-        PdfPTable t = new PdfPTable(1);
-         PdfPCell cell = new PdfPCell();
-        Paragraph p=new Paragraph("مشتريات الموظف", normal);
-        p.setAlignment(PdfPCell.ALIGN_CENTER);
-        cell.addElement(p);
-        cell.setBorder(Rectangle.NO_BORDER);
-        cell.setRunDirection(RUN_DIRECTION_RTL); //To Make arabic works well
-        t.addCell(cell);
-        document.add(t);
-        
-       /************Date  of Document*************/
-        preface.add(new Paragraph(
-                "" + ft.format(date),normal));
+             Paragraph preface2 = new Paragraph();
+             addEmptyLine(preface2, 2);
+             document.add(preface2);
+             
+             
+             PdfPTable table = new PdfPTable(4);
+             table.setRunDirection(RUN_DIRECTION_RTL);//To Make arabic works well
+             
+             
+             
+             /***Header of table*****/
+             
+             PdfPCell c1 = new PdfPCell(new Phrase("تاريخ اليوم",normal));
+             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+             c1.setRunDirection(RUN_DIRECTION_RTL);
+             table.addCell(c1);
+             c1 = new PdfPCell(new Phrase("ميعاد الحضور",normal));
+             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+             c1.setRunDirection(RUN_DIRECTION_RTL);
+             table.addCell(c1);
+             c1 = new PdfPCell(new Phrase("ميعاد الانصراف",normal));
+             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+             c1.setRunDirection(RUN_DIRECTION_RTL);
+             table.addCell(c1);
+             c1 = new PdfPCell(new Phrase("عدد الساعات",normal));
+             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+             table.addCell(c1);
+             
+             
+             table.setHeaderRows(1);
+             /***********************/
+            
+             
+             
+                         
+            ResultSet rs=DatabaseHandler.getInstance().execQuery(qOut1);
+            
+            
+             while(rs.next()){
+                String da=rs.getString("emp_date");   
+                String dat=rs.getString("emp_start_time"); 
+                String bar=rs.getString("emp_finish_time");
+                int quan=rs.getInt("emp_hours");
+
                 
-        addEmptyLine(preface, 1); //add line space
-        preface.add("----------------------------------------------------------------------------------------------------------------------------------");
-        addEmptyLine(preface, 2);
-        document.add(preface);   // Add paragraph of name preface to document
-        
-        
-        
-        /************************Start of content*********/
- 
-        /*****Creat table has 4 column*******/
-        PdfPTable table = new PdfPTable(4);
-        table.setRunDirection(RUN_DIRECTION_RTL);//To Make arabic works well
-        
-          /***Header of table*****/
-        PdfPCell c1 = new PdfPCell(new Phrase("التاريخ",normal));
-        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-        c1.setRunDirection(RUN_DIRECTION_RTL);
-        table.addCell(c1);
-        c1 = new PdfPCell(new Phrase("توقيت الحضور ",normal));
-        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(c1);
-        c1 = new PdfPCell(new Phrase("توقيت الانصراف ",normal));
-        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(c1);
-         c1 = new PdfPCell(new Phrase("عدد ساعات العمل ",normal));
-        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(c1);
-        
-        table.setHeaderRows(1);
-        
-        /***********retrive data from database and but them in cells***************/
-        try {
-            while(rs.next()){
-          
-                String x1=rs.getString("emp_name"); //emp_finish_time
-                 String x2=rs.getString("emp_start_time");
-                 String x3=rs.getString("emp_finish_time");
-                int x4=rs.getInt("emp_hours ");
-                
-                System.out.println(x1+"  "+x2);
                 //cell 1
-                c1 = new PdfPCell(new Phrase(x1,normal));
+                c1 = new PdfPCell(new Phrase(da,normal));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-                c1.setRunDirection(RUN_DIRECTION_RTL);
+                table.addCell(c1);
+                //cell 1
+                c1 = new PdfPCell(new Phrase(dat,normal));
+                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
                 //cell 2
-                c1 = new PdfPCell(new Phrase(x2,normal));
+                c1 = new PdfPCell(new Phrase(bar,normal));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-                c1.setRunDirection(RUN_DIRECTION_RTL);
                 table.addCell(c1);
-                //cell 3
-                c1 = new PdfPCell(new Phrase(x3,normal));
-                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-                c1.setRunDirection(RUN_DIRECTION_RTL);
-                table.addCell(c1);
-        
-                  //cell 4
-                c1 = new PdfPCell(new Phrase(String.valueOf(x4),normal));
+
+                //cell 5
+                c1 = new PdfPCell(new Phrase(quan+"",normal));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
                 
+
+               
             }
-            // Add table to document
-            document.add(table);
- 
-            /////////////////ِTo show that pdf is printed///////////////
-            Alert AT=new Alert(Alert.AlertType.INFORMATION);
-            AT.setHeaderText(null);
-            AT.setContentText("تمت طباعة التقرير");
-            AT.showAndWait();
-            
-                   } catch(Exception e){
-            System.out.println(e);
-        }
-        // close document
-        document.close();
-        System.out.println("Document Closed");
+            document.add(table); 
+            ////////////////ِTo show that pdf is printed///////////////
+            Alerts.showInfoAlert("تمت طباعة التقرير");
+            document.close();
+         
+         
+         
+//        catch(NullPointerException e){
+//                // Alerts.showErrorAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة");
+              }        
+else {
+              Alerts.showErrorAlert("تاريخ النهاية يسبق تاريخ البداية");
+          }
+         
 
-
+                 } catch (DocumentException ex) { 
+            Logger.getLogger(Employee_ReportsController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Employee_ReportsController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Employee_ReportsController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
     
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+    
+//    private void attendance(String startDate ,String endDate) throws FileNotFoundException, DocumentException{
+//        String qu="SELECT * FROM employee1  RIGHT OUTER JOIN employee2 on  employee1.emp_id = employee1.emp_id BETWEEN '"+startDate+"'AND '"+endDate+"'";  
+//        ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
+//                
+//        
+//         /**********Create Document******************/
+//        Document document =new Document(PageSize.A4); 
+//        System.out.println("Document Created");
+//        /***********Method to calculate Date******/
+//             Date date=new Date();
+//            SimpleDateFormat ft = 
+//            new SimpleDateFormat (" yyyy.MM.dd ");
+//            
+//        /***************The Name of Pdf************/
+//         try {
+//         
+//             PdfWriter.getInstance(document, new FileOutputStream("مصاريف الموظف "+ft.format(date)+".pdf"));
+//         } catch (DocumentException ex) {
+//             Logger.getLogger(Employee_ReportsController.class.getName()).log(Level.SEVERE, null, ex);
+//         }
+//        System.out.println("Writrer insrance Created");
+//        document.open();  // Open the document to append in it .
+//        System.out.println("Document Opened");
+//        /************Title of Document*************/
+//      
+//        Paragraph preface = new Paragraph();
+//        addEmptyLine(preface, 1);
+//        
+//        PdfPTable t = new PdfPTable(1);
+//         PdfPCell cell = new PdfPCell();
+//        Paragraph p=new Paragraph("مشتريات الموظف", normal);
+//        p.setAlignment(PdfPCell.ALIGN_CENTER);
+//        cell.addElement(p);
+//        cell.setBorder(Rectangle.NO_BORDER);
+//        cell.setRunDirection(RUN_DIRECTION_RTL); //To Make arabic works well
+//        t.addCell(cell);
+//        document.add(t);
+//        
+//       /************Date  of Document*************/
+//        preface.add(new Paragraph(
+//                "" + ft.format(date),normal));
+//                
+//        addEmptyLine(preface, 1); //add line space
+//        preface.add("----------------------------------------------------------------------------------------------------------------------------------");
+//        addEmptyLine(preface, 2);
+//        document.add(preface);   // Add paragraph of name preface to document
+//        
+//        
+//        
+//        /************************Start of content*********/
+// 
+//        /*****Creat table has 4 column*******/
+//        PdfPTable table = new PdfPTable(4);
+//        table.setRunDirection(RUN_DIRECTION_RTL);//To Make arabic works well
+//        
+//          /***Header of table*****/
+//        PdfPCell c1 = new PdfPCell(new Phrase("التاريخ",normal));
+//        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+//        c1.setRunDirection(RUN_DIRECTION_RTL);
+//        table.addCell(c1);
+//        c1 = new PdfPCell(new Phrase("توقيت الحضور ",normal));
+//        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+//        table.addCell(c1);
+//        c1 = new PdfPCell(new Phrase("توقيت الانصراف ",normal));
+//        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+//        table.addCell(c1);
+//         c1 = new PdfPCell(new Phrase("عدد ساعات العمل ",normal));
+//        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+//        table.addCell(c1);
+//        
+//        table.setHeaderRows(1);
+//        
+//        /***********retrive data from database and but them in cells***************/
+//        try {
+//            while(rs.next()){
+//          
+//                String x1=rs.getString("emp_name"); //emp_finish_time
+//                 String x2=rs.getString("emp_start_time");
+//                 String x3=rs.getString("emp_finish_time");
+//                int x4=rs.getInt("emp_hours ");
+//                
+//                System.out.println(x1+"  "+x2);
+//                //cell 1
+//                c1 = new PdfPCell(new Phrase(x1,normal));
+//                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+//                c1.setRunDirection(RUN_DIRECTION_RTL);
+//                table.addCell(c1);
+//                //cell 2
+//                c1 = new PdfPCell(new Phrase(x2,normal));
+//                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+//                c1.setRunDirection(RUN_DIRECTION_RTL);
+//                table.addCell(c1);
+//                //cell 3
+//                c1 = new PdfPCell(new Phrase(x3,normal));
+//                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+//                c1.setRunDirection(RUN_DIRECTION_RTL);
+//                table.addCell(c1);
+//        
+//                  //cell 4
+//                c1 = new PdfPCell(new Phrase(String.valueOf(x4),normal));
+//                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+//                table.addCell(c1);
+//                
+//            }
+//            // Add table to document
+//            document.add(table);
+// 
+//            /////////////////ِTo show that pdf is printed///////////////
+//            Alert AT=new Alert(Alert.AlertType.INFORMATION);
+//            AT.setHeaderText(null);
+//            AT.setContentText("تمت طباعة التقرير");
+//            AT.showAndWait();
+//            
+//                   } catch(Exception e){
+//            System.out.println(e);
+//        }
+//        // close document
+//        document.close();
+//        System.out.println("Document Closed");
+//
+//
+//    }
+//    
     
     /**************************************************************ُُExpenses********************************************************/
     
@@ -323,6 +484,7 @@ public static void fillComboBox(ComboBox C1){
     
     
     private void employeeExpense(String startDate ,String endDate,String name) throws FileNotFoundException, DocumentException{
+         if (E_field_date1.getValue().compareTo(E_field_date2.getValue())<0){   //To make sure that end date is after start date
         String qu="SELECT * FROM employee1 FULL OUTER JOIN employee2 on  employee1.emp_id = employee1.emp_id where emp_name = "+ name+" BETWEEN '"+startDate+"'AND '"+endDate+"'";  
         ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
                 
@@ -428,18 +590,22 @@ public static void fillComboBox(ComboBox C1){
             AT.setHeaderText(null);
             AT.setContentText("تمت طباعة التقرير");
             AT.showAndWait();
-            
+        
                    } catch(Exception e){
             System.out.println(e);
-        }
+        
+                   }
+         
         // close document
         document.close();
         System.out.println("Document Closed");
 
-
+}else {
+              Alerts.showErrorAlert("تاريخ النهاية يسبق تاريخ البداية");
+          }
+    
+    
     }
-    
-    
     
     
     
@@ -449,6 +615,8 @@ public static void fillComboBox(ComboBox C1){
     
     
     private void employeeSalary(String startDate ,String endDate,String name) throws FileNotFoundException, DocumentException{
+        if (E_field_date1.getValue().compareTo(E_field_date2.getValue())<0){   //To make sure that end date is after start date
+     
         String qu="SELECT * FROM employee1 RIGJT OUTER JOIN employee2 on  employee1.emp_id = employee1.emp_id where emp_name = "+ name+" BETWEEN '"+startDate+"'AND '"+endDate+"'";  
         ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
                 
@@ -581,7 +749,7 @@ public static void fillComboBox(ComboBox C1){
             AT.setHeaderText(null);
             AT.setContentText("تمت طباعة التقرير");
             AT.showAndWait();
-            
+        
                    } catch(Exception e){
             System.out.println(e);
         }
@@ -589,7 +757,9 @@ public static void fillComboBox(ComboBox C1){
         document.close();
         System.out.println("Document Closed");
 
-
+}  else {
+              Alerts.showErrorAlert("تاريخ النهاية يسبق تاريخ البداية");
+          }
     }
 
     
@@ -613,6 +783,8 @@ public static void fillComboBox(ComboBox C1){
             paragraph.add(new Paragraph(" "));
         }
     }
+
+   
     
     
     
