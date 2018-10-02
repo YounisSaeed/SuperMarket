@@ -145,7 +145,7 @@ public class Financial_ReportsController implements Initializable {
              addEmptyLine(preface, 2);
              document.add(preface);   // Add paragraph of name preface to document
              
-             PdfPTable table = new PdfPTable(7);
+             PdfPTable table = new PdfPTable(8);
              table.setRunDirection(RUN_DIRECTION_RTL);//To Make arabic works well
              
              
@@ -164,10 +164,15 @@ public class Financial_ReportsController implements Initializable {
              c1.setHorizontalAlignment(Element.ALIGN_CENTER);
              c1.setRunDirection(RUN_DIRECTION_RTL);
              table.addCell(c1);
+             c1 = new PdfPCell(new Phrase("مرتجعات بقيمة",normal));
+             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+             c1.setRunDirection(RUN_DIRECTION_RTL);
+             table.addCell(c1);
              c1 = new PdfPCell(new Phrase("مصاريف المحل",normal));
              c1.setHorizontalAlignment(Element.ALIGN_CENTER);
              c1.setRunDirection(RUN_DIRECTION_RTL);
              table.addCell(c1);
+             
              c1 = new PdfPCell(new Phrase("مصاريف الشراء",normal));
              c1.setHorizontalAlignment(Element.ALIGN_CENTER);
              c1.setRunDirection(RUN_DIRECTION_RTL);
@@ -192,14 +197,17 @@ public class Financial_ReportsController implements Initializable {
                 double Shop_Expenses=0;
                 double buy_Exp=0;
                 double total_Exp=0;
+                double Recalls=0;
                 double profit=0;
                 d=rs_SalesDate.getString("sale_date");
                 String qIN1="SELECT current_qty,cost FROM sales WHERE sale_date = '"+d+"'";
                 String qIN2="SELECT e_cost FROM expenses WHERE exp_date = '"+d+"'";
                 String qIN3="SELECT cost FROM buying WHERE buy_date = '"+d+"'";
+                String qIN4="SELECT cost,source FROM recalls WHERE rec_date = '"+d+"'";
                 ResultSet rs_Sales=DatabaseHandler.getInstance().execQuery(qIN1)
                         ,rs_Exp=DatabaseHandler.getInstance().execQuery(qIN2)
-                        ,rs_Buy=DatabaseHandler.getInstance().execQuery(qIN3);
+                        ,rs_Buy=DatabaseHandler.getInstance().execQuery(qIN3)
+                        ,rs_rec=DatabaseHandler.getInstance().execQuery(qIN4);
                 
                 while(rs_Sales.next()){
                    contQuan+=rs_Sales.getInt("current_qty");
@@ -211,7 +219,12 @@ public class Financial_ReportsController implements Initializable {
                 while(rs_Buy.next()){
                     buy_Exp+=rs_Buy.getDouble("cost");
                 }
-                total_Exp=Shop_Expenses+buy_Exp;
+                while(rs_rec.next()){
+                    if(rs_rec.getString("source").equals("عميل")){
+                        Recalls+=rs_rec.getDouble("cost");}
+                }
+                
+                total_Exp=Shop_Expenses+buy_Exp+Recalls;
                 profit=TotalQuan-total_Exp;
                 //cell 1
                 c1 = new PdfPCell(new Phrase(d,normal));
@@ -226,18 +239,22 @@ public class Financial_ReportsController implements Initializable {
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
                 //cell 4
-                c1 = new PdfPCell(new Phrase(Shop_Expenses+"",normal));
+                c1 = new PdfPCell(new Phrase(Recalls+"",normal));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
                 //cell 5
-                c1 = new PdfPCell(new Phrase(buy_Exp+"",normal));
+                c1 = new PdfPCell(new Phrase(Shop_Expenses+"",normal));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
                 //cell 6
-                c1 = new PdfPCell(new Phrase(total_Exp+"",normal));
+                c1 = new PdfPCell(new Phrase(buy_Exp+"",normal));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
                 //cell 7
+                c1 = new PdfPCell(new Phrase(total_Exp+"",normal));
+                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(c1);
+                //cell 8
                 c1 = new PdfPCell(new Phrase(profit+"",normal));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
@@ -532,10 +549,12 @@ public class Financial_ReportsController implements Initializable {
             String qOut1="SELECT cost FROM sales WHERE sale_date >= '"+da1+"' AND sale_date <= '"+da2+"'"; 
             String qOut2="SELECT cost FROM buying WHERE buy_date >= '"+da1+"' AND buy_date <= '"+da2+"'"; 
             String qOut3="SELECT e_cost FROM expenses WHERE exp_date >= '"+da1+"' AND exp_date <= '"+da2+"'"; 
+            String qOut4="SELECT cost,source FROM recalls WHERE rec_date >= '"+da1+"' AND rec_date <= '"+da2+"'"; 
             ResultSet rs1=DatabaseHandler.getInstance().execQuery(qOut1);
             ResultSet rs2=DatabaseHandler.getInstance().execQuery(qOut2);
             ResultSet rs3=DatabaseHandler.getInstance().execQuery(qOut3);
-            double TotalSales=0,TotalBuying=0,Expenses=0,Profit;
+            ResultSet rs4=DatabaseHandler.getInstance().execQuery(qOut4);
+            double TotalSales=0,TotalBuying=0,Expenses=0,Profit,Recalls=0;
         
          /**********Create Document******************/
         Document document =new Document(PageSize.A4); 
@@ -614,8 +633,12 @@ public class Financial_ReportsController implements Initializable {
             while(rs3.next()){
                     Expenses+=rs1.getDouble("e_cost");
             }
+            while(rs4.next()){
+                    if(rs4.getString("source").equals("عميل")){
+                        Recalls+=rs4.getDouble("cost");}
+            }
             
-            Profit=TotalSales-(TotalBuying+Expenses);
+            Profit=TotalSales-(TotalBuying+Expenses+Recalls);
         /**************************************************************************/    
             
             PdfPTable t3 = new PdfPTable(1);

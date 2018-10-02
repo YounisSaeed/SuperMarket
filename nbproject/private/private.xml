@@ -3,39 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Manager/Employee/Reports/Employee_ReportsController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Manager/Suppliers/Manager_SuppliersController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/employees/account/accepted/AcoountacceptController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/employees/recall/RecallController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Manager/Main/HomeController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Manager/Product/Quantity/Manager_Product_QuantityController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Manager/Suppliers/Reports/Sppliers_ReportsController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Manager/Employee/Manager_EmployeeController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/employees/account/AccountController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/employees/main/EmployeesController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/resources/tables.xml</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Manager/Account/Manager_AccountController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Manager/Products/Manager_ProductsController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Manager/Reports/ReportsController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Manager/Financial/Reports/Financial_ReportsController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Manager/Products/Reports/Products_ReportsController.java</file>
             <file>file:/D:/walid/Last2/Supermarket_Management_System/src/employees/buying/BuyingController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/employees/damage/DamageController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/employees/rackshortages/RackshortagesController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/employees/account/accept/attendence/AttendenceController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/employees/personalexpenses/PersonalexpensesController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/employees/personalexpenses/MainPersonalExpenses.java</file>
+            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Manager/Suppliers/Reports/Sppliers_ReportsController.java</file>
+            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Database/DataHelper.java</file>
+            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/employees/recall/RecallController.java</file>
             <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Manager/date/DateController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/employees/sales/SalesController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/employees/expenses/ExpensesController.java</file>
-=======
-            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Manager/Employee/Reports/Employee_ReportsController.java</file>
-            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Manager/Suppliers/Reports/Sppliers_ReportsController.java</file>
-            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/resources/tables.xml</file>
-            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Manager/Employee/Reports/Main.java</file>
-            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Manager/Financial/Reports/Financial_ReportsController.java</file>
->>>>>>> b67465272629959e70c5da2879a1509f795d8e85
+            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Manager/Product/Quantity/Manager_Product_QuantityController.java</file>
         </group>
     </open-files>
 </project-private>
