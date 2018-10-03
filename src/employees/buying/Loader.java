@@ -7,11 +7,13 @@ package employees.buying;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 
 public class Loader extends Application {
@@ -25,6 +27,7 @@ public class Loader extends Application {
         stage.getIcons().add(icon);
         stage.setTitle("الشراء");
         stage.setScene(scene);
+        
         stage.show();
     }
 

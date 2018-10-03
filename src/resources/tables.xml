@@ -136,32 +136,4 @@
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <table-entry name="daily_report" col-data="
-             day_date date
-            ,count_quan int
-            ,total_quan double
-            ,shop_exp double
-            ,emp_exp double
-            ,buy_exp double
-            ,total_exp double
-            ,netprofit double
-    "/>
-    
-    
 </tables>

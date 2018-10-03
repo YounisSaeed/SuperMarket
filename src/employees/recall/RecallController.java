@@ -141,7 +141,7 @@ public class RecallController extends NewSerial implements Initializable {
     @FXML
     private void Add_REC(KeyEvent event) {
         try{
-            if(event.getCode().equals(KeyCode.ENTER)){
+            if(event.getCode().equals(KeyCode.CONTROL)){
                 this.addRecall(); 
             }
         }catch(Exception e){}

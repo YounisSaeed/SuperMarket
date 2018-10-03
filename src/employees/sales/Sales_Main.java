@@ -22,6 +22,7 @@ public class Sales_Main extends Application {
         stage.setTitle("البيع");
         stage.setScene(scene);
         stage.show();
+        
     }
     
     public static void main(String[] args) {

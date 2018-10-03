@@ -125,13 +125,12 @@ public class DamageController extends NewSerial implements Initializable {
     @FXML
     private void A_Q(KeyEvent event) {
         try{
-        if(event.getCode().equals(KeyCode.ENTER)) 
+        if(event.getCode().equals(KeyCode.CONTROL)) 
              this.saveDamage();
         }catch(Exception e){}
     }
     /**************************************************************************/
     
-    @FXML
     private void addQuntity(ActionEvent event) {
         this.addQuntity();
     } 
@@ -270,6 +269,10 @@ public class DamageController extends NewSerial implements Initializable {
         } catch (IOException ex) {
             Alerts.showErrorAlert("حدث مشكلة اثناء فتح الآلة الحاسبة , يرجى المحاولة لاحقا");
         }
+    }
+
+    @FXML
+    private void DeleteItemButton(ActionEvent event) {
     }
 
     /***************************_____________THE END______________********************************/ 

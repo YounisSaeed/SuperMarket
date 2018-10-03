@@ -102,6 +102,7 @@ public class BuyingController  extends NewSerial implements Initializable {
         billNumber.setText(getSalesSerial()+"");
         initTableViewCols();
         DataHelper.checkDataBar(B_searchField); // get barcode of all products
+        ser();
     }    
     private  void initTableViewCols(){
         t_bar.setCellValueFactory(new PropertyValueFactory<>("barcodfiled"));
@@ -151,7 +152,7 @@ public class BuyingController  extends NewSerial implements Initializable {
     @FXML
     private void A_N_B(KeyEvent event) {  // addBuying(); do it by pressing in SHIFT with Z  keys 
         try{
-        if(event.getCode().equals(KeyCode.SHIFT.Z)) 
+        if(event.getCode().equals(KeyCode.CONTROL)) 
              this.addBuying();
         }catch(Exception e){}
     }

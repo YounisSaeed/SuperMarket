@@ -90,8 +90,6 @@ public class SalesController extends NewSerial implements Initializable {
     @FXML
     private TextField totalPrice;
     @FXML
-    private TableColumn<Sales, String> c_num;
-    @FXML
     private TableView<Sales> SalesTabel;
     /**
      * Initializes the controller class.
@@ -133,23 +131,22 @@ public class SalesController extends NewSerial implements Initializable {
                 });
             }
         });
-        
+       
     }
-    
+
     private void DRR(){
-        String qu="DROP TABLE recall";
+        String qu="DROP TABLE daily_report";
         boolean r=databaseHandler.execAction(qu);
         if(r)
             System.out.println("    dedddddddddddddd");
     }
-    
+
     private  void initTableViewCols(){
         c_item.setCellValueFactory(new PropertyValueFactory<>("name"));
         c_price.setCellValueFactory(new PropertyValueFactory<>("UintPrice"));
         c_quantity.setCellValueFactory(new PropertyValueFactory<>("CurrentQuantity"));
         c_quantityKind.setCellValueFactory(new PropertyValueFactory<>("quantityKind"));
         c_cost.setCellValueFactory(new PropertyValueFactory<>("cost"));
-        c_num.setCellValueFactory(new PropertyValueFactory<>("number"));
         c_bar.setCellValueFactory(new PropertyValueFactory<>("barcodfiled"));
     }
     private void ser(){ // set dinamic serial to bills .. every 24 hours it set serial to 1 
@@ -196,7 +193,7 @@ public class SalesController extends NewSerial implements Initializable {
     @FXML
     private void A_N_B(KeyEvent event) {    // AddNewBill(); do it by pressing in SHIFT with Z  keys 
         try{                                // deleteAllRows(); impelemented by pressing in SHIFT with DELETE keys
-        if(event.getCode().equals(KeyCode.SHIFT.Z)) 
+        if(event.getCode().equals(KeyCode.CONTROL)) 
              this.AddNewBill();
         else if(event.getCode().equals(KeyCode.SHIFT.DELETE))
             this.deleteAllRows();
@@ -270,64 +267,18 @@ public class SalesController extends NewSerial implements Initializable {
     /***************************** FREEZE BILL ********************************/
     @FXML
     private void freezeBill(ActionEvent event) {
-       checksales();
+       ;
     }
     /**************************************************************************/
     /***********************Previous Process***********************************/
     @FXML
     private void PreviousProcess(ActionEvent event) {
-        try {
-            String q2="SELECT DISTINCT sale_date FROM sales WHERE sale_date >= '2018-09-20' AND sale_date <= '2018-09-24'";
-            
-            String d="";
-            ResultSet rs2=DatabaseHandler.getInstance().execQuery(q2);
-            while(rs2.next()){
-                int contQuan=0;
-                double TotalQuan=0;
-                d=rs2.getString("sale_date");
-                System.out.println("\n"+d+"     |||||||||||");
-                
-            String q1="SELECT current_qty,cost FROM sales WHERE sale_date = '"+d+"'";
-            ResultSet rs=DatabaseHandler.getInstance().execQuery(q1);
-                while(rs.next()){
-                    contQuan+=rs.getInt("current_qty");
-                    TotalQuan+=rs.getInt("cost");
-                }
-                System.out.println( "Counter  =   "+contQuan);
-                System.out.println("Total  =  "+TotalQuan);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SalesController.class.getName()).log(Level.SEVERE, null, ex);
-        }
             
     }
     /***********************Next Process***************************************/
     @FXML
     private void NextProcess(ActionEvent event) {
         
-            String q2="SELECT sale_id FROM bills WHERE sale_date = '2018-09-25'";
-            
-            ResultSet rs2=DatabaseHandler.getInstance().execQuery(q2);
-            int id=0;
-        try {
-            while(rs2.next()){
-                id=rs2.getInt("sale_id");
-                System.out.println("\n"+"Bill no. "+id);
-                String q1="SELECT * FROM sales WHERE sale_id="+id+" AND sale_date = '2018-09-25'";
-                ResultSet rs=DatabaseHandler.getInstance().execQuery(q1);
-                while(rs.next()){
-                        String x1=rs.getString("product_name");
-                        double x2=rs.getDouble("unit_price");
-                        
-                        System.out.println("product_name:  "+x1+"\n"+"unit_price:  "+x2);
-                }
-            }
-            
-            
-            
-            
-        } catch (SQLException ex) {
-        }
     }
     /**************************************************************************/
     

@@ -138,8 +138,6 @@ public class Manager_EmployeeController implements Initializable {
     
     
     
-     String qu="SELECT emp_id FROM employee1 "; 
-               ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
     
     /******************************************************** Add new Employee****************************************************/
       

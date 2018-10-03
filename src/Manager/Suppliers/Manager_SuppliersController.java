@@ -39,15 +39,11 @@ public class Manager_SuppliersController implements Initializable {
     @FXML
     private AnchorPane Manager_Suppliers;
     @FXML
-    private ComboBox<String> S_Ctype;
-    @FXML
     private VBox VBox;
     @FXML
     private Label Suppliers;
     @FXML
     private Label S_name;
-    @FXML
-    private Label S_Type;
     @FXML
     private Label S_Phone;
     @FXML
@@ -76,8 +72,6 @@ public class Manager_SuppliersController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         databaseHandler=DatabaseHandler.getInstance();
-         ObservableList<String> list= FXCollections.observableArrayList("أخرى","منظفات","معلبات","مجمدات","عصائر","شيكولاتات","شيبسي وحلويات","شاي وبن","سمنة وزيوت","جبن","ايس كريم","ألبان");
-        S_Ctype.setItems(list);
         t_name.setCellValueFactory(new PropertyValueFactory<>("supplierName"));
         t_category.setCellValueFactory(new PropertyValueFactory<>("supplierCategory"));
         t_phone.setCellValueFactory(new PropertyValueFactory<>("supplierPhone"));
@@ -139,7 +133,7 @@ public class Manager_SuppliersController implements Initializable {
     private void AddSupplier()
     {
         try {
-        if ( !S_Tname.getText().equals("") && !S_TPhone.getText().equals("") && !S_TSaller.getText().equals("")  && !S_Ctype.getValue().equals(""))
+        if ( !S_Tname.getText().equals("") && !S_TPhone.getText().equals("") && !S_TSaller.getText().equals(""))
         {
            
                  
@@ -147,7 +141,6 @@ public class Manager_SuppliersController implements Initializable {
                   
                     Suppliers s =new Suppliers();
                     s.setSupplierName(S_Tname.getText());
-                    s.setSupplierCategory(S_Ctype.getValue());
                     s.setSupplierPhone(S_TPhone.getText());
                     s.setSalespersonName(S_TSaller.getText());
                     boolean result = DataHelper.insertNewSupplier(s);
@@ -181,13 +174,12 @@ public class Manager_SuppliersController implements Initializable {
     
      private void Edit_Supplier() {
          
-        if ( !S_Tname.getText().equals("") && !S_TPhone.getText().equals("") && !S_TSaller.getText().equals("") &&!S_Ctype.getValue().equals("")  ){  
+        if ( !S_Tname.getText().equals("") && !S_TPhone.getText().equals("") && !S_TSaller.getText().equals("")){  
             try{
                 String name=S_Tname.getText();
                 String phone=S_TPhone.getText();
-                String cate=(String) S_Ctype.getValue();
                 String salesperson=S_TSaller.getText();
-                Suppliers S=new Suppliers(name, phone, cate, salesperson);
+                Suppliers S=new Suppliers(name, phone, salesperson);
                 boolean R=DataHelper.updateSupplier(S, oldCompName);
                 if(R){Alerts.showInfoAlert("تم التعديل"); DataHelper.loadSuppliersData(S_Table);}
             }
@@ -211,7 +203,7 @@ public class Manager_SuppliersController implements Initializable {
     private void Delete_Supplier() {
         
        // try {
-         if ( !S_Tname.getText().equals("") && !S_TPhone.getText().equals("") && !S_TSaller.getText().equals("") &&!S_Ctype.getValue().equals("") ){
+         if ( !S_Tname.getText().equals("") && !S_TPhone.getText().equals("") && !S_TSaller.getText().equals("") ){
             
                
            Suppliers S=S_Table.getSelectionModel().getSelectedItem();
@@ -251,7 +243,7 @@ public class Manager_SuppliersController implements Initializable {
     
     private void Suppliers_Search() {
         
-         if ( !S_TSearch.getText().equals("") && !S_Ctype.getValue().equals("") ){
+         if ( !S_TSearch.getText().equals("")){
             
              try{
                 //yooooour coooode
@@ -303,7 +295,6 @@ public class Manager_SuppliersController implements Initializable {
     private void selectFromTable(MouseEvent event) {
         
         Suppliers sup=S_Table.getSelectionModel().getSelectedItem();
-        S_Ctype.setValue(sup.getSupplierCategory());
         S_Tname.setText(sup.getSupplierName());
         S_TPhone.setText(sup.getSupplierPhone());
         S_TSaller.setText(sup.getSalespersonName());
@@ -349,7 +340,6 @@ public class Manager_SuppliersController implements Initializable {
         S_Tname.setText("");
         S_TPhone.setText("");
         S_TSaller.setText("");
-        S_Ctype.setValue("");
     }
 }
 

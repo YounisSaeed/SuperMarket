@@ -533,9 +533,8 @@ public static boolean isEmployeeisEXits(String id) {
             while (rs.next()) {
                 String name=rs.getString("sup_company_name");
                 String pho=rs.getString("sup_phone");
-                String cate=rs.getString("sup_category");
                 String sup=rs.getString("sup_name");
-                list.add(new Suppliers(name, pho, cate, sup));
+                list.add(new Suppliers(name, pho,sup));
             }
         } catch (SQLException ex) {
             Alerts.showInfoAlert("");
@@ -549,11 +548,10 @@ public static boolean isEmployeeisEXits(String id) {
     {
         try{
         PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "INSERT INTO suppliers1 (sup_name,sup_company_name,sup_category,sup_phone) VALUES(?,?,?,?)");
+                    "INSERT INTO suppliers1 (sup_name,sup_company_name,sup_phone) VALUES(?,?,?)");
         statement.setString(1, s.getSalespersonName());
         statement.setString(2, s.getSupplierName());
-        statement.setString(3, s.getSupplierCategory());
-        statement.setString(4, s.getSupplierPhone());
+        statement.setString(3, s.getSupplierPhone());
         
         return statement.executeUpdate() > 0;
         
@@ -568,12 +566,11 @@ public static boolean isEmployeeisEXits(String id) {
     {
         try {
             PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "UPDATE suppliers1 SET  sup_company_name=?,sup_phone=?,sup_category=?,sup_name=? WHERE sup_company_name='"+oldCompName+"'");
+                    "UPDATE suppliers1 SET  sup_company_name=?,sup_phone=?,sup_name=? WHERE sup_company_name='"+oldCompName+"'");
             
             statement.setString(1, s.getSupplierName());
             statement.setString(2, s.getSupplierPhone());
-            statement.setString(3, s.getSupplierCategory());
-            statement.setString(4, s.getSalespersonName());
+            statement.setString(3, s.getSalespersonName());
            
             return statement.executeUpdate() > 0;
         }
@@ -607,9 +604,8 @@ public static boolean isEmployeeisEXits(String id) {
             while (rs.next()) {
                 String name=rs.getString("sup_company_name");
                 String phone=rs.getString("sup_phone");
-                String category=rs.getString("sup_category");
                 String sales_name=rs.getString("sup_name");
-                list.add(new Suppliers(name,phone,category,sales_name));
+                list.add(new Suppliers(name,phone,sales_name));
              //   list2.add(phone);
             }
         } catch (SQLException ex) {
@@ -626,9 +622,8 @@ public static boolean isEmployeeisEXits(String id) {
             while (rs.next()) {
                 String name=rs.getString("supplierName");
                 String phone=rs.getString("supplierPhone");
-                String category=rs.getString("supplierCategory");
                 String sales_name=rs.getString("salespersonName");
-               list.add(new Suppliers(name,phone,category,sales_name));
+               list.add(new Suppliers(name,phone,sales_name));
             }
         } catch (SQLException ex) {
             Alerts.showInfoAlert("لا يوجد موردين");

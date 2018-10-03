@@ -24,16 +24,14 @@ public class Suppliers{// Common_Methods is an Interface include Add , Update , 
     }
     public Suppliers()
     {}
-    public Suppliers(String a,String b,String c,String d)
+    public Suppliers(String a,String b,String d)
     {
         this.supplierName=a;
         this.supplierPhone=b;
-        this.supplierCategory=c;
         this.salespersonName=d;
     }
     private String supplierName;
     private String supplierPhone;
-    private String supplierCategory;
     private String salespersonName;
 
     public String getSupplierName() {
@@ -42,14 +40,6 @@ public class Suppliers{// Common_Methods is an Interface include Add , Update , 
 
     public void setSupplierName(String supplierName) {
         this.supplierName = supplierName;
-    }
-
-    public String getSupplierCategory() {
-        return supplierCategory;
-    }
-
-    public void setSupplierCategory(String supplierCategory) {
-        this.supplierCategory = supplierCategory;
     }
 
     public String getSupplierPhone() {

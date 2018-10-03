@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -92,7 +91,6 @@
                <font>
                   <Font name="System Bold" size="20.0" />
                </font></TextField>
-            <JFXComboBox fx:id="S_Ctype" layoutX="723.0" layoutY="599.0" prefHeight="35.0" prefWidth="221.0" style="-fx-background-color: #fff;" unFocusColor="WHITE" />
             <TableView fx:id="S_Table" layoutX="33.0" layoutY="194.0" onMouseClicked="#selectFromTable" prefHeight="481.0" prefWidth="636.0">
                <columns>
                   <TableColumn fx:id="t_supplier" prefWidth="165.00003051757812" text="المندوب" />
@@ -102,11 +100,6 @@
                </columns>
             </TableView>
             <Label fx:id="S_name" alignment="CENTER" contentDisplay="RIGHT" layoutX="1000.0" layoutY="307.0" minWidth="-Infinity" prefHeight="45.0" prefWidth="79.0" text="اسم : " textAlignment="RIGHT" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="30.0" />
-               </font>
-            </Label>
-            <Label fx:id="S_Type" alignment="CENTER" contentDisplay="RIGHT" layoutX="970.0" layoutY="595.0" minWidth="-Infinity" prefHeight="45.0" prefWidth="109.0" text="تصنيف :" textAlignment="RIGHT" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
