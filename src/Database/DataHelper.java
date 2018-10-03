@@ -127,10 +127,24 @@ public class DataHelper {
 //        catch (SQLException ex) {}
 //        return false;
 //    }
-    public static boolean QuickEditQuantity(int quan,String bar) {
-        String qu="UPDATE product SET  pro_All_qty="+quan+" WHERE pro_bar = '"+bar+"' ";
-        if(DatabaseHandler.getInstance().execAction(qu))
+    public static boolean QuickEditQuantity(int quan,String bar,boolean supSum) {
+        try {
+            int alQ=0;
+            String qu1 = "SELECT pro_All_qty FROM product WHERE pro_bar = '"+bar+"' ";
+            ResultSet rs =DatabaseHandler.getInstance().execQuery(qu1);
+            if(rs.next()) alQ=rs.getInt("pro_All_qty");
+            if(supSum == true)
+                alQ+=quan;
+            else if(supSum == false)
+                alQ=alQ-quan;
+                
+            String qu="UPDATE product SET  pro_All_qty="+alQ+" WHERE pro_bar = '"+bar+"' ";
+            if(DatabaseHandler.getInstance().execAction(qu))
             return true;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DataHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return false;
     }
     
@@ -208,13 +222,16 @@ public class DataHelper {
         
         try {
             if(rs.next()){
-                
-                TI.setText(rs.getInt("pro_All_qty")+"");
-                TP.setText( (rs.getInt("pro_All_qty")/rs.getInt("pro_qty_item")) + "");
+                int  
+                        packets=(rs.getInt("pro_All_qty")%(rs.getInt("pro_qty_item")*rs.getInt("pro_qty_packet")))/rs.getInt("pro_qty_item"),
+                        boxes= (rs.getInt("pro_All_qty")/(rs.getInt("pro_qty_item")*rs.getInt("pro_qty_packet"))) ,
+                        items=(rs.getInt("pro_All_qty")%(rs.getInt("pro_qty_item")*rs.getInt("pro_qty_packet")))%rs.getInt("pro_qty_item");
+                TI.setText(items+"");
+                //TP.setText( (rs.getInt("pro_All_qty")/rs.getInt("pro_qty_item")) + "");
+                TP.setText( packets + "");
                 if(rs.getString("pro_box").equals("يوجد")){
                     TB.setDisable(false);
-                    System.out.println(",,,,,,,,,,,,,,,,,,,,,,,,,,,mmmmmm");
-                    TB.setText((rs.getInt("pro_All_qty")/(rs.getInt("pro_qty_item")*rs.getInt("pro_qty_packet"))) + "");}
+                    TB.setText(boxes + "");}
                 else if(!rs.getString("pro_box").equals("يوجد")){
                     TB.setText("0");
                     TB.setDisable(true);}

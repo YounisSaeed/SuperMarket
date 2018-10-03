@@ -62,6 +62,8 @@ public class Manager_Product_QuantityController implements Initializable {
     DatabaseHandler databaseHandler;
     @FXML
     private Label P_Quantity;
+    
+    private static int itm=0,pkt=0,bx=0;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         databaseHandler=DatabaseHandler.getInstance();
@@ -90,8 +92,10 @@ public class Manager_Product_QuantityController implements Initializable {
     @FXML
     private void P_Search(ActionEvent event) {
          
-        if (!P_TSearch.getText().equals(""))
-            this.P_Search();
+        if (!P_TSearch.getText().equals("")){
+            this.P_Search();quann();
+            System.out.println(itm+"            "+pkt+"         "+bx);
+        }
        else 
             Alerts.showErrorAlert("برجاء ادخال الباكورد ..");
        
@@ -99,6 +103,13 @@ public class Manager_Product_QuantityController implements Initializable {
     @FXML
     private void AutoCompSearch(KeyEvent event) {
         P_Search();
+        quann();
+        System.out.println(itm+"            "+pkt+"         "+bx);
+    }
+    private void quann(){
+        itm=Integer.parseInt(P_UQuantity.getText());
+        pkt=Integer.parseInt(P_BQuantity.getText());
+        bx=Integer.parseInt(P_CQuantity.getText());
     }
     @FXML
     private void Edit_Product(ActionEvent event) {
@@ -120,7 +131,7 @@ public class Manager_Product_QuantityController implements Initializable {
     //////////////////////////
     
     
-    private void P_Search ()
+    private void P_Search()
     {
         DataHelper.ProductQuantity(P_TSearch.getText(),P_UQuantity,P_BQuantity,P_CQuantity,LName);
     }
@@ -138,17 +149,37 @@ public class Manager_Product_QuantityController implements Initializable {
                   DataHelper.getQuanDetails(P_TSearch.getText(), L_InP, L_PnB);
                   int inp=Integer.parseInt(L_InP.getText());
                   int pnb=Integer.parseInt(L_PnB.getText());
-                  if(R_item.isSelected()){ 
-                      DataHelper.QuickEditQuantity(it,P_TSearch.getText());  Alerts.showInfoAlert("تم التعديل");
+                  if(R_item.isSelected()){
+                        if(itm <it ){
+                            it-=itm;
+                            DataHelper.QuickEditQuantity(it,P_TSearch.getText(),true);  Alerts.showInfoAlert("تم التعديل");}
+                        else if(itm >it){
+                            itm-=it;
+                            DataHelper.QuickEditQuantity(itm,P_TSearch.getText(),false);  Alerts.showInfoAlert("تم التعديل");
+                        }else     Alerts.showInfoAlert("لا يوجد تغير فى الكمية");
                   }
                   else if(R_packet.isSelected()){
-                      DataHelper.QuickEditQuantity(pa*inp,P_TSearch.getText()); Alerts.showInfoAlert("تم التعديل");
+                        if(pkt < pa){
+                            pa-=pkt;
+                            DataHelper.QuickEditQuantity(pa*inp,P_TSearch.getText(),true); Alerts.showInfoAlert("تم التعديل");}
+                        else if(pkt > pa){
+                            pkt-=pa;
+                            DataHelper.QuickEditQuantity(pkt*inp,P_TSearch.getText(),false); Alerts.showInfoAlert("تم التعديل");
+                        }else     Alerts.showInfoAlert("لا يوجد تغير فى الكمية");
                   }
                   else if(R_box.isSelected() && Integer.parseInt(P_CQuantity.getText()) != 0 ){
-                      DataHelper.QuickEditQuantity(bo*pnb*inp,P_TSearch.getText()); Alerts.showInfoAlert("تم التعديل");
+                      if(bx < bo){
+                            bo-=bx;
+                            DataHelper.QuickEditQuantity(bo*pnb*inp,P_TSearch.getText(),true); Alerts.showInfoAlert("تم التعديل");
+                      }
+                      else if(bx > bo){
+                            bx-=bo;
+                            DataHelper.QuickEditQuantity(bx*pnb*inp,P_TSearch.getText(),false); Alerts.showInfoAlert("تم التعديل");
+                      }else     Alerts.showInfoAlert("لا يوجد تغير فى الكمية");
+                  
                   }
-                  //P_Search();
-                  DataHelper.ProductQuantity(P_TSearch.getText(),P_UQuantity,P_BQuantity,P_CQuantity,LName);
+                  P_Search();
+                  quann();
               }
               else
                   Alerts.showErrorAlert("لم يتم تحديد خلية محددة");

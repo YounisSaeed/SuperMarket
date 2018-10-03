@@ -17,7 +17,7 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="P_TSearch" focusColor="#4aabc0" labelFloat="true" layoutX="548.0" layoutY="199.0" onKeyTyped="#AutoCompSearch" prefHeight="54.0" prefWidth="320.0" promptText=" ادخل الباركود ..                      " styleClass="field" stylesheets="@manager_producttype.css" unFocusColor="WHITE">
+      <JFXTextField fx:id="P_TSearch" focusColor="#4aabc0" labelFloat="true" layoutX="548.0" layoutY="199.0" onKeyPressed="#AutoCompSearch" prefHeight="54.0" prefWidth="320.0" promptText=" ادخل الباركود ..                      " styleClass="field" stylesheets="@manager_producttype.css" unFocusColor="WHITE">
          <font>
             <Font size="25.0" />
          </font>
