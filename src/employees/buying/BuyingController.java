@@ -146,13 +146,14 @@ public class BuyingController  extends NewSerial implements Initializable {
     /************************* ADD OR DELETE BILL TO DATABASE *****************/
     @FXML
     private void addBuying(ActionEvent event) { // AddNewBill(); do it by mouse click on button "جديد"
-        this.addBuying();
+        if( !supplier.getValue().equals("")) 
+             this.addBuying();
     }
     
     @FXML
     private void A_N_B(KeyEvent event) {  // addBuying(); do it by pressing in SHIFT with Z  keys 
         try{
-        if(event.getCode().equals(KeyCode.CONTROL)) 
+        if(event.getCode().equals(KeyCode.CONTROL) && !supplier.getValue().equals("")) 
              this.addBuying();
         }catch(Exception e){}
     }
@@ -214,13 +215,16 @@ public class BuyingController  extends NewSerial implements Initializable {
     {
         if(!totalPrice.getText().equals(""))
         {
+            boolean supp=supplier.getValue().isEmpty();
             billNumber.setText(getSalesSerial()+"");
             Buying B=new Buying();
             B.setSerial(Integer.parseInt(billNumber.getText()));
             Date JDBC_Date = Date.valueOf(this.date.getText()); // JDBC_Date: this var take value of date in "Date"data type to pass it to Date column in database
             B.setDate(JDBC_Date);
             B.setTime(gettTime());
-            B.setSupplier(supplier.getValue());
+            if(!supp){
+                 B.setSupplier(supplier.getValue());}
+            else{Alerts.showErrorAlert("يرجى تحديد المورد !!");}
             B.setTotalPrice(Double.parseDouble(totalPrice.getText()));
 
             boolean result = DataHelper.insertBuyGoodsNewBill(B);
@@ -246,7 +250,7 @@ public class BuyingController  extends NewSerial implements Initializable {
     /********************************************* addQuntity _________*/
     private void addQuntity()
     {
-        if(!Quntity.getText().equals("") && !productBarcode.getText().equals("") && !supplier.getValue().equals("") && !BuuPrice.getText().equals(""))
+        if(!Quntity.getText().equals("") && !productBarcode.getText().equals("") && !BuuPrice.getText().equals(""))
         {
             Buying B=new Buying();
             try{
@@ -326,6 +330,7 @@ public class BuyingController  extends NewSerial implements Initializable {
         supplier.setValue("");
         Quntity.clear();
         totalPrice.clear();
+        BuuPrice.clear();
     }
 
     

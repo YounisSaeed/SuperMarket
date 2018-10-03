@@ -134,12 +134,12 @@ public class SalesController extends NewSerial implements Initializable {
        
     }
 
-    private void DRR(){
-        String qu="DROP TABLE daily_report";
-        boolean r=databaseHandler.execAction(qu);
-        if(r)
-            System.out.println("    dedddddddddddddd");
-    }
+//    private void DRR(){
+//        String qu="DROP TABLE personal_expences";
+//        boolean r=databaseHandler.execAction(qu);
+//        if(r)
+//            System.out.println("    dedddddddddddddd");
+//    }
 
     private  void initTableViewCols(){
         c_item.setCellValueFactory(new PropertyValueFactory<>("name"));

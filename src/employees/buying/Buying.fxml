@@ -95,10 +95,15 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </JFXTextField>
-            <TextField fx:id="Quntity" layoutX="684.0" layoutY="494.0" onKeyPressed="#AddQuanPress" prefHeight="30.0" prefWidth="101.0" styleClass="textfield" stylesheets="@buying.css">
+            <TextField fx:id="Quntity" layoutX="684.0" layoutY="494.0" prefHeight="30.0" prefWidth="101.0" styleClass="textfield" stylesheets="@buying.css">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font></TextField>
+            <TextField fx:id="BuuPrice" layoutX="685.0" layoutY="561.0" onKeyPressed="#AddQuanPress" prefHeight="54.0" prefWidth="224.0" styleClass="textfield-none" stylesheets="@buying.css">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </TextField>
             <JFXButton layoutX="317.0" layoutY="59.0" onAction="#B_SearchButton" prefHeight="25.0" prefWidth="160.0" styleClass="jfx-button" stylesheets="@buying.css" text="بحث" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="20.0" />
@@ -201,11 +206,6 @@
                   <DropShadow height="9.14" radius="4.07" width="9.14" />
                </effect>
             </Label>
-            <TextField fx:id="BuuPrice" editable="false" layoutX="685.0" layoutY="561.0" prefHeight="54.0" prefWidth="224.0" styleClass="textfield-none" stylesheets="@buying.css">
-               <font>
-                  <Font name="System Bold" size="25.0" />
-               </font>
-            </TextField>
             <Label layoutX="913.0" layoutY="570.0" text="سعر الشراء :" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="30.0" />

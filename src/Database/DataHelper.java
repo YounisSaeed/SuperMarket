@@ -1029,7 +1029,7 @@ public static boolean isEmployeeisEXits(String id) {
     public static boolean deleteBuyRow(Buying buy) {
         try {
             PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement( 
-                    "DELETE FROM bills WHERE number = ?");
+                    "DELETE FROM buying WHERE number = ?");
 
             statement.setLong(1, buy.getNumber());
             int res = statement.executeUpdate();

@@ -5,9 +5,11 @@ import Classes.Employee;
 import Serial_dinamic.NewSerial;
 import static Serial_dinamic.NewSerial.gettDate;
 import database.*;
+import employees.account.AccountController;
 import employees.main.EmployeesController;
 import java.net.URL;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,7 +29,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author NOUR
  */
-public class PersonalexpensesController extends NewSerial implements Initializable {
+public class PersonalexpensesController extends AccountController implements Initializable {
     EmployeesController x = new EmployeesController();
     @FXML
     private AnchorPane loadPane;
@@ -65,6 +67,7 @@ public class PersonalexpensesController extends NewSerial implements Initializab
 
     @FXML
     private void loadBack(ActionEvent event) {
+        EmpCode="";
         x.loadwindow(loadPane,"/employees/account/accepted/acoountaccept.fxml");
         //x.loadwindow(loadPane,"/employees/account/accepted/accountaccept.fxml");
     }
@@ -81,7 +84,7 @@ public class PersonalexpensesController extends NewSerial implements Initializab
     }*/
     private void add(){
                 Employee e = new Employee();
-                Date today = Date.valueOf(gettDate());
+                Date today = Date.valueOf(getDate());
                 e.setDate(today);
                 e.setEmployeeExpensesCost(Double.parseDouble(value.getText()));
                 e.setEmployeeExpensesReason(reason.getText());
@@ -116,4 +119,13 @@ public class PersonalexpensesController extends NewSerial implements Initializab
        
     }catch(Exception e){}
     }  
+    
+    
+    private String getDate(){
+        java.util.Date today;
+        SimpleDateFormat simpleDF;
+        today = new java.util.Date();
+        simpleDF = new SimpleDateFormat ("yyyy-MM-dd");
+        return simpleDF.format(today);
+    }
     }

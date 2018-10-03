@@ -130,6 +130,7 @@
     
     <table-entry name="personal_expences" col-data="
             emp_product varchar(200)
+            ,emp_id varchar(200) 
             ,emp_date date
             ,emp_price_product double
     "/>

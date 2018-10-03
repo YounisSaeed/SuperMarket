@@ -21,6 +21,8 @@ import javafx.scene.layout.AnchorPane;
  * @author NOUR
  */
 public class AccountController implements Initializable {
+    public static String EmpCode="";
+    
     EmployeesController x = new EmployeesController();
     @FXML
     private AnchorPane loadPane;
@@ -74,6 +76,7 @@ public class AccountController implements Initializable {
         String id =  code_employee.getText();
         if (DataHelper.isEmployeeisEXits(id))
         {
+            EmpCode=code_employee.getText();
             //Alerts.showInfoAlert("كود صحيح");
              x.loadwindow(loadPane,"/employees/account/accepted/acoountaccept.fxml");
             

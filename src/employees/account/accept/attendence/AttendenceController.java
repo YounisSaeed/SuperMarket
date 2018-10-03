@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXButton;
 import employees.main.EmployeesController;
 import java.net.URL;
 import com.jfoenix.controls.JFXTextField;
+import employees.account.AccountController;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,7 +20,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author NOUR
  */
-public class AttendenceController implements Initializable {
+public class AttendenceController extends AccountController implements Initializable {
     EmployeesController x = new EmployeesController();
     @FXML
     private AnchorPane loadPane;
@@ -32,7 +33,7 @@ public class AttendenceController implements Initializable {
     private JFXTextField differenceText;
     @FXML
     private JFXButton difference_btn;
-
+    
     /**
      * Initializes the controller class.
      */

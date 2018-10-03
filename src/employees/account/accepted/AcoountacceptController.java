@@ -5,6 +5,7 @@
  */
 package employees.account.accepted;
 
+import employees.account.AccountController;
 import employees.main.EmployeesController;
 import java.io.IOException;
 import java.net.URL;
@@ -22,7 +23,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author NOUR
  */
-public class AcoountacceptController implements Initializable {
+public class AcoountacceptController extends AccountController implements Initializable {
     @FXML
     private AnchorPane loadPane;
 
@@ -46,6 +47,7 @@ public class AcoountacceptController implements Initializable {
 
     @FXML
     private void loadBack(ActionEvent event) {
+        EmpCode="";
         loadWindow("/employees/account/account.fxml");
     }
     
