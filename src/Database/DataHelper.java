@@ -344,20 +344,68 @@ public class DataHelper {
         return false;
     }
     
-    public static boolean insertAttendence(Employee emp) {
+    public static boolean insertAttendence(Date d, String name,String id,Time start) {
         try {
             PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "INSERT INTO employee1(emp_start_time,emp_finish_time,emp_hours) VALUES(?,?,?)");
-            statement.setString(1, String.valueOf(emp.getStart()));
-            statement.setString(2, String.valueOf(emp.getEnd()));
-            statement.setString(3, String.valueOf(emp.getDifference()));
-            return statement.executeUpdate() > 0;
+                    "INSERT INTO emp_att(emp_date,emp_name,emp_id,emp_start_time) VALUES(?,?,?,?)");
+            statement.setDate(1,d);
+            statement.setString(2,name);
+            statement.setString(3,id);
+            statement.setTime(4,start);
+            
+            if(statement.executeUpdate() > 0){
+                System.out.println("att inserted 000000");
+                return true;}
         } catch (SQLException ex) {
-         System.out.print("Attendence not sorted");
+            Logger.getLogger(DataHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
-
+    
+    public static void checkattendance(String id,TextField fx,String d) {
+        try {
+            String qu="SELECT emp_start_time FROM emp_att WHERE emp_id ='"+id+"' AND emp_date='"+d+"'";
+            ResultSet rs =DatabaseHandler.getInstance().execQuery(qu);
+            if(rs.next())
+                fx.setText(rs.getTime("emp_start_time")+"");
+            else fx.setText("تسجيل حضور");
+        } catch (SQLException ex) {
+            Logger.getLogger(DataHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static boolean insertleft(Date d, String name,String id,Time end) {
+        try {
+            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+                    "INSERT INTO emp_left(emp_date,emp_name,emp_id,emp_start_time) VALUES(?,?,?,?)");
+            statement.setDate(1,d);
+            statement.setString(2,name);
+            statement.setString(3,id);
+            statement.setTime(4,end);
+            if(statement.executeUpdate() > 0){
+                System.out.println("Left inserted 000000");
+                return true;}
+        } catch (SQLException ex) {
+            Logger.getLogger(DataHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    public static boolean insertWorkHours(Date d, String name,String id,int h) {
+        try {
+            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+                    "INSERT INTO emp_hours(emp_date,emp_name,emp_id,emp_hours) VALUES(?,?,?,?)");
+            statement.setDate(1,d);
+            statement.setString(2,name);
+            statement.setString(3,id);
+            statement.setInt(4,h);
+            if(statement.executeUpdate() > 0){
+                System.out.println("num of h = "+h);
+                return true;}
+        } catch (SQLException ex) {
+            Logger.getLogger(DataHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
     public static void loadEmployeesData(TableView TV) {
         ObservableList<Employee> list = FXCollections.observableArrayList();
        // ObservableList<String> list2 = FXCollections.observableArrayList();
@@ -410,10 +458,13 @@ public static boolean isEmployeeisEXits(String id) {
     {
         try{
         PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "INSERT INTO personal_expences (emp_price_product,emp_product,emp_date) VALUES(?,?,?)");
-        statement.setDouble(1, E.getEmployeeExpensesCost());
-        statement.setString(2, E.getEmployeeExpensesReason());
-        statement.setDate(3, E.getDate());
+                    "INSERT INTO personal_expences (emp_name,emp_id,emp_price_product,emp_product,emp_date) VALUES(?,?,?,?,?)");
+        
+        statement.setString(1, E.getEmployeeName());
+        statement.setString(2, E.getEmployeeId());
+        statement.setDouble(3, E.getEmployeeExpensesCost());
+        statement.setString(4, E.getEmployeeExpensesReason());
+        statement.setDate(5, E.getDate());
        
         return statement.executeUpdate() > 0;
         } catch (SQLException ex)
@@ -422,10 +473,10 @@ public static boolean isEmployeeisEXits(String id) {
         return false;
     }
 
-    public static void loadpersonalExpensesData(TableView TV,String date) {
+    public static void loadpersonalExpensesData(TableView TV,String date,String id) {
         ObservableList<Employee> list = FXCollections.observableArrayList();
         list.clear();
-        String qu = "SELECT * FROM personal_expences WHERE emp_date = '"+date+"'";
+        String qu = "SELECT * FROM personal_expences WHERE emp_date = '"+date+"' AND emp_id='"+id+"'" ;
         ResultSet rs =DatabaseHandler.getInstance().execQuery(qu);
         try {
             while (rs.next()) {
@@ -1384,6 +1435,19 @@ public static boolean isEmployeeisEXits(String id) {
     }
     
     /*************************************************/
+    public static String getEmpName(String cod){
+        String name="";
+        String qu="SELECT emp_name FROM employee1 WHERE emp_id='"+cod+"'"; 
+        ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
+        try {
+            if(rs.next()){
+                name = rs.getString("emp_name");
+            }       
+        } catch (SQLException ex) {
+            Logger.getLogger(SalesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return name;
+    }
     
     /***********************************************Reports********************************************************/
     

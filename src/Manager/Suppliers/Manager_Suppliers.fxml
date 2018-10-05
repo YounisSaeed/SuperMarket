@@ -95,9 +95,11 @@
                <columns>
                   <TableColumn fx:id="t_supplier" prefWidth="165.00003051757812" text="المندوب" />
                   <TableColumn fx:id="t_phone" prefWidth="128.0" text="تليفون  " />
-                  <TableColumn fx:id="t_category" prefWidth="190.0" text="تصنيف" />
                   <TableColumn fx:id="t_name" prefWidth="184.0" text="الاسم" />
                </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
             <Label fx:id="S_name" alignment="CENTER" contentDisplay="RIGHT" layoutX="1000.0" layoutY="307.0" minWidth="-Infinity" prefHeight="45.0" prefWidth="79.0" text="اسم : " textAlignment="RIGHT" textFill="WHITE">
                <font>

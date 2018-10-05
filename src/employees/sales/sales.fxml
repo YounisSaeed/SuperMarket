@@ -126,6 +126,10 @@
                <font>
                   <Font name="System Bold" size="25.0" />
                </font></TextField>
+            <TextField fx:id="paid" accessibleRoleDescription="PARENT" layoutX="80.0" layoutY="505.0" onKeyPressed="#E_P" prefHeight="34.0" prefWidth="230.0" styleClass="textfield">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font></TextField>
 
             <JFXButton accessibleRole="PARENT" layoutX="344.0" layoutY="59.0" onAction="#searchButton" prefHeight="42.0" prefWidth="120.0" text="بحث" textFill="WHITE">
 
@@ -250,10 +254,6 @@
                   <DropShadow height="9.14" radius="4.07" width="9.14" />
                </effect>
             </Label>
-            <TextField fx:id="paid" accessibleRoleDescription="PARENT" layoutX="80.0" layoutY="505.0" onKeyPressed="#E_P" prefHeight="34.0" prefWidth="230.0" styleClass="textfield">
-               <font>
-                  <Font name="System Bold" size="25.0" />
-               </font></TextField>
             <JFXButton accessibleRoleDescription="PARENT" layoutX="80.0" layoutY="565.0" onAction="#AddPaid" prefHeight="25.0" prefWidth="230.0" text="إدخال المدفوع">
                <font>
                   <Font name="System Bold Italic" size="25.0" />

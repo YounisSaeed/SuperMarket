@@ -62,7 +62,6 @@ public class Manager_SuppliersController implements Initializable {
     private TableColumn<Suppliers, String> t_supplier;
     @FXML
     private TableColumn<Suppliers, String> t_phone;
-    @FXML
     private TableColumn<Suppliers, String> t_category;
     @FXML
     private TableColumn<Suppliers, String> t_name;

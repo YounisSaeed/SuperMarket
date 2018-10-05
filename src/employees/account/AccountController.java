@@ -7,6 +7,7 @@ package employees.account;
 
 import Classes.Alerts;
 import database.DataHelper;
+import database.DatabaseHandler;
 import employees.main.EmployeesController;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,6 +23,8 @@ import javafx.scene.layout.AnchorPane;
  */
 public class AccountController implements Initializable {
     public static String EmpCode="";
+    public static String EmpName="";
+    
     
     EmployeesController x = new EmployeesController();
     @FXML
@@ -32,9 +35,11 @@ public class AccountController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    DatabaseHandler databaseHandler;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        databaseHandler=DatabaseHandler.getInstance();
     }    
 
     @FXML
@@ -77,6 +82,8 @@ public class AccountController implements Initializable {
         if (DataHelper.isEmployeeisEXits(id))
         {
             EmpCode=code_employee.getText();
+            EmpName=DataHelper.getEmpName(EmpCode);
+            System.out.println(EmpName);
             //Alerts.showInfoAlert("كود صحيح");
              x.loadwindow(loadPane,"/employees/account/accepted/acoountaccept.fxml");
             

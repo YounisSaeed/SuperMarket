@@ -131,13 +131,15 @@ public class SalesController extends NewSerial implements Initializable {
                 });
             }
         });
-       
+        
     }
 
 //    private void DRR(){
-//        String qu="DROP TABLE personal_expences";
+//        String qu="DROP TABLE emp_left";
+//        String qu2="DROP TABLE emp_att";
 //        boolean r=databaseHandler.execAction(qu);
-//        if(r)
+//        boolean r2=databaseHandler.execAction(qu2);
+//        if(r && r2)
 //            System.out.println("    dedddddddddddddd");
 //    }
 

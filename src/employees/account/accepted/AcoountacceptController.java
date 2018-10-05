@@ -48,6 +48,7 @@ public class AcoountacceptController extends AccountController implements Initia
     @FXML
     private void loadBack(ActionEvent event) {
         EmpCode="";
+        EmpName="";
         loadWindow("/employees/account/account.fxml");
     }
     

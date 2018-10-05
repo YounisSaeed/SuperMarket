@@ -202,10 +202,11 @@ public static void fillComboBox(ComboBox C1){
      //    if (!E_field_date1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals("") &&!E_field_date2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals("")  ){
               if (E_field_date1.getValue().compareTo(E_field_date2.getValue())<0){   //To make sure that end date is after start date          
              
-             String da1=E_field_date1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+              String da1=E_field_date1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
              String da2=E_field_date1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-             String sup=E_cname.getValue();
-             String qOut1="SELECT * FROM employee2 RIGHT OUTER JOIN employee1 on  employee1.emp_id = employee2.emp_id   WHERE (emp_date >= '"+da1+"' AND emp_date <= '"+da2+"') AND (emp_name='"+sup+"') "; 
+             String emp=E_cname.getValue();
+             //String qOut1="SELECT * FROM employee2 RIGHT OUTER JOIN employee1 on  employee1.emp_id = employee2.emp_id   WHERE (emp_date >= '"+da1+"' AND emp_date <= '"+da2+"') AND (emp_name='"+sup+"') "; 
+             String qOut1="SELECT emp_date FROM emp_att WHERE emp_name='"+emp+"' AND (emp_date >= '"+da1+"' AND emp_date <= '"+da2+"') "; 
              
              /**********Create Document******************/
              Document document =new Document(PageSize.A3);
@@ -285,29 +286,42 @@ public static void fillComboBox(ComboBox C1){
                          
             ResultSet rs=DatabaseHandler.getInstance().execQuery(qOut1);
             
-            
+            String dat="";
              while(rs.next()){
-                String da=rs.getString("emp_date");   
-                String dat=rs.getString("emp_start_time"); 
-                String bar=rs.getString("emp_finish_time");
-                int quan=rs.getInt("emp_hours");
-
+                dat=rs.getString("emp_date");
+                String start="";
+                String end="";
+                int hours=0;
                 
-                //cell 1
-                c1 = new PdfPCell(new Phrase(da,normal));
-                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-                table.addCell(c1);
+                String qu1="SELECT emp_start_time FROM emp_att WHERE emp_date='"+dat+"' AND emp_name='"+emp+"'";
+                ResultSet rs1=DatabaseHandler.getInstance().execQuery(qu1);
+                if(rs1.next()) start=rs1.getString("emp_start_time");
+                
+                String qu2="SELECT emp_start_time FROM emp_left WHERE emp_date='"+dat+"' AND emp_name='"+emp+"'";
+                ResultSet rs2=DatabaseHandler.getInstance().execQuery(qu2);
+                if(rs2.next()) end=rs2.getString("emp_start_time");
+                
+//                String qu3="SELECT emp_hours FROM emp_hours WHERE emp_date='"+dat+"' AND emp_name='"+emp+"'";
+//                ResultSet rs3=DatabaseHandler.getInstance().execQuery(qu3);
+//                if(rs3.next()) hours=rs3.getInt("emp_hours");
+//                
+                int hour=difff(start, end);
+                
                 //cell 1
                 c1 = new PdfPCell(new Phrase(dat,normal));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
+                //cell 1
+                c1 = new PdfPCell(new Phrase(start,normal));
+                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(c1);
                 //cell 2
-                c1 = new PdfPCell(new Phrase(bar,normal));
+                c1 = new PdfPCell(new Phrase(end,normal));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
 
                 //cell 5
-                c1 = new PdfPCell(new Phrase(quan+"",normal));
+                c1 = new PdfPCell(new Phrase(hour+"",normal));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
                 
@@ -485,8 +499,15 @@ else {
     
     private void employeeExpense(String startDate ,String endDate,String name) throws FileNotFoundException, DocumentException{
          if (E_field_date1.getValue().compareTo(E_field_date2.getValue())<0){   //To make sure that end date is after start date
-        String qu="SELECT * FROM employee1 FULL OUTER JOIN employee2 on  employee1.emp_id = employee1.emp_id where emp_name = "+ name+" BETWEEN '"+startDate+"'AND '"+endDate+"'";  
-        ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
+             String da1=E_field_date1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+             String da2=E_field_date1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+             String emp=E_cname.getValue();
+             //String qOut1="SELECT * FROM employee2 RIGHT OUTER JOIN employee1 on  employee1.emp_id = employee2.emp_id   WHERE (emp_date >= '"+da1+"' AND emp_date <= '"+da2+"') AND (emp_name='"+sup+"') "; 
+             String qOut1="SELECT * FROM personal_expences WHERE emp_name='"+emp+"' AND (emp_date >= '"+da1+"' AND emp_date <= '"+da2+"') "; 
+             //String qOut1="SELECT * FROM personal_expences WHERE (emp_date >= '"+da1+"' AND emp_date <= '"+da2+"') AND (emp_name='"+emp+"') "; 
+             //String qOut1="SELECT * FROM personal_expences "; 
+             
+             ResultSet rs=DatabaseHandler.getInstance().execQuery(qOut1);
                 
         
          /**********Create Document******************/
@@ -514,7 +535,7 @@ else {
         
         PdfPTable t = new PdfPTable(1);
          PdfPCell cell = new PdfPCell();
-        Paragraph p=new Paragraph("مشتريات الموظف", normal);
+        Paragraph p=new Paragraph("مصاريف الموظف", normal);
         p.setAlignment(PdfPCell.ALIGN_CENTER);
         cell.addElement(p);
         cell.setBorder(Rectangle.NO_BORDER);
@@ -531,6 +552,22 @@ else {
         addEmptyLine(preface, 2);
         document.add(preface);   // Add paragraph of name preface to document
         
+        
+        PdfPTable t2 = new PdfPTable(1);
+             PdfPCell cell2 = new PdfPCell();
+             Paragraph p2=new Paragraph("الموظف :    "+emp, normal);
+             p2.setAlignment(PdfPCell.ALIGN_LEFT);
+             cell2.addElement(p2);
+             cell2.setBorder(Rectangle.NO_BORDER);
+             cell2.setRunDirection(RUN_DIRECTION_RTL); //To Make arabic works well
+             t2.addCell(cell2);
+             document.add(t2);
+             
+             Paragraph preface2 = new Paragraph();
+             addEmptyLine(preface2, 2);
+             document.add(preface2);
+             
+             
         
         
         /************************Start of content*********/
@@ -617,8 +654,18 @@ else {
     private void employeeSalary(String startDate ,String endDate,String name) throws FileNotFoundException, DocumentException{
         if (E_field_date1.getValue().compareTo(E_field_date2.getValue())<0){   //To make sure that end date is after start date
      
-        String qu="SELECT * FROM employee1 RIGJT OUTER JOIN employee2 on  employee1.emp_id = employee1.emp_id where emp_name = "+ name+" BETWEEN '"+startDate+"'AND '"+endDate+"'";  
-        ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
+        //String qu="SELECT * FROM employee1 RIGJT OUTER JOIN employee2 on  employee1.emp_id = employee1.emp_id where emp_name = "+ name+" BETWEEN '"+startDate+"'AND '"+endDate+"'";  
+         String da1=E_field_date1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+             String da2=E_field_date1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+             String emp=E_cname.getValue();
+             //String qOut1="SELECT * FROM employee2 RIGHT OUTER JOIN employee1 on  employee1.emp_id = employee2.emp_id   WHERE (emp_date >= '"+da1+"' AND emp_date <= '"+da2+"') AND (emp_name='"+sup+"') "; 
+             String gqu="SELECT emp_salary_hours FROM employee1 WHERE emp_name='"+emp+"'";
+             String qOut1="SELECT emp_hours FROM emp_hours WHERE emp_name='"+emp+"' AND (emp_date >= '"+da1+"' AND emp_date <= '"+da2+"') "; 
+             String qOut2="SELECT emp_price_product FROM personal_expences WHERE emp_name='"+emp+"' AND (emp_date >= '"+da1+"' AND emp_date <= '"+da2+"') "; 
+             
+             ResultSet grs=DatabaseHandler.getInstance().execQuery(gqu);
+             ResultSet rs1=DatabaseHandler.getInstance().execQuery(qOut1);
+             ResultSet rs2=DatabaseHandler.getInstance().execQuery(qOut2);
                 
         
          /**********Create Document******************/
@@ -632,7 +679,7 @@ else {
         /***************The Name of Pdf************/
          try {
          
-             PdfWriter.getInstance(document, new FileOutputStream("أجر الموظف"+ft.format(date)+".pdf"));
+             PdfWriter.getInstance(document, new FileOutputStream("أجر الموظف "+emp+ft.format(date)+".pdf"));
          } catch (DocumentException ex) {
              Logger.getLogger(Employee_ReportsController.class.getName()).log(Level.SEVERE, null, ex);
          }
@@ -646,7 +693,7 @@ else {
         
         PdfPTable t = new PdfPTable(1);
          PdfPCell cell = new PdfPCell();
-        Paragraph p=new Paragraph("أجر الموظف", normal);
+        Paragraph p=new Paragraph("أجر الموظف :"+emp, normal);
         p.setAlignment(PdfPCell.ALIGN_CENTER);
         cell.addElement(p);
         cell.setBorder(Rectangle.NO_BORDER);
@@ -665,91 +712,64 @@ else {
         
         
         
+        PdfPTable t5 = new PdfPTable(1);
+        PdfPCell cell5 = new PdfPCell();
+        Paragraph p5=new Paragraph("الفترة من  :  "+da1+"    الى:  "+da2,normal);
+        p5.setAlignment(PdfPCell.ALIGN_LEFT);
+        cell5.addElement(p5);
+        cell5.setBorder(Rectangle.NO_BORDER);
+        cell5.setRunDirection(RUN_DIRECTION_RTL); //To Make arabic works well
+        t5.addCell(cell5);
+        addEmptyLine(p5, 2);
+        document.add(t5);
+
+        
+        Paragraph preface2 = new Paragraph();
+        preface2.setAlignment(Element.ALIGN_RIGHT);
+        //preface2.add("--------------------------------------------------              ");
+        addEmptyLine(preface2, 3);
+        document.add(preface2);
+        
+        
         /************************Start of content*********/
  
-        /*****Creat table has 4 column*******/
-        PdfPTable table = new PdfPTable(5);
-        table.setRunDirection(RUN_DIRECTION_RTL);//To Make arabic works well
-        
-          /***Header of table*****/
-        PdfPCell c1 = new PdfPCell(new Phrase("التاريخ",normal));
-        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-        c1.setRunDirection(RUN_DIRECTION_RTL);
-        table.addCell(c1);
-        c1 = new PdfPCell(new Phrase("عدد ساعات العمل",normal));
-        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(c1);
-        c1 = new PdfPCell(new Phrase("الأجر ",normal));
-        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(c1);
-        c1 = new PdfPCell(new Phrase("المصاريف ",normal));
-        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(c1);
-        c1 = new PdfPCell(new Phrase("صافي المرتب ",normal));
-        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(c1);
-        
-        table.setHeaderRows(1);
-        
         /***********retrive data from database and but them in cells***************/
         try {
-            
-            double hours=0,expenses=0,salary,netSalary;
-            while(rs.next()){
-          
-                double x1 =rs.getDouble("emp_hours");
-                double x2 =rs.getDouble("emp_price_product");
-                 hours=hours+x1;
-                 expenses=expenses+x2;
-                 System.out.println(x1+"  "+x2+" "+hours+" "+ expenses);
-                }
-            
-                 double x3 =rs.getDouble("emp_salary_hours");
-                 String x4=rs.getString("emp_date");
-                 salary=hours*x3;
-                 netSalary=salary-expenses;
-                 System.out.println(salary+" "+ netSalary);
-                
-                
-                
-                //cell 1
-                c1 = new PdfPCell(new Phrase(x4,normal));
-                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-                c1.setRunDirection(RUN_DIRECTION_RTL);
-                table.addCell(c1);
-                //cell 2
-                c1 = new PdfPCell(new Phrase(String.valueOf(hours),normal));
-                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-                c1.setRunDirection(RUN_DIRECTION_RTL);
-                table.addCell(c1);
-                 //cell 2
-                c1 = new PdfPCell(new Phrase(String.valueOf(salary),normal));
-                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-                c1.setRunDirection(RUN_DIRECTION_RTL);
-                table.addCell(c1);
-                //cell 2
-                c1 = new PdfPCell(new Phrase(String.valueOf(expenses),normal));
-                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-                c1.setRunDirection(RUN_DIRECTION_RTL);
-                table.addCell(c1);
-                 //cell 2
-                c1 = new PdfPCell(new Phrase(String.valueOf(netSalary),normal));
-                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-                c1.setRunDirection(RUN_DIRECTION_RTL);
-                table.addCell(c1);
-        
-                
-                
-            
-            // Add table to document
-            document.add(table);
+            double salaryPerHour=0,salary=0,expenses=0,netSalary=0;
+            int workHours=0;
+            if(grs.next())
+                salaryPerHour=grs.getDouble("emp_salary_hours"); // الاجر للساعة
  
+            while(rs1.next()){
+                workHours+=rs1.getInt("emp_hours"); // عدد ساعات العمل
+            }
+            salary=salaryPerHour*workHours; // الاجر
+            
+            while(rs2.next()){
+                expenses+=rs2.getDouble("emp_price_product"); // المصاريف الشخصية
+            }
+            
+            netSalary=salary-expenses;
+            
+            
+            PdfPTable t3 = new PdfPTable(1);
+            PdfPCell cell3 = new PdfPCell();
+            Paragraph p3=new Paragraph("  اجر الساعة:    "+ salaryPerHour+"\n\n"+"عدد ساعات العمل:    "+workHours +"\n\n"+
+                    "المصاريف الشخصية:     "+expenses+"\n\n"+
+                    "صافى المرتب:     "+netSalary,normal);
+            p3.setAlignment(PdfPCell.ALIGN_LEFT);
+            cell3.addElement(p3);
+            cell3.setBorder(Rectangle.NO_BORDER);
+            cell3.setRunDirection(RUN_DIRECTION_RTL); //To Make arabic works well
+            t3.addCell(cell3);
+            document.add(t3);
+            
+            
+            
+            
+            
             /////////////////ِTo show that pdf is printed///////////////
-            Alert AT=new Alert(Alert.AlertType.INFORMATION);
-            AT.setHeaderText(null);
-            AT.setContentText("تمت طباعة التقرير");
-            AT.showAndWait();
-        
+            Alerts.showInfoAlert("تمت طباعة التقرير");
                    } catch(Exception e){
             System.out.println(e);
         }
@@ -784,7 +804,32 @@ else {
         }
     }
 
-   
+   private int difff(String st,String fh){
+        double salary;
+        String start = st;
+        String finish = fh;
+         long differenceCalc=0;
+
+        try{SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss");
+            Date date1 = format.parse(start);
+            Date date2 = format.parse(finish);
+            differenceCalc = date2.getTime() - date1.getTime(); 
+        }catch(Exception e){
+            System.out.println("test");
+        }
+        long timeDifference = differenceCalc/1000;
+        int h = (int) (timeDifference / (3600));
+        int m = (int) ((timeDifference - (h * 3600)) / 60);
+        int s = (int) (timeDifference - (h * 3600) - m * 60);
+        
+         String finalTime = String.format("%02d:%02d:%02d", h,m,s);
+        
+        salary = h*m * 20;
+        
+        System.out.println(h+"  "+s);
+        //this.diff();
+        return  h;
+    }
     
     
     
@@ -793,3 +838,58 @@ else {
 
     }
 
+/*
+
+        PdfPCell c1 = new PdfPCell(new Phrase("التاريخ",normal));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        c1.setRunDirection(RUN_DIRECTION_RTL);
+        table.addCell(c1);
+        c1 = new PdfPCell(new Phrase("عدد ساعات العمل",normal));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+        c1 = new PdfPCell(new Phrase("الأجر ",normal));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+        c1 = new PdfPCell(new Phrase("المصاريف ",normal));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+        c1 = new PdfPCell(new Phrase("صافي المرتب ",normal));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+        
+        table.setHeaderRows(1);
+
+
+                //cell 1
+                c1 = new PdfPCell(new Phrase(x4,normal));
+                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                c1.setRunDirection(RUN_DIRECTION_RTL);
+                table.addCell(c1);
+                //cell 2
+                c1 = new PdfPCell(new Phrase(String.valueOf(hours),normal));
+                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                c1.setRunDirection(RUN_DIRECTION_RTL);
+                table.addCell(c1);
+                 //cell 2
+                c1 = new PdfPCell(new Phrase(String.valueOf(salary),normal));
+                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                c1.setRunDirection(RUN_DIRECTION_RTL);
+                table.addCell(c1);
+                //cell 2
+                c1 = new PdfPCell(new Phrase(String.valueOf(expenses),normal));
+                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                c1.setRunDirection(RUN_DIRECTION_RTL);
+                table.addCell(c1);
+                 //cell 2
+                c1 = new PdfPCell(new Phrase(String.valueOf(netSalary),normal));
+                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                c1.setRunDirection(RUN_DIRECTION_RTL);
+                table.addCell(c1);
+        
+                
+                
+            
+            // Add table to document
+            document.add(table);
+
+*/

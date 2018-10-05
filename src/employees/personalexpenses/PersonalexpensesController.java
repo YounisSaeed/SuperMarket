@@ -1,6 +1,7 @@
 
 package employees.personalexpenses;
 
+import Classes.Alerts;
 import Classes.Employee;
 import Serial_dinamic.NewSerial;
 import static Serial_dinamic.NewSerial.gettDate;
@@ -51,7 +52,7 @@ public class PersonalexpensesController extends AccountController implements Ini
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         databaseHandler=DatabaseHandler.getInstance();
-        DataHelper.loadpersonalExpensesData(personal_table,gettDate());
+        DataHelper.loadpersonalExpensesData(personal_table,gettDate(),EmpCode);
         showTable();
     }
     private void showTable(){
@@ -68,6 +69,7 @@ public class PersonalexpensesController extends AccountController implements Ini
     @FXML
     private void loadBack(ActionEvent event) {
         EmpCode="";
+        EmpName="";
         x.loadwindow(loadPane,"/employees/account/accepted/acoountaccept.fxml");
         //x.loadwindow(loadPane,"/employees/account/accepted/accountaccept.fxml");
     }
@@ -88,17 +90,13 @@ public class PersonalexpensesController extends AccountController implements Ini
                 e.setDate(today);
                 e.setEmployeeExpensesCost(Double.parseDouble(value.getText()));
                 e.setEmployeeExpensesReason(reason.getText());
+                e.setEmployeeName(EmpName);
+                e.setEmployeeId(EmpCode);
                 boolean result = DataHelper.insertNewPersonalExpences(e);
                 personal_table.getItems().add(e);
-                if(result){
-                    
-                    Alert AT=new Alert(Alert.AlertType.INFORMATION);
-                    AT.setHeaderText(null);
-                    AT.setContentText("تم اضافة المصاريف الشخصية");
-                    AT.showAndWait();
-                    clear();
-                    return;
-                }
+                if(result)
+                    Alerts.showInfoAlert("تم اضافة المصاريف الشخصية");
+                
             }
     @FXML
     private void confirm(ActionEvent event) {
