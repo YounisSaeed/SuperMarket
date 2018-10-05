@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Manager.Product.Quantity;
 
 import Classes.Alerts;
@@ -25,11 +21,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-/**
- * FXML Controller class
- *
- * @author lolo
- */
+
 public class Manager_Product_QuantityController implements Initializable {
     HomeController x = new HomeController (); // used for load main page
     

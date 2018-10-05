@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Fri Oct 05 22:38:44 EET 2018 Thread[JavaFX Application Thread,5,main] Ignored duplicate property derby.module.replication.master in jar:file:/D:/walid/Last2/Supermarket_Management_System/libs/derby.jar!/org/apache/derby/modules.properties
 Fri Oct 05 22:38:44 EET 2018 Thread[JavaFX Application Thread,5,main] Ignored duplicate property derby.module.resultSetStatisticsFactory in jar:file:/D:/walid/Last2/Supermarket_Management_System/libs/derby.jar!/org/apache/derby/modules.properties
 Fri Oct 05 22:38:44 EET 2018 Thread[JavaFX Application Thread,5,main] Ignored duplicate property derby.module.NoneAuthentication in jar:file:/D:/walid/Last2/Supermarket_Management_System/libs/derby.jar!/org/apache/derby/modules.properties
@@ -66,11 +67,18 @@ Fri Oct 05 22:38:44 EET 2018:
 Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0166-45f4-3615-000002bffc50 
 on database directory D:\walid\Last2\Supermarket_Management_System\database with class loader sun.misc.Launcher$AppClassLoader@5c647e05 
 Loaded from file:/D:/walid/Last2/Supermarket_Management_System/dist/lib/derby.jar
+=======
+----------------------------------------------------------------
+Fri Oct 05 21:44:01 EET 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0166-45c2-1db3-0000009630f0 
+on database directory F:\Dokkan\ProjectAfter\SuperMarket\database with class loader sun.misc.Launcher$AppClassLoader@1f96302 
+Loaded from file:/F:/Dokkan/ProjectAfter/SuperMarket/dist/run1841374120/lib/derby.jar
+>>>>>>> 5b11aec721fe918b9921d930156e72be6b685fa6
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_181-b13
-user.dir=D:\walid\Last2\Supermarket_Management_System
+java.runtime.version=1.8.0_171-b11
+user.dir=F:\Dokkan\ProjectAfter\SuperMarket
 os.name=Windows 10
-os.arch=amd64
+os.arch=x86
 os.version=10.0
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

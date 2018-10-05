@@ -304,7 +304,7 @@ public class Financial_ReportsController implements Initializable {
     private void invoices(){    
 
          try { 
-              if (F_Tdate1.getValue().compareTo(F_Tdate1.getValue())<0){   //To make sure that end date is after start date
+              if (F_Tdate1.getValue().compareTo(F_Tdate2.getValue())<0){   //To make sure that end date is after start date
              String da1=F_Tdate1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
              String da2=F_Tdate2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
              
@@ -321,7 +321,7 @@ public class Financial_ReportsController implements Initializable {
              
              /***************The Name of Pdf************/
              
-             PdfWriter.getInstance(document, new FileOutputStream("الفواتير"+ft.format(date)+".pdf"));
+             PdfWriter.getInstance(document, new FileOutputStream("فواتير المبيعات"+ft.format(date)+".pdf"));
              
              System.out.println("Writrer insrance Created");
              document.open();  // Open the document to append in it .

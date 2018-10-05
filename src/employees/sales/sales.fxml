@@ -39,6 +39,7 @@
                   <DropShadow height="6.0" radius="2.5" spread="1.0" width="6.0" />
                </effect>
             </JFXButton>
+   
             <JFXButton onAction="#cancelBill" prefHeight="25.0" prefWidth="160.0" styleClass="jfx-button" stylesheets="@sales.css" text="إلغاء" textAlignment="JUSTIFY" textFill="WHITE">
                <VBox.margin>
                   <Insets left="18.0" top="30.0" />

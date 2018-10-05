@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package employees.buying;
 
 import Classes.Buying;
@@ -153,8 +149,11 @@ public class BuyingController  extends NewSerial implements Initializable {
     @FXML
     private void A_N_B(KeyEvent event) {  // addBuying(); do it by pressing in SHIFT with Z  keys 
         try{
-        if(event.getCode().equals(KeyCode.CONTROL) && !supplier.getValue().equals("")) 
+        if(event.getCode().equals(KeyCode.CONTROL) && !supplier.getValue().equals("")){
              this.addBuying();
+        } else 
+            Alerts.showErrorAlert("يرجى ادخال المورد");   
+            
         }catch(Exception e){}
     }
     /**************************************************************************/
@@ -250,8 +249,11 @@ public class BuyingController  extends NewSerial implements Initializable {
     /********************************************* addQuntity _________*/
     private void addQuntity()
     {
-        if(!Quntity.getText().equals("") && !productBarcode.getText().equals("") && !BuuPrice.getText().equals(""))
+        if(!Quntity.getText().equals("")  && !BuuPrice.getText().equals(""))
         {
+            if ( !productBarcode.getText().equals("")){
+               
+            
             Buying B=new Buying();
             try{
             B.setCurrentQuantity(Integer.parseInt(Quntity.getText()));
@@ -277,15 +279,19 @@ public class BuyingController  extends NewSerial implements Initializable {
                     totalPrice.setText(TOTAL+"");
                     B_table.getItems().add(B);
                     Alerts.showInfoAlert("تمت الاضافة !!");
+                    clearSome();
+                    
                 }
                 else
-                Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى");
+                Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. ");
             }
             
             }catch(NumberFormatException es){
                 Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة !!");
             }
-            
+            }
+            else 
+             Alerts.showErrorAlert("يرجى ادخال الصنف");   
         }
         else
             Alerts.showErrorAlert("يرجى ادخال الكمية");
@@ -332,6 +338,15 @@ public class BuyingController  extends NewSerial implements Initializable {
         totalPrice.clear();
         BuuPrice.clear();
     }
+    private void clearSome(){
+       B_searchField.clear();
+       productPrise.setText("");
+       Quntity.clear();
+       BuuPrice.clear();
+       productBarcode.setText("");
+       productName.setText("");
+    }
+    
 
     
     

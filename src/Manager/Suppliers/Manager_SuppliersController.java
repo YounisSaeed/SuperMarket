@@ -82,14 +82,17 @@ public class Manager_SuppliersController implements Initializable {
     
     /**************************************Buttons to move to another Page*************************************/
     @FXML
-    private void Suppliers_Reports(ActionEvent event) {                                               // Suuplier Reports Page
+    private void Suppliers_Reports(ActionEvent event) {          
+         if (Alerts.ConfirmAlert("هل تريد الخروج من الصفحة وألغاء أي تغييرات ؟","")){// Suuplier Reports Page
          x.loadwindow(Manager_Suppliers,"/Manager/Suppliers/Reports/Sppliers_Reports.fxml");
-    }
+    }}
 
     @FXML
-    private void Manager_Home(ActionEvent event) {                                                  // Manager Main Page
-         x.loadwindow(Manager_Suppliers,"/Manager/Main/Home.fxml");
-    }
+    private void Manager_Home(ActionEvent event) {    
+        // Manager Main Page
+         if (Alerts.ConfirmAlert("هل تريد الخروج من الصفحة وألغاء أي تغييرات ؟","")){
+        x.loadwindow(Manager_Suppliers,"/Manager/Main/Home.fxml");
+    }}
 
     
     
@@ -135,15 +138,13 @@ public class Manager_SuppliersController implements Initializable {
         if ( !S_Tname.getText().equals("") && !S_TPhone.getText().equals("") && !S_TSaller.getText().equals(""))
         {
            
-                 
-                         
-                  
                     Suppliers s =new Suppliers();
                     s.setSupplierName(S_Tname.getText());
                     s.setSupplierPhone(S_TPhone.getText());
                     s.setSalespersonName(S_TSaller.getText());
                     boolean result = DataHelper.insertNewSupplier(s);
 
+                    
                     if(result){
                         S_Table.getItems().add(s);
                         Alerts.showInfoAlert("تم الاضافة");
@@ -151,8 +152,10 @@ public class Manager_SuppliersController implements Initializable {
                     }
                     else 
                         Alerts.showErrorAlert("خطأ فى الاضافة");
-                    }
-                
+                   
+        
+        }else 
+                Alerts.showErrorAlert("برجاء التأكد من ملىء جميع الحقول المطلوبة ");
           
          } catch (NullPointerException e){                   
                 Alerts.showErrorAlert("برجاء التأكد من ملىء جميع الحقول المطلوبة ");
@@ -180,7 +183,12 @@ public class Manager_SuppliersController implements Initializable {
                 String salesperson=S_TSaller.getText();
                 Suppliers S=new Suppliers(name, phone, salesperson);
                 boolean R=DataHelper.updateSupplier(S, oldCompName);
-                if(R){Alerts.showInfoAlert("تم التعديل"); DataHelper.loadSuppliersData(S_Table);}
+                if(R)
+                {
+                    Alerts.showInfoAlert("تم التعديل");
+                    DataHelper.loadSuppliersData(S_Table);
+                    clear();
+                }
             }
             catch (NumberFormatException es)
             {
@@ -202,7 +210,7 @@ public class Manager_SuppliersController implements Initializable {
     private void Delete_Supplier() {
         
        // try {
-         if ( !S_Tname.getText().equals("") && !S_TPhone.getText().equals("") && !S_TSaller.getText().equals("") ){
+         if ( S_Table.getSelectionModel().getSelectedItem()!=null ){
             
                
            Suppliers S=S_Table.getSelectionModel().getSelectedItem();
@@ -217,13 +225,15 @@ public class Manager_SuppliersController implements Initializable {
                  else 
                     Alerts.showErrorAlert("لم تتم العملية بشكل صحيح ");
             }
-    }
+    }else {
+             Alerts.showErrorAlert("برجاءاختيار عنصر لمسحه");
+                }
+    
              
              
              
              
-             
-           /*  try{
+           /* try{
                 
                  
                  

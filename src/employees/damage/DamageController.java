@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package employees.damage;
 
 import Classes.Common_Properties;
@@ -33,11 +29,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
-/**
- * FXML Controller class
- *
- * @author NOUR
- */
+
 public class DamageController extends NewSerial implements Initializable {
     EmployeesController x = new EmployeesController();
     @FXML
@@ -95,6 +87,9 @@ public class DamageController extends NewSerial implements Initializable {
         t_kquan.setCellValueFactory(new PropertyValueFactory<>("quantityKind"));
         t_cost.setCellValueFactory(new PropertyValueFactory<>("cost"));
     }
+
+
+
     
     /******************* Search with button or pressing enter ******************/
     @FXML
@@ -115,6 +110,11 @@ public class DamageController extends NewSerial implements Initializable {
         searrch();
     }
     /**************************************************************************/
+
+
+
+
+
     
     /************************* ADD DAMAGES TO DATABASE ************************/
     @FXML
@@ -131,9 +131,14 @@ public class DamageController extends NewSerial implements Initializable {
     }
     /**************************************************************************/
     
-    private void addQuntity(ActionEvent event) {
-        this.addQuntity();
-    } 
+
+
+
+
+
+//    private void addQuntity(ActionEvent event) {
+//        this.addQuntity();
+//    } 
 
 //    @FXML
 //    private void addPaid(ActionEvent event) {
@@ -206,8 +211,17 @@ public class DamageController extends NewSerial implements Initializable {
 //        else
 //            Alerts.showErrorAlert("لم يتم ادخال البيانات بشكل صحيح ! .. يرجى التأكد من ملئ جميع الحقول المطلوبه");
 //        
+    }else Alerts.showErrorAlert("يرجى التأكد من ملئ جميع الحقول المطلوبة");
     }
-    }
+    /*********************************************************************************************************/
+    
+    
+    
+    
+    
+    
+    
+    /**********************************Cancel ***************************************/
     
     private void cancelDamage()
     {
@@ -231,17 +245,7 @@ public class DamageController extends NewSerial implements Initializable {
     /**********************************************************************************************/
     /**********************************************************************************************/
     
-    private void addQuntity()
-    {
-        if(!Quntity.getText().equals(""))
-        {
-            //yoooour coooode
-        }
-        else
-        {
-            Alerts.showErrorAlert("يرجى ادخال الكمية");
-        }
-    }
+  
     
 //    private void addPaid()
 //    {
@@ -259,9 +263,10 @@ public class DamageController extends NewSerial implements Initializable {
     /*********************************      LOAD PAGES     ***************************************/
     @FXML
     private void loadMainOfDamage(ActionEvent event) {
+         if (Alerts.ConfirmAlert("هل تريد الخروج من الصفحة وألغاء أي تغييرات ؟","")){
        x.loadwindow(loadPane,"/employees/main/employees.fxml");
     }
-
+    }
     @FXML
     private void calcButton(ActionEvent event) {
         try {
@@ -273,6 +278,7 @@ public class DamageController extends NewSerial implements Initializable {
 
     @FXML
     private void DeleteItemButton(ActionEvent event) {
+        
     }
 
     /***************************_____________THE END______________********************************/ 

@@ -93,15 +93,17 @@ public class Manager_EmployeeController implements Initializable {
     //Method To load Employee Reports page
     @FXML
     private void Employee_Reports(ActionEvent event) {
+        if (Alerts.ConfirmAlert("هل تريد الخروج من الصفحة وألغاء أي تغييرات ؟","")){
         x.loadwindow(Manger_Employee,"/Manager/Employee/Reports/Employee_Reports.fxml");
     }
-
+    }
     //Method To load Admin home page
     @FXML
     private void Manager_Home(ActionEvent event) {
+        if (Alerts.ConfirmAlert("هل تريد الخروج من الصفحة وألغاء أي تغييرات ؟","")){
         x.loadwindow(Manger_Employee,"/Manager/Main/Home.fxml");
     }
-    
+    }
     //Method to call add employee method
     @FXML
     private void Add_Employee(ActionEvent event) throws SQLException {
@@ -242,8 +244,7 @@ public class Manager_EmployeeController implements Initializable {
      /*********************************************************Delete Employee************************************************/
     
     private void Delete_Employee() {
-        if ( !E_Tname.getText().equals("") && !E_Tcode.getText().equals("") && !E_Tphone.getText().equals("")
-             && !E_Taddress.getText().equals("") && !E_Tsalary.getText().equals("")  ){  
+        if ( E_tables.getSelectionModel().getSelectedItem() !=null  ){  
             
             
            Employee G=E_tables.getSelectionModel().getSelectedItem();
@@ -255,9 +256,9 @@ public class Manager_EmployeeController implements Initializable {
                     E_tables.getItems().removeAll(E_tables.getSelectionModel().getSelectedItem());
                     clear();
                 }
-                 else {  Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى");}
+                 else {  Alerts.showErrorAlert("لم تتم العملية بشكل صحيح ");}
             
-    } else {    Alerts.showErrorAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة"); }
+    } else {    Alerts.showErrorAlert("برجاءاختيار عنصر لمسحه"); }
         
     }    
     }

@@ -85,6 +85,9 @@ public class PersonalexpensesController extends AccountController implements Ini
         }
     }*/
     private void add(){
+                if (!reason.getText().equals("") && !value.getText().equals("")){
+                if (Double.parseDouble(value.getText())>0){
+        
                 Employee e = new Employee();
                 Date today = Date.valueOf(getDate());
                 e.setDate(today);
@@ -94,9 +97,27 @@ public class PersonalexpensesController extends AccountController implements Ini
                 e.setEmployeeId(EmpCode);
                 boolean result = DataHelper.insertNewPersonalExpences(e);
                 personal_table.getItems().add(e);
+<<<<<<< HEAD
                 if(result)
                     Alerts.showInfoAlert("تم اضافة المصاريف الشخصية");
                 
+=======
+                if(result){
+                    
+                    Alert AT=new Alert(Alert.AlertType.INFORMATION);
+                    AT.setHeaderText(null);
+                    AT.setContentText("تم اضافة المصاريف الشخصية");
+                    AT.showAndWait();
+                    clear();
+                    return;
+                }
+                }else {
+                    Alerts.showInfoAlert("القيمة التي أدخلتها غير صحيحة");
+                }
+                }else {
+                    Alerts.showInfoAlert("يرجى التأكد من ملئ جميع الحقول المطلوبة");
+                }
+>>>>>>> 5b11aec721fe918b9921d930156e72be6b685fa6
             }
     @FXML
     private void confirm(ActionEvent event) {
