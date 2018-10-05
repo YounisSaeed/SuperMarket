@@ -1,6 +1,7 @@
 
 package employees.personalexpenses;
 
+import Classes.Alerts;
 import Classes.Employee;
 import Serial_dinamic.NewSerial;
 import static Serial_dinamic.NewSerial.gettDate;
@@ -83,6 +84,9 @@ public class PersonalexpensesController extends AccountController implements Ini
         }
     }*/
     private void add(){
+                if (!reason.getText().equals("") && !value.getText().equals("")){
+                if (Double.parseDouble(value.getText())>0){
+        
                 Employee e = new Employee();
                 Date today = Date.valueOf(getDate());
                 e.setDate(today);
@@ -98,6 +102,12 @@ public class PersonalexpensesController extends AccountController implements Ini
                     AT.showAndWait();
                     clear();
                     return;
+                }
+                }else {
+                    Alerts.showInfoAlert("القيمة التي أدخلتها غير صحيحة");
+                }
+                }else {
+                    Alerts.showInfoAlert("يرجى التأكد من ملئ جميع الحقول المطلوبة");
                 }
             }
     @FXML

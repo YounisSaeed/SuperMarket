@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package employees.sales;
 
 import Serial_dinamic.*;
@@ -15,6 +11,7 @@ import database.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import com.sun.glass.events.MouseEvent;
 import employees.main.EmployeesController;
 import java.io.IOException;
 import java.net.URL;
@@ -33,6 +30,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -41,12 +39,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author NOUR
- */
+
 public class SalesController extends NewSerial implements Initializable {
     EmployeesController x = new EmployeesController();
     @FXML
@@ -91,14 +86,36 @@ public class SalesController extends NewSerial implements Initializable {
     private TextField totalPrice;
     @FXML
     private TableView<Sales> SalesTabel;
+//    @FXML
+//    public Button closeButton;
+//    
+//
+//
+//@FXML
+//public void handleCloseButtonAction(ActionEvent event) {
+//    
+//    if(event.equals(MouseEvent.EXIT)){
+//    if (Alerts.ConfirmAlert("هل تريد الخروج من الصفحة وألغاء أي تغييرات ؟","")){
+//    Stage stage = (Stage) closeButton.getScene().getWindow();
+//    stage.close();
+//    }
+//}
+//}
+    //          <Button fx:id="closeButton" cancelButton="true" layoutX="350.0" layoutY="767.0" mnemonicParsing="false" onAction="#handleCloseButtonAction" prefWidth="100.0" text="Close" />
+    
+    
     /**
      * Initializes the controller class.
      */
+    
+    
     
     /***************************************************************************************************************/
     /******************************************INITIALIZATION*******************************************************/
     /***************************************************************************************************************/
 
+    
+    
     DatabaseHandler databaseHandler;
     private static double TOTAL=0; // TOTAL is global var represents TotalPrice and it back to ZERO with new bill generated
     
@@ -156,6 +173,8 @@ public class SalesController extends NewSerial implements Initializable {
         z=new Serial_S(s);
     }
     
+   
+    
     /******************* Search with button or pressing enter ******************/
     Price pri;
     @FXML
@@ -177,15 +196,25 @@ public class SalesController extends NewSerial implements Initializable {
         DataHelper.fillSalesWithInfoOfProduct(T_Search.getText(),productBarcode,productName,productPrice,pri,quntityComboBox);
         System.out.println(pri.getItemPrice());  
     }
+    
+    
+    
+    
+    
+    
     /**************************************************************************/
     /**************************************************************************/
     /**************************************************************************/
+    
+    
     
     
     
     
     
     /************************* ADD OR DELETE BILL TO DATABASE *****************/
+    
+    
     @FXML
     private void AddNewBill(ActionEvent event) { // AddNewBill(); do it by mouse click on button "جديد"
         this.AddNewBill();
@@ -199,9 +228,17 @@ public class SalesController extends NewSerial implements Initializable {
             this.deleteAllRows();
         }catch(Exception e){}
     }
+    
+    
+    
+    
     /**************************************************************************/
     
+    
+    
+    
     /************************* ADD ITEMS TO BILL TABLE VIEW *******************/
+    
     @FXML
     private void AddQuantity(ActionEvent event) { // AddQuantity(); do it by mouse click on button "إدخال الكمية"
         this.AddQuantity();
@@ -214,9 +251,13 @@ public class SalesController extends NewSerial implements Initializable {
         }
         }catch(Exception e){}
     }
+    
+    
     /**************************************************************************/
     
+    
     /********************* DELETE ROW FROM TABLE VIEW *************************/
+    
     @FXML
     private void DeleteRow(ActionEvent event) { // DeleteRow(); do it by mouse click on button "مسح عنصر"
             this.DeleteRow(); 
@@ -230,10 +271,13 @@ public class SalesController extends NewSerial implements Initializable {
              this.DeleteRow();
         }}catch(Exception e){}
     }
+    
     /**************************************************************************/
     
     
+    
     /*********************** ADD PAID MONEY ***********************************/
+    
     @FXML
     private void AddPaid(ActionEvent event) { // AddPaid(); do it by mouse click on button "ادخال المدفوع"
         this.AddPaid();
@@ -244,9 +288,12 @@ public class SalesController extends NewSerial implements Initializable {
              this.AddPaid();
         }
     }
+    
+    
     /**************************************************************************/
     
     /***************************** CANCEL BILL ********************************/
+    
     @FXML
     private void cancelBill(ActionEvent event) {
         if (Alerts.ConfirmAlert("هل تريد مسح جميع عناصر الفاتورة ؟!!","")) {
@@ -254,6 +301,23 @@ public class SalesController extends NewSerial implements Initializable {
         clear();
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**************************************************************************/
     
     
@@ -269,7 +333,10 @@ public class SalesController extends NewSerial implements Initializable {
     private void freezeBill(ActionEvent event) {
        ;
     }
+    
     /**************************************************************************/
+    
+    
     /***********************Previous Process***********************************/
     @FXML
     private void PreviousProcess(ActionEvent event) {
@@ -366,7 +433,8 @@ public class SalesController extends NewSerial implements Initializable {
     private void AddQuantity() {
         
         Sales S=new Sales(); 
-        if(!productBarcode.getText().equals("") || !Quntity.getText().equals("")){
+        if(!productBarcode.getText().equals("") ){
+             if(  !Quntity.getText().equals("")){
             try{
                 if(Double.parseDouble(Quntity.getText())>0){
                 S.setCurrentQuantity(Integer.parseInt(Quntity.getText()));
@@ -402,17 +470,25 @@ public class SalesController extends NewSerial implements Initializable {
                         SalesTabel.getItems().add(S);
                         TOTAL+=S.getCost();
                         totalPrice.setText(TOTAL+"");
+                        clearSome();
                      //   Alerts.showInfoAlert("تمت الاضافة !!");
                     }
                     else
-                        Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى");
+                        Alerts.showErrorAlert("لم تتم العملية بشكل صحيح ");
                 }
                 }else{Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة !!");}
             }catch(NumberFormatException es){
                 Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة !!");
             }
-        }else Alerts.showErrorAlert("لايوجد منتج للأضافة");
+            
+       
+    }else Alerts.showErrorAlert("أدخل الكمية");
+     }else Alerts.showErrorAlert("لايوجد منتج للأضافة");
+    
     }
+    
+    
+    
     
     
     /********************************************* AddPaid _________*/
@@ -432,10 +508,16 @@ public class SalesController extends NewSerial implements Initializable {
     }
     
     
+    
+    
     /********************************************* DeleteRow _________*/
     private void DeleteRow(){
         if(SalesTabel.getItems().isEmpty()){
+            
             Alerts.showErrorAlert("لا يوجد بيانات فى الجدول !!");
+        }
+        else if (SalesTabel.getSelectionModel().getSelectedItem() == null ){
+            Alerts.showErrorAlert("حدد عنصر أولا");
         }
         else{
             double c=SalesTabel.getSelectionModel().getSelectedItem().getCost();
@@ -463,7 +545,7 @@ public class SalesController extends NewSerial implements Initializable {
                     totalPrice.setText(TOTAL+"");
                     
                 } else {
-                    Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى");
+                    Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .");
                 }
             }
         }
@@ -472,7 +554,7 @@ public class SalesController extends NewSerial implements Initializable {
     
     /********************************************* deleteAllRows _________*/
     private void deleteAllRows(){  
-        if(SalesTabel.getItems().isEmpty() || T_Search.getText().equals("")){
+        if(SalesTabel.getItems().isEmpty() && T_Search.getText().equals("")){
             Alerts.showErrorAlert("لا يوجد بيانات لتتم عملية المسح !!");
         }
         else{
@@ -486,7 +568,7 @@ public class SalesController extends NewSerial implements Initializable {
                         Alerts.showInfoAlert("تم مسح جميع العناصر");
                     }
                     else
-                        Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى");
+                        Alerts.showErrorAlert("لم تتم العملية بشكل صحيح");
                 }
            TOTAL=0;
         }
@@ -505,6 +587,14 @@ public class SalesController extends NewSerial implements Initializable {
         SalesTabel.getItems().clear();
     }
     
+    private void clearSome(){
+        T_Search.clear();
+        productName.setText("");
+        productPrice.setText("");
+        productBarcode.setText(""); 
+        Quntity.clear();
+    }
+    
     /**********************_____________END OF IMPELMTNTAION______________************************/
     
     
@@ -512,7 +602,9 @@ public class SalesController extends NewSerial implements Initializable {
     @FXML
     private void loadMainOfSales(ActionEvent event) {
         //loadWindow("/employees/main/employees.fxml");
+        if (Alerts.ConfirmAlert("هل تريد الخروج من الصفحة وألغاء أي تغييرات ؟","")){
         x.loadwindow(loadPane, "/employees/main/employees.fxml");
+    }
     }
 
     @FXML
