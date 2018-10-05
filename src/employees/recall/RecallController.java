@@ -247,19 +247,7 @@ public class RecallController extends NewSerial implements Initializable {
     
     /************************************CLEAR DATA FROM FIELDS _________*/
     private void CancelRecall(){
-        if(R_table.getItems().isEmpty()){
-            Alerts.showErrorAlert("لا يوجد بيانات فى الجدول !!");
-        }
-        else{
-            Recalls R =R_table.getSelectionModel().getSelectedItem();
-            if (Alerts.ConfirmAlert("هل تريد مسح", R.getName())) {
-                Boolean result = DataHelper.deleteRCallRow(R);
-                if (result)
-                    R_table.getItems().removeAll(R_table.getSelectionModel().getSelectedItem()); // delete item from ui table                    totalPrice.setText(TOTAL+"");
-                else 
-                    Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى");
-            }
-        }
+        clear();
     }
     
     
@@ -288,6 +276,24 @@ public class RecallController extends NewSerial implements Initializable {
             Runtime.getRuntime().exec("calc");
         } catch (IOException ex) {
             Alerts.showErrorAlert("حدث مشكلة اثناء فنح  الآلة الحاسبة, يرجى المحاولة لاحقا");
+        }
+    }
+
+    @FXML
+    private void DeleteRow(ActionEvent event) {
+        
+        if(R_table.getItems().isEmpty()){
+            Alerts.showErrorAlert("لا يوجد بيانات فى الجدول !!");
+        }
+        else{
+            Recalls R =R_table.getSelectionModel().getSelectedItem();
+            if (Alerts.ConfirmAlert("هل تريد مسح", R.getName())) {
+                Boolean result = DataHelper.deleteRCallRow(R);
+                if (result)
+                    R_table.getItems().removeAll(R_table.getSelectionModel().getSelectedItem()); // delete item from ui table                    totalPrice.setText(TOTAL+"");
+                else 
+                    Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى");
+            }
         }
     }
 

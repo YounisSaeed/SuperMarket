@@ -221,5 +221,6 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </TextField>
+      <Label fx:id="alterLabel" text="Label" textFill="#343642" />
    </children>
 </AnchorPane>

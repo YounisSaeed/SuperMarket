@@ -762,7 +762,6 @@ public static boolean isEmployeeisEXits(String id) {
         try {
             PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement( 
                     "DELETE FROM sales WHERE number = ?");
-
             statement.setLong(1, sal.getNumber());
             int res = statement.executeUpdate();
             if (res == 1) {
@@ -890,6 +889,7 @@ public static boolean isEmployeeisEXits(String id) {
         String qu="SELECT pro_All_qty,pro_qty_item,pro_qty_packet FROM product WHERE pro_bar='"+bar+"'";
         ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
         int allQuan = 0,iteminbox=0,packetinbox=0,subQuan=0;
+        String qu2="";
         try {
             if(rs.next()){
                 allQuan=rs.getInt("pro_All_qty");
@@ -900,25 +900,31 @@ public static boolean isEmployeeisEXits(String id) {
             Logger.getLogger(SalesController.class.getName()).log(Level.SEVERE, null, ex);
         }
         if(kquan.equals("قطعة")){
-            if((allQuan-XQuantity)>=0)
+            if((allQuan-XQuantity)>=0){
                 subQuan=allQuan-XQuantity;
+                qu2="UPDATE product SET pro_All_qty= "+subQuan+" WHERE pro_bar = '"+bar+"'";
+            if(DatabaseHandler.getInstance().execAction(qu2))
+            return true;}
             else {Alerts.showErrorAlert("لا توجد كمية كافية"); return false;}
         }
         else if(kquan.equals("علبة")){
-            if((allQuan- (XQuantity*iteminbox))>=0)
+            if((allQuan- (XQuantity*iteminbox))>=0){
                 subQuan=allQuan- (XQuantity*iteminbox);
+            qu2="UPDATE product SET pro_All_qty= "+subQuan+" WHERE pro_bar = '"+bar+"'";
+            if(DatabaseHandler.getInstance().execAction(qu2))
+            return true;}
             else{ Alerts.showErrorAlert("لا توجد كمية كافية"); return false;}
         }
         else{
-            if((allQuan- (XQuantity*iteminbox*packetinbox) ) >= 0)
+            if((allQuan- (XQuantity*iteminbox*packetinbox) ) >= 0){
                 subQuan=allQuan- (XQuantity*iteminbox*packetinbox);
+            qu2="UPDATE product SET pro_All_qty= "+subQuan+" WHERE pro_bar = '"+bar+"'";
+            if(DatabaseHandler.getInstance().execAction(qu2))
+            return true;}
             else
             {Alerts.showErrorAlert("لا توجد كمية كافية"); return false;}
         }
-        String qu2="UPDATE product SET pro_All_qty= "+subQuan+" WHERE pro_bar = '"+bar+"'";
-        if(DatabaseHandler.getInstance().execAction(qu2))
-            return true;
-        
+
         return false;
     }
     
@@ -1109,7 +1115,13 @@ public static boolean isEmployeeisEXits(String id) {
         }
         return list;
     }
-    
+    public static boolean deleteAllRowsInBuyTV(int serial) {
+        String qu = "DELETE FROM buying WHERE buy_id ="+serial+""; //
+        if(DatabaseHandler.getInstance().execAction(qu)){
+            return true;
+        }
+        return false;
+    }
     
     /*******************************************END OF BUYING********************************************************/
     /****************************************************************************************************************/
@@ -1193,7 +1205,7 @@ public static boolean isEmployeeisEXits(String id) {
     public static void loadDamageData(TableView TV,String dat) {
         ObservableList<Common_Properties> list = FXCollections.observableArrayList();
         list.clear();
-        String qu = "SELECT * FROM damages WHERE dam_date = '"+dat+"'";
+        String qu = "SELECT * FROM damages WHERE dam_date ='"+dat+"'";
         ResultSet rs =DatabaseHandler.getInstance().execQuery(qu);
         try {
             while (rs.next()) {
@@ -1207,6 +1219,7 @@ public static boolean isEmployeeisEXits(String id) {
                 Time x8=rs.getTime("t_time");
                 long x9=rs.getLong("number");
                 list.add(new Common_Properties(x1,x2,x3,x4,x5,x6,x7,x8,x9));
+                
             }
         } catch (SQLException ex) {
             Alerts.showInfoAlert("لا يوجد اصناف");
@@ -1233,6 +1246,11 @@ public static boolean isEmployeeisEXits(String id) {
         }
         return num;
     }
+        
+        public static boolean deletedamage(long sal) {
+            String qu="DELETE FROM damages WHERE number = "+sal+"";
+            return DatabaseHandler.getInstance().execAction(qu);
+        }
     /*******************************************END OF DAMAGES*******************************************************/
 
     /****************************************************************************************************************/

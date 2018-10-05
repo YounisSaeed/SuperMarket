@@ -202,6 +202,11 @@
                </effect>
             </Label>
             <JFXComboBox fx:id="quntityComboBox" focusColor="#35889a" layoutX="887.0" layoutY="619.0" prefHeight="54.0" prefWidth="108.0" promptText="عنصر" styleClass="quntityComboBox" stylesheets="@recall.css" unFocusColor="WHITE" visibleRowCount="3" />
+            <JFXButton layoutX="278.0" layoutY="604.0" onAction="#DeleteRow" prefHeight="54.0" prefWidth="153.0" styleClass="jfx-button" stylesheets="@../damage/damage.css" text="مسح عنصر" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </JFXButton>
          </children>
       </Pane>
    </children>

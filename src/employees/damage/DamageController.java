@@ -278,7 +278,15 @@ public class DamageController extends NewSerial implements Initializable {
 
     @FXML
     private void DeleteItemButton(ActionEvent event) {
-        
+        Common_Properties S =D_table.getSelectionModel().getSelectedItem();
+        if (Alerts.ConfirmAlert("هل تريد مسح  ", S.getName())) {
+                Boolean result = DataHelper.deletedamage(S.getNumber());
+                if (result) {
+                    D_table.getItems().removeAll(D_table.getSelectionModel().getSelectedItem()); // delete item from ui table
+                } else {
+                    Alerts.showErrorAlert("لم تتم العملية بشكل صحيح ");
+                }
+            }
     }
 
     /***************************_____________THE END______________********************************/ 

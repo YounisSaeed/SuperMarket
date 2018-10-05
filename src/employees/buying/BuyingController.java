@@ -86,6 +86,8 @@ public class BuyingController  extends NewSerial implements Initializable {
     private static double TOTAL=0; // TOTAL is global var represents TotalPrice and it back to ZERO with new bill generated
     @FXML
     private TextField BuuPrice;
+    @FXML
+    private Label alterLabel;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -141,18 +143,15 @@ public class BuyingController  extends NewSerial implements Initializable {
     
     /************************* ADD OR DELETE BILL TO DATABASE *****************/
     @FXML
-    private void addBuying(ActionEvent event) { // AddNewBill(); do it by mouse click on button "جديد"
-        if( !supplier.getValue().equals("")) 
+    private void addBuying(ActionEvent event) { // AddNewBill(); do it by mouse click on button "جديد" 
              this.addBuying();
     }
     
     @FXML
     private void A_N_B(KeyEvent event) {  // addBuying(); do it by pressing in SHIFT with Z  keys 
         try{
-        if(event.getCode().equals(KeyCode.CONTROL) && !supplier.getValue().equals("")){
+        if(event.getCode().equals(KeyCode.CONTROL))
              this.addBuying();
-        } else 
-            Alerts.showErrorAlert("يرجى ادخال المورد");   
             
         }catch(Exception e){}
     }
@@ -168,8 +167,8 @@ public class BuyingController  extends NewSerial implements Initializable {
     private void AddQuanPress(KeyEvent event) {
         try{
         if(event.getCode().equals(KeyCode.ENTER)) { // deleteRow(); do it by pressing in Delete key while focus on row in table view
-             // do something
              this.addQuntity();
+             
         }}catch(Exception e){}
     }
     /**************************************************************************/
@@ -196,6 +195,7 @@ public class BuyingController  extends NewSerial implements Initializable {
     private void cancelBuying(ActionEvent event) {
         if(Alerts.ConfirmAlert("هل تريد مسج جميع عناصر فاتورة الشراء؟",""))
         {
+         deleteAllRows();
          clear();   
         }
     }
@@ -212,18 +212,16 @@ public class BuyingController  extends NewSerial implements Initializable {
     /********************************************* addBuying _________*/
     private void addBuying()
     {
-        if(!totalPrice.getText().equals(""))
+        try{
+        if(!totalPrice.getText().equals("") && !supplier.getValue().equals(""))
         {
-            boolean supp=supplier.getValue().isEmpty();
+            
             billNumber.setText(getSalesSerial()+"");
             Buying B=new Buying();
             B.setSerial(Integer.parseInt(billNumber.getText()));
             Date JDBC_Date = Date.valueOf(this.date.getText()); // JDBC_Date: this var take value of date in "Date"data type to pass it to Date column in database
             B.setDate(JDBC_Date);
             B.setTime(gettTime());
-            if(!supp){
-                 B.setSupplier(supplier.getValue());}
-            else{Alerts.showErrorAlert("يرجى تحديد المورد !!");}
             B.setTotalPrice(Double.parseDouble(totalPrice.getText()));
 
             boolean result = DataHelper.insertBuyGoodsNewBill(B);
@@ -242,17 +240,15 @@ public class BuyingController  extends NewSerial implements Initializable {
         }
         else
             Alerts.showErrorAlert("لم يتم ادخال البيانات بشكل صحيح!  .. يرجى التأكد من ملئ جميع الحقول المطلوبة");
-        
+        }catch(Exception e){Alerts.showWorningAlert("خطأ .. ربما لم يحدد اسم المورد");}
     }
      
     
     /********************************************* addQuntity _________*/
     private void addQuntity()
     {
-        if(!Quntity.getText().equals("")  && !BuuPrice.getText().equals(""))
+        if(!Quntity.getText().equals("")  && !BuuPrice.getText().equals("") &&  !productBarcode.getText().equals(""))
         {
-            if ( !productBarcode.getText().equals("")){
-               
             
             Buying B=new Buying();
             try{
@@ -289,12 +285,9 @@ public class BuyingController  extends NewSerial implements Initializable {
             }catch(NumberFormatException es){
                 Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة !!");
             }
-            }
-            else 
-             Alerts.showErrorAlert("يرجى ادخال الصنف");   
         }
         else
-            Alerts.showErrorAlert("يرجى ادخال الكمية");
+            Alerts.showErrorAlert("برجاء ملئ جميع الحقول المطلوبة");
     }
     
 
@@ -326,6 +319,27 @@ public class BuyingController  extends NewSerial implements Initializable {
             }
         }
     }
+    /************************************Delete all rows ________________*/
+    private void deleteAllRows(){  
+        if(B_table.getItems().isEmpty()){
+            clear();
+        }
+        else{
+                    B_table.getItems().forEach((t) -> {
+                           alterLabel.setText(t.getBarcodfiled());
+                           boolean de=DataHelper.InterAction_B_Sales__Products_addQuan(alterLabel, t.getCurrentQuantity(),t.getQuantityKind());
+                    });
+                    boolean result=DataHelper.deleteAllRowsInBuyTV(getBuyingSerial());
+                    if(result){
+                        B_table.getItems().clear();
+                        Alerts.showInfoAlert("تم مسح جميع العناصر");
+                    }
+                    else
+                        Alerts.showErrorAlert("لم تتم العملية بشكل صحيح");
+                
+           TOTAL=0;
+        }
+    }
     /************************************CLEAR DATA FROM FIELDS _________*/
     private void clear(){
         B_searchField.clear();
@@ -339,7 +353,6 @@ public class BuyingController  extends NewSerial implements Initializable {
         BuuPrice.clear();
     }
     private void clearSome(){
-       B_searchField.clear();
        productPrise.setText("");
        Quntity.clear();
        BuuPrice.clear();
