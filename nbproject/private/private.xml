@@ -3,15 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/employees/buying/BuyingController.java</file>
-            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/employees/personalexpenses/PersonalexpensesController.java</file>
-            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/employees/sales/Sales_Main.java</file>
-            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/employees/damage/MainDamage.java</file>
-            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/employees/sales/sales.fxml</file>
-            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/employees/damage/DamageController.java</file>
-            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/employees/sales/SalesController.java</file>
-            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/employees/personalexpenses/MainPersonalExpenses.java</file>
-            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Manager/Financial/Reports/Financial_ReportsController.java</file>
+            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Manager/Employee/Manager_EmployeeController.java</file>
+            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Manager/Product/Quantity/Main.java</file>
+            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Manager/Suppliers/Manager_SuppliersController.java</file>
+            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Manager/Product/Quantity/Manager_Product_QuantityController.java</file>
+            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Database/DataHelper.java</file>
+            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Manager/Suppliers/Main.java</file>
         </group>
     </open-files>
 </project-private>
