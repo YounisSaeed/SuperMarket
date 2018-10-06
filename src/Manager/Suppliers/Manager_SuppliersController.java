@@ -62,7 +62,7 @@ public class Manager_SuppliersController implements Initializable {
     private TableColumn<Suppliers, String> t_supplier;
     @FXML
     private TableColumn<Suppliers, String> t_phone;
-    private TableColumn<Suppliers, String> t_category;
+    //private TableColumn<Suppliers, String> t_category;
     @FXML
     private TableColumn<Suppliers, String> t_name;
     DatabaseHandler databaseHandler;
@@ -72,7 +72,7 @@ public class Manager_SuppliersController implements Initializable {
         // TODO
         databaseHandler=DatabaseHandler.getInstance();
         t_name.setCellValueFactory(new PropertyValueFactory<>("supplierName"));
-        t_category.setCellValueFactory(new PropertyValueFactory<>("supplierCategory"));
+      //  t_category.setCellValueFactory(new PropertyValueFactory<>("supplierCategory"));
         t_phone.setCellValueFactory(new PropertyValueFactory<>("supplierPhone"));
         t_supplier.setCellValueFactory(new PropertyValueFactory<>("salespersonName"));
         DataHelper.loadSuppliersData(S_Table);
