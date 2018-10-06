@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Manager.date;
 
 import Classes.Alerts;
@@ -23,12 +19,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import database.*;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-/**
- * FXML Controller class
- *
- * @author NOUR
- */
+
 public class DateController implements Initializable {
     HomeController x = new HomeController (); // used for load main page
     @FXML
@@ -78,25 +71,40 @@ public class DateController implements Initializable {
 
     @FXML
     private void EditDate(ActionEvent event) {
-        
+        if (!D_TSearch.getText().equals("") && !D_Date.getValue().equals("")   ){
         String da1=D_Date.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         boolean x=DataHelper.updateExpireDate(D_TSearch.getText(),da1);
         if(x){
             Alerts.showInfoAlert("تم تعديل تاريخ الانتهاء");
             DataHelper.fillSalesWithInfoOfProduct(D_TSearch.getText(),LName,D_EXP);// 
+            clear();
         }
         else
             Alerts.showErrorAlert("لم يتم التعديل");
+    }else 
+         Alerts.showErrorAlert("تأكد من ملئ جميع الحقول المطلوبة");  
+        
     }
 
     @FXML
     private void MainPage(ActionEvent event) {
+        
         x.loadwindow(Product_Quantity, "/Manager/Main/Home.fxml");
     }
 
     @FXML
     private void SearhButton(ActionEvent event) {
         searrch();
+    }
+
+    private void clear(){
+       D_TSearch.setText("");
+       LName.setText("");
+       D_EXP.setText("");
+       
+       
+       
+        
     }
     
 }
