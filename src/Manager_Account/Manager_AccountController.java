@@ -5,6 +5,7 @@
  */
 package Manager_Account;
 
+import Classes.Alerts;
 import Manager.Main.HomeController;
 import java.io.IOException;
 import java.net.URL;
@@ -30,8 +31,6 @@ public class Manager_AccountController implements Initializable {
     @FXML
     private AnchorPane Account;
     @FXML
-    private Label Code;
-    @FXML
     private Label RPassword;
     @FXML
     private Label Password;
@@ -39,41 +38,51 @@ public class Manager_AccountController implements Initializable {
     private PasswordField T_Password;
     @FXML
     private PasswordField T_RPassword;
-    @FXML
-    private TextField T_Code;
 
     /**
      * Initializes the controller class.
      */
+    String pass="admin12345678";
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
     }    
 
-    @FXML
-    private void Edit_Account(ActionEvent event) {
-    }
 
     @FXML
     private void Back(ActionEvent event) {
         x.loadwindow(Account,"/Manager/Main/Home.fxml");
     }
+    private boolean validation(){
+        return T_Password.getText().equals(pass) && T_RPassword.getText().equals(pass);
+    }
 
     @FXML
     private void Backup(ActionEvent event) {
-        try {
-            Runtime.getRuntime().exec("xcopy D:\\walid\\Last2\\Supermarket_Management_System\\database D:\\walid\\Last2\\DB /s/h/e/k/f/c/y/r");
-        } catch (IOException ex) {
-            Logger.getLogger(Manager_AccountController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        if(!T_Password.getText().equals("") && !T_RPassword.getText().equals("")){
+            if(validation()){
+                try {
+                    Runtime.getRuntime().exec("xcopy D:\\walid\\Last2\\Supermarket_Management_System\\database D:\\walid\\Last2\\DB /s/h/e/k/f/c/y/r");
+                    Alerts.showInfoAlert("تم حفظ نسخة احتياطية من البرنامج");
+                } catch (IOException ex) {
+                    Logger.getLogger(Manager_AccountController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else Alerts.showErrorAlert("كلمة السر غير صحيحة");
+        }else Alerts.showErrorAlert("لم يتم ادخال كلمة السر");
     }
 
     @FXML
     private void Restore(ActionEvent event) {
-        try {
-            Runtime.getRuntime().exec("xcopy D:\\walid\\Last2\\DB D:\\walid\\Last2\\Supermarket_Management_System\\database /s/h/e/k/f/c/y/r");
-        } catch (IOException ex) {
-            Logger.getLogger(Manager_AccountController.class.getName()).log(Level.SEVERE, null, ex);
+        if(!T_Password.getText().equals("") && !T_RPassword.getText().equals("")){
+            if(validation()){
+                try {
+                    Runtime.getRuntime().exec("xcopy D:\\walid\\Last2\\DB D:\\walid\\Last2\\Supermarket_Management_System\\database /s/h/e/k/f/c/y/r");
+                    Alerts.showInfoAlert("تم استرجاع بيانات النظام الى اخر نسخة محفوظة");
+                } catch (IOException ex) {
+                    Logger.getLogger(Manager_AccountController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else Alerts.showErrorAlert("كلمة السر غير صحيحة");
         }
     }
     
