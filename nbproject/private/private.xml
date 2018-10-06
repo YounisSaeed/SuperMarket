@@ -3,21 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Manager/Employee/Reports/Employee_ReportsController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/employees/account/AccountController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/Database/DataHelper.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/resources/tables.xml</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/employees/sales/SalesController.java</file>
-            <file>file:/D:/walid/Last2/Supermarket_Management_System/src/employees/account/accept/attendence/AttendenceController.java</file>
-=======
-            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Manager/Employee/Manager_EmployeeController.java</file>
-            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Manager/Product/Quantity/Main.java</file>
             <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Manager/Suppliers/Manager_SuppliersController.java</file>
-            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Manager/Product/Quantity/Manager_Product_QuantityController.java</file>
-            <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Database/DataHelper.java</file>
             <file>file:/F:/Dokkan/ProjectAfter/SuperMarket/src/Manager/Suppliers/Main.java</file>
->>>>>>> 5b11aec721fe918b9921d930156e72be6b685fa6
         </group>
     </open-files>
 </project-private>

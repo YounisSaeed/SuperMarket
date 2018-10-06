@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Manager.Account;
 
 import Classes.Alerts;
@@ -20,11 +16,15 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
+<<<<<<< HEAD
 /**
  * FXML Controller class
  *
  * @author NOUR
  */
+=======
+
+>>>>>>> ddff243b7ffb211eb58a738dadd50b324604ab85
 public class Manager_AccountController implements Initializable {
     HomeController x = new HomeController(); // used for load windows
 

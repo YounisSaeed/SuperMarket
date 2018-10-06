@@ -1,22 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Manager.Products;
 
+import java.util.Optional;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
-/**
- *
- * @author lolo
- */
+
 public class Main extends Application {
     
     @Override
@@ -28,6 +26,21 @@ public class Main extends Application {
         stage.getIcons().add(icon);
         stage.setScene(scene);
         stage.show();
+         stage.setOnCloseRequest( event -> 
+        {
+            ButtonType yes = new ButtonType("نعم", ButtonBar.ButtonData.YES);
+            ButtonType no = new ButtonType("لا", ButtonBar.ButtonData.NO);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"",yes,no);
+            alert.initStyle(StageStyle.UTILITY);
+            alert.setTitle("طلب تأكيد");
+            alert.setHeaderText("انتبه");
+            alert.setContentText("هل تريد الخروج بالفعل؟");
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.get()== yes)
+                stage.close();
+            else
+                event.consume();
+        });
     }
 
     /**
