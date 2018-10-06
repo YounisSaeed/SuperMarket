@@ -50,5 +50,15 @@
             <Font name="System Bold" size="25.0" />
          </font>
       </JFXButton>
+      <JFXButton layoutX="1187.0" layoutY="201.0" onAction="#Backup" prefHeight="55.0" prefWidth="145.0" text="Backup" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="1187.0" layoutY="393.0" onAction="#Restore" prefHeight="55.0" prefWidth="145.0" text="Restore" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>
