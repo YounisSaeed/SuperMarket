@@ -186,28 +186,29 @@ public class Products_ReportsController implements Initializable {
             while(rs.next()){
           
                 String x1=rs.getString("pro_name");        
-                int x2=rs.getInt("pro_qty_item");
-                int x3=rs.getInt("pro_qty_packet");
-                int x4=rs.getInt("pro_All_qty");
+                int  
+                        packets=(rs.getInt("pro_All_qty")%(rs.getInt("pro_qty_item")*rs.getInt("pro_qty_packet")))/rs.getInt("pro_qty_item"),
+                        boxes= (rs.getInt("pro_All_qty")/(rs.getInt("pro_qty_item")*rs.getInt("pro_qty_packet"))) ,
+                        items=(rs.getInt("pro_All_qty")%(rs.getInt("pro_qty_item")*rs.getInt("pro_qty_packet")))%rs.getInt("pro_qty_item");
                 
                 
-                System.out.println(x1+"  "+x2+"  "+x3+"  "+x4);
+                
                 //cell 1
                 c1 = new PdfPCell(new Phrase(x1,normal));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 c1.setRunDirection(RUN_DIRECTION_RTL);
                 table.addCell(c1);
                 //cell 1
-                c1 = new PdfPCell(new Phrase(String.valueOf(x4),normal));
+                c1 = new PdfPCell(new Phrase(String.valueOf(items),normal));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
                 //cell 3
-                c1 = new PdfPCell(new Phrase(String.valueOf( (x4/x2) ),normal));
+                c1 = new PdfPCell(new Phrase(String.valueOf( (packets) ),normal));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
                 //cell 4
                 if(rs.getString("pro_box").equals("يوجد"))
-                    c1 = new PdfPCell(new Phrase(String.valueOf( x4/(x2*x3) ),normal));
+                    c1 = new PdfPCell(new Phrase(String.valueOf(boxes),normal));
                 else if(!rs.getString("pro_box").equals("يوجد"))
                     c1 = new PdfPCell(new Phrase("لا يوجد",normal));
             

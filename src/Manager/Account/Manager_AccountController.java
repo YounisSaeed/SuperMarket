@@ -16,15 +16,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
-<<<<<<< HEAD
 /**
  * FXML Controller class
  *
  * @author NOUR
  */
-=======
 
->>>>>>> ddff243b7ffb211eb58a738dadd50b324604ab85
 public class Manager_AccountController implements Initializable {
     HomeController x = new HomeController(); // used for load windows
 
