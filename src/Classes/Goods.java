@@ -5,6 +5,8 @@
  */
 package Classes;
 
+import java.sql.Date;
+
 
 /**
 
@@ -34,6 +36,13 @@ public class Goods{
     //private Price productPrice;
     //private Quantity productQuantity;
     private int itemsInPacket;
+
+    public Goods(String productName, String productBarCode, String productExpirationdate) {
+        this.productName = productName;
+        this.productBarCode = productBarCode;
+        this.productExpirationdate = productExpirationdate;
+    }
+    
     private int PacketsInBox;
     private String box;
 
@@ -52,6 +61,14 @@ public class Goods{
     private double boxPrice;
     private int productMinQuantity;
     private String productExpirationdate;
+
+    public String getProductExpirationdate() {
+        return productExpirationdate;
+    }
+
+    public void setProductExpirationdate(String productExpirationdate) {
+        this.productExpirationdate = productExpirationdate;
+    }
     private long allQuantity; //// //////////// //////////// ///////////////////
 
     public int getItemsInPacket() {
@@ -143,13 +160,6 @@ public class Goods{
         this.productMinQuantity = productMinQuantity;
     }
 
-    public String getProductExpirationdate() {
-        return productExpirationdate;
-    }
-
-    public void setProductExpirationdate(String productExpirationdate) {
-        this.productExpirationdate = productExpirationdate;
-    }
     
 
 }

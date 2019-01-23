@@ -74,7 +74,6 @@ public class Financial_ReportsController implements Initializable {
     private void Expenses_Reports(ActionEvent event) throws FileNotFoundException, DocumentException {
          try {
          if (!F_Tdate1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals("") &&!F_Tdate2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals("") ){
-            System.out.println("غلطططططط "); // yoooooooooour code
             expences();
          }
          }
@@ -567,7 +566,7 @@ public class Financial_ReportsController implements Initializable {
         /***************The Name of Pdf************/
          try {
          
-             PdfWriter.getInstance(document, new FileOutputStream("أرباح شامل"+ft.format(date)+".pdf"));
+                 PdfWriter.getInstance(document, new FileOutputStream("ارباح شامل"+ft.format(date)+".pdf"));
          } catch (DocumentException ex) {
              Logger.getLogger(Financial_ReportsController.class.getName()).log(Level.SEVERE, null, ex);
          }
@@ -623,24 +622,31 @@ public class Financial_ReportsController implements Initializable {
         
         /***********retrive data from database and but them in cells***************/
         try {
-            
+            System.out.println("Try");
             while(rs1.next()){
                     TotalSales+=rs1.getDouble("cost");
+                    System.out.print(1);
             }
-            while(rs2.next()){
-                    TotalBuying+=rs1.getDouble("cost");
+             while(rs2.next()){
+                    TotalBuying+=rs2.getDouble("cost");
+                    System.out.print(2);
             }
-            while(rs3.next()){
+           
+             while(rs3.next()){
                     Expenses+=rs1.getDouble("e_cost");
+                    System.out.print(3);
             }
             while(rs4.next()){
                     if(rs4.getString("source").equals("عميل")){
-                        Recalls+=rs4.getDouble("cost");}
+                        Recalls+=rs4.getDouble("cost");
+                    System.out.print(4);
+                    }
+           
             }
             
             Profit=TotalSales-(TotalBuying+Expenses+Recalls);
         /**************************************************************************/    
-            
+            System.out.println(TotalSales+" "+TotalBuying+" "+Expenses+" "+Profit+" "+normal);
             PdfPTable t3 = new PdfPTable(1);
             PdfPCell cell3 = new PdfPCell();
             Paragraph p3=new Paragraph("اجمالى قيمة المبيعات:    "+TotalSales +"\n\n"+

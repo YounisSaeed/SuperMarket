@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="Reports" prefHeight="697.0" prefWidth="1366.0" style="-fx-background-color: #343642;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Manager.Reports.ReportsController">
+   <children>
+      <Label fx:id="LReports" alignment="CENTER" layoutX="631.0" layoutY="27.0" prefHeight="45.0" prefWidth="125.0" text="التقارير" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <JFXButton contentDisplay="TOP" layoutX="787.0" layoutY="132.0" onAction="#loadproducts_Report" prefHeight="218.0" prefWidth="294.0" stylesheets="@Reports.css" text="تقارير الاصناف" textFill="WHITE">
+         <graphic>
+            <ImageView fitHeight="128.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/Admin/تقارير%20اصناف.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </JFXButton>
+      <JFXButton contentDisplay="TOP" layoutX="297.0" layoutY="132.0" onAction="#loadFinancial_Reports" prefHeight="218.0" prefWidth="294.0" stylesheets="@Reports.css" text="الحسابات" textFill="WHITE">
+         <graphic>
+            <ImageView fitHeight="128.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/Admin/الحسابات.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </JFXButton>
+      <JFXButton contentDisplay="TOP" layoutX="787.0" layoutY="422.0" onAction="#loadSuppliers_Report" prefHeight="218.0" prefWidth="294.0" stylesheets="@Reports.css" text="تقارير الموردين" textFill="WHITE">
+         <graphic>
+            <ImageView fitHeight="128.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/Admin/received_2014690272175496.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </JFXButton>
+      <JFXButton contentDisplay="TOP" layoutX="297.0" layoutY="422.0" onAction="#loadEmployee_Report" prefHeight="218.0" prefWidth="294.0" stylesheets="@Reports.css" text="تقارير الموظفين" textFill="WHITE">
+         <graphic>
+            <ImageView fitHeight="128.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/Admin/تقارير%20موظفين.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </JFXButton>
+      <JFXButton contentDisplay="RIGHT" layoutX="1220.0" layoutY="23.0" onAction="#Back" style="-fx-cursor: hand; -fx-background-color: #343642;" text="رجوع" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="40.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/arrow.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+   </children>
+</AnchorPane>

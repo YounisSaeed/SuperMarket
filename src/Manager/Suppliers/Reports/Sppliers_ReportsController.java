@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Manager.Suppliers.Reports;
 
 import Classes.Alerts;
@@ -277,7 +273,7 @@ public class Sppliers_ReportsController implements Initializable {
              
              /***************The Name of Pdf************/
              
-             PdfWriter.getInstance(document, new FileOutputStream("الفواتير"+ft.format(date)+".pdf"));
+             PdfWriter.getInstance(document, new FileOutputStream("فواتير الشراء"+ft.format(date)+".pdf"));
              
              System.out.println("Writrer insrance Created");
              document.open();  // Open the document to append in it .
@@ -443,7 +439,10 @@ public class Sppliers_ReportsController implements Initializable {
              else {
               Alerts.showErrorAlert("تاريخ النهاية يسبق تاريخ البداية");
           }
-         }}
+         }else
+             Alerts.showErrorAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة");
+             
+        }
         catch(NullPointerException e){
                  Alerts.showErrorAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة");
                  } catch (DocumentException ex) {

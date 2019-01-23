@@ -98,11 +98,8 @@ HomeController y = new HomeController();
                 break;
             case 3: 
                    Alerts.showErrorAlert("خطا ف كود الدخول او كلمة السر");
-                   clear();
-                   break;
+                                      break;
             default : Alerts.showErrorAlert("خطا ف كود الدخول او كلمة السر");
-                      
-                    clear();
                     break;
     }
     

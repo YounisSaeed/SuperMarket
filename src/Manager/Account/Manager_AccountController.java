@@ -21,7 +21,6 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author NOUR
  */
-
 public class Manager_AccountController implements Initializable {
     HomeController x = new HomeController(); // used for load windows
 
@@ -39,7 +38,7 @@ public class Manager_AccountController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    String pass="admin12345678";
+    String pass="admin@55555";
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

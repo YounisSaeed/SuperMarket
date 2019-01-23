@@ -196,7 +196,7 @@ public class Manager_ProductsController implements Initializable {
                     clear();
                 }
                 else
-                    Alerts.showInfoAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى");
+                    Alerts.showInfoAlert("لم تتم العملية بشكل صحيح .");
                 
             }catch(NumberFormatException e) {Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة ");}
         }
@@ -331,7 +331,7 @@ public class Manager_ProductsController implements Initializable {
     @FXML
     private void Key_Pressed(KeyEvent event) {
           try{
-        if(event.getCode().equals(KeyCode.S)){
+        if(event.getCode().equals(KeyCode.CONTROL)){
           this.Add_Product(); }
         else if (event.getCode().equals(KeyCode.DELETE)){
           this.Delete_Product();

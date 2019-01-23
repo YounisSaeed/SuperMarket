@@ -3,12 +3,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import Classes.*;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDatePicker;
 import employees.sales.SalesController;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Time;
-import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static javafx.application.Platform.exit;
@@ -275,6 +273,24 @@ public class DataHelper {
     
     
     
+    public static void loadExpiredData(TableView TV,String dat) {
+        ObservableList<Goods> list = FXCollections.observableArrayList();
+        String qu = "SELECT pro_bar,pro_name,expire_date FROM product WHERE expire_date='"+dat+"'";
+        ResultSet rs =DatabaseHandler.getInstance().execQuery(qu);
+        try {
+            while (rs.next()) {
+                String x1 =rs.getString("pro_bar");
+                String x2 =rs.getString("pro_name");
+                String x3=rs.getString("expire_date");
+                list.add(new Goods(x1, x2, x3));
+                System.out.println(x1+" "+x2+"  "+x3);
+                
+            }
+        } catch (SQLException ex) {
+            Alerts.showInfoAlert("لا يوجد اصناف");
+        }
+        TV.setItems(list);
+    }
     
     /********************************************END OF PRODUCTS*****************************************************/
     /****************************************************************************************************************/

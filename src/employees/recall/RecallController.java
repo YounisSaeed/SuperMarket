@@ -182,6 +182,7 @@ public class RecallController extends NewSerial implements Initializable {
         if(!Quntity.getText().equals("") && !productBarcode.getText().equals("")){
             Recalls R=new Recalls();
             try{
+                if(Double.parseDouble(Quntity.getText())>0){
             R.setCurrentQuantity(Integer.parseInt(Quntity.getText()));
             Date JDBC_Date = Date.valueOf(this.date.getText());
             R.setDate(JDBC_Date);
@@ -225,6 +226,7 @@ public class RecallController extends NewSerial implements Initializable {
                 else
                 Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. ");
             }
+                }else{Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة !!");}
             }catch(NumberFormatException e){Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة ");}
         }
         else
@@ -283,11 +285,15 @@ public class RecallController extends NewSerial implements Initializable {
     private void DeleteRow(ActionEvent event) {
         
         if(R_table.getItems().isEmpty()){
+            
             Alerts.showErrorAlert("لا يوجد بيانات فى الجدول !!");
+        }
+        else if (R_table.getSelectionModel().getSelectedItem() == null ){
+            Alerts.showErrorAlert("حدد عنصر أولا");
         }
         else{
             Recalls R =R_table.getSelectionModel().getSelectedItem();
-            if (Alerts.ConfirmAlert("هل تريد مسح", R.getName())) {
+            if (Alerts.ConfirmAlert(" هل تريد مسح  ", R.getName())) {
                 Boolean result = DataHelper.deleteRCallRow(R);
                 if (result)
                     R_table.getItems().removeAll(R_table.getSelectionModel().getSelectedItem()); // delete item from ui table                    totalPrice.setText(TOTAL+"");

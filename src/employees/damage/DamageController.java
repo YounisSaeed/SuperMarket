@@ -162,6 +162,7 @@ public class DamageController extends NewSerial implements Initializable {
     /************************************************** saveDamage()______*/
     private void saveDamage()
     {
+        try{
         if(!Quntity.getText().equals("") && !productBarcode.getText().equals(""))
         {
             if (Integer.parseInt(Quntity.getText())>0){
@@ -212,6 +213,8 @@ public class DamageController extends NewSerial implements Initializable {
 //            Alerts.showErrorAlert("لم يتم ادخال البيانات بشكل صحيح ! .. يرجى التأكد من ملئ جميع الحقول المطلوبه");
 //        
     }else Alerts.showErrorAlert("يرجى التأكد من ملئ جميع الحقول المطلوبة");
+        }catch(NumberFormatException e){Alerts.showErrorAlert("القيمة التي أدخلتها غير صحيحة");}
+            
     }
     /*********************************************************************************************************/
     
@@ -278,6 +281,14 @@ public class DamageController extends NewSerial implements Initializable {
 
     @FXML
     private void DeleteItemButton(ActionEvent event) {
+        if(D_table.getItems().isEmpty()){
+            
+            Alerts.showErrorAlert("لا يوجد بيانات فى الجدول !!");
+        }
+        else if (D_table.getSelectionModel().getSelectedItem() == null ){
+            Alerts.showErrorAlert("حدد عنصر أولا");
+        }
+        else{
         Common_Properties S =D_table.getSelectionModel().getSelectedItem();
         if (Alerts.ConfirmAlert("هل تريد مسح  ", S.getName())) {
                 Boolean result = DataHelper.deletedamage(S.getNumber());
@@ -287,6 +298,7 @@ public class DamageController extends NewSerial implements Initializable {
                     Alerts.showErrorAlert("لم تتم العملية بشكل صحيح ");
                 }
             }
+        }
     }
 
     /***************************_____________THE END______________********************************/ 

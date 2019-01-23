@@ -327,64 +327,6 @@ public class SalesController extends NewSerial implements Initializable {
                 /****************************************************/
                             /**********************/
     
-    /* * * * @ @ @           NEW TABLE FOR FREEZING           @ @ @ * * * * /
-    
-    */
-    /***************************** FREEZE BILL ********************************/
-    @FXML
-    private void freezeBill(ActionEvent event) {
-       ;
-    }
-    
-    /**************************************************************************/
-    
-    
-    /***********************Previous Process***********************************/
-    @FXML
-    private void PreviousProcess(ActionEvent event) {
-            
-    }
-    /***********************Next Process***************************************/
-    @FXML
-    private void NextProcess(ActionEvent event) {
-        
-    }
-    /**************************************************************************/
-    
-    
-                        /********************************/
-                /****************************************************/
-    /**************************************************************************/
-    
-    
-    /**************************************************************************/
-    
-    
-    
-    
-    private void checksales(){
-        String qu="SELECT * FROM sales";
-        ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
-        try {
-            while(rs.next()){
-                int x1=rs.getInt("number");
-                int x2=rs.getInt("sale_id");
-                Date x3=rs.getDate("sale_date");
-                String x4=rs.getString("product_name");
-                String x5=rs.getString("qty_kind");
-                double x6=rs.getDouble("unit_price");
-                int x7=rs.getInt("current_qty");
-                double x8=rs.getDouble("cost");
-                Time t=rs.getTime("t_time");
-                
-                System.out.println(x1+" "+x2+" "+x3+" "+x4+" "+x5+" "+x6+" "+x7+" "+x8+"    "+t);
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(SalesController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
     
     
     

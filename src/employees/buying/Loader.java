@@ -19,6 +19,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import Serial_dinamic.Serial_B;
+import Serial_dinamic.Serial_S;
 
 
 public class Loader extends Application {
@@ -44,8 +46,12 @@ public class Loader extends Application {
             alert.setHeaderText("انتبه");
             alert.setContentText("هل تريد الخروج بالفعل؟");
             Optional<ButtonType> result = alert.showAndWait();
-            if(result.get()== yes)
-                stage.close();
+            if(result.get()== yes){
+                if(Serial_B.stat)
+                    Serial_B.timer.cancel();
+                if(Serial_S.stat)
+                    Serial_S.timer.cancel();
+                stage.close();}
             else
                 event.consume();
         });

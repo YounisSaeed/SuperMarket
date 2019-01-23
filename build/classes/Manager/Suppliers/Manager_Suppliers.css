@@ -1,0 +1,41 @@
+.textfield
+{
+    -fx-background-color: #FFF;
+    -fx-text-fill: #343642;
+    -fx-faint-focus-color: #4aabc0;
+}
+
+.jfx-button
+{
+    -fx-background-color:  #35889a;
+    -fx-cursor: hand;
+}
+
+.jfx-button:hover
+{
+    -fx-background-color: #4aabc0;
+    -fx-cursor: hand;
+}
+
+.pane
+{
+    -fx-background-color: #343642;
+}
+
+.vbox
+{
+    -fx-background-color:  #989c9d;
+}
+
+
+.textfield-n:focused
+{
+    -fx-faint-focus-color: #4aabc0;
+}
+
+.textfield-none:focused
+{
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: rgba(74,171,192,0.2);
+
+}

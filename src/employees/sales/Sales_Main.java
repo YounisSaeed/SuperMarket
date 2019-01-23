@@ -14,7 +14,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
+import Serial_dinamic.Serial_S;
+import Serial_dinamic.Serial_B;
 public class Sales_Main extends Application {
 
     @Override
@@ -37,8 +38,12 @@ public class Sales_Main extends Application {
             alert.setHeaderText("انتبه");
             alert.setContentText("هل تريد الخروج بالفعل؟");
             Optional<ButtonType> result = alert.showAndWait();
-            if(result.get()== yes)
-                stage.close();
+            if(result.get()== yes){
+                if(Serial_B.stat)
+                    Serial_B.timer.cancel();
+                if(Serial_S.stat)
+                    Serial_S.timer.cancel();
+                stage.close();}
             else
                 event.consume();
         });

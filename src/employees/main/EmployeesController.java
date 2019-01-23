@@ -136,6 +136,11 @@ public class EmployeesController implements Initializable {
             Logger.getLogger(EmployeesController.class.getName()).log(Level.SEVERE, null, ex);
         }*/
 
+    @FXML
+    private void loadExpire(ActionEvent event) {
+        loadwindow(loadPane,"/employees/expiredate/rackshortages.fxml");
+    }
+
     
     }
 

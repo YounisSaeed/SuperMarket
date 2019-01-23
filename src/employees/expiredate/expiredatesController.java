@@ -7,9 +7,12 @@ package employees.expiredate;
 
 import employees.rackshortages.*;
 import Classes.Common_Properties;
+import Classes.Goods;
+import Serial_dinamic.NewSerial;
 import database.*;
 import employees.main.EmployeesController;
 import java.net.URL;
+import java.sql.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,19 +27,19 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author NOUR
  */
-public class expiredatesController implements Initializable {
+public class expiredatesController extends NewSerial implements Initializable {
     EmployeesController x =  new EmployeesController();
 
     @FXML
     private AnchorPane loadPane;
     @FXML
-    private TableView<Common_Properties> rackshortagesTable;
+    private TableView<Goods> rackshortagesTable;
     @FXML
-    private TableColumn<Common_Properties, String> t_quan;
+    private TableColumn<Goods, String> t_quan;
     @FXML
-    private TableColumn<Common_Properties, String> t_cate;
+    private TableColumn<Goods, String> t_cate;
     @FXML
-    private TableColumn<Common_Properties, String> t_bar;
+    private TableColumn<Goods, String> t_bar;
 
     /**
      * Initializes the controller class.
@@ -48,12 +51,12 @@ public class expiredatesController implements Initializable {
         // TODO
         databaseHandler=DatabaseHandler.getInstance();
         initTableViewCols();
-        //DataHelper.loadDEFECTSData(rackshortagesTable);
+        DataHelper.loadExpiredData(rackshortagesTable,gettDate());
     }    
     private  void initTableViewCols(){
-        t_bar.setCellValueFactory(new PropertyValueFactory<>("barcodfiled"));
-        t_cate.setCellValueFactory(new PropertyValueFactory<>("name"));
-        t_quan.setCellValueFactory(new PropertyValueFactory<>("CurrentQuantity"));
+        t_bar.setCellValueFactory(new PropertyValueFactory<>("productBarCode"));
+        t_cate.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        t_quan.setCellValueFactory(new PropertyValueFactory<>("productExpirationdate"));
     }
     @FXML
     private void loadRackMain(ActionEvent event) {

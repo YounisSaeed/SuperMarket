@@ -35,16 +35,11 @@ public class Manager_Product_QuantityController implements Initializable {
     private JFXTextField P_BQuantity;
     @FXML
     private JFXTextField P_UQuantity;
-    @FXML
     private RadioButton R_packet;
-    @FXML
     private RadioButton R_item;
-    @FXML
     private RadioButton R_box;
     @FXML
     private Label LName;
-    @FXML
-    private ToggleGroup choiceQuan;
     @FXML
     private Label L_InP; // in this label I take the value of ItemInPackets of specific product From Database
     @FXML
@@ -60,9 +55,9 @@ public class Manager_Product_QuantityController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         databaseHandler=DatabaseHandler.getInstance();
         
-        P_UQuantity.setEditable(false);
-        P_BQuantity.setEditable(false);
-        P_CQuantity.setEditable(false);
+//        P_UQuantity.setEditable(false);
+//        P_BQuantity.setEditable(false);
+//        P_CQuantity.setEditable(false);
         DataHelper.getBarcodesInEditQuanPage(P_TSearch);
         P_TSearch.focusedProperty().addListener(new ChangeListener<Boolean>() {
         @Override
@@ -105,7 +100,7 @@ public class Manager_Product_QuantityController implements Initializable {
     }
     @FXML
     private void Edit_Product(ActionEvent event) {
-        this.Edit_Product();
+        this.editItemProduct();
     }
 
     @FXML
@@ -126,6 +121,90 @@ public class Manager_Product_QuantityController implements Initializable {
     private void P_Search()
     {
         DataHelper.ProductQuantity(P_TSearch.getText(),P_UQuantity,P_BQuantity,P_CQuantity,LName);
+    }
+    
+    
+    private void editItemProduct(){
+        if (!P_UQuantity.getText().equals(""))
+        {
+            try{
+            int it=Integer.parseInt(P_UQuantity.getText());
+            
+
+            DataHelper.getQuanDetails(P_TSearch.getText(), L_InP, L_PnB);
+            int inp=Integer.parseInt(L_InP.getText());
+            int pnb=Integer.parseInt(L_PnB.getText());
+            
+            if(itm <it ){
+                it-=itm;
+                DataHelper.QuickEditQuantity(it,P_TSearch.getText(),true);  Alerts.showInfoAlert("تم التعديل");}
+            else if(itm >it){
+                itm-=it;
+                DataHelper.QuickEditQuantity(itm,P_TSearch.getText(),false);  Alerts.showInfoAlert("تم التعديل");
+            }else     Alerts.showInfoAlert("لا يوجد تغير فى الكمية");
+            P_Search();
+            quann();    
+            }catch(NumberFormatException e){Alerts.showErrorAlert("لقد ادخلت قيمة خاطئة");}
+        }
+        else {
+       Alerts.showErrorAlert("برجاء ادخال عدد الكراتين");
+       }
+    }
+    
+    
+    private void editPacketProduct(){
+        if (!P_BQuantity.getText().equals(""))
+        {
+            try{
+            int pa=Integer.parseInt(P_BQuantity.getText());
+
+            DataHelper.getQuanDetails(P_TSearch.getText(), L_InP, L_PnB);
+            int inp=Integer.parseInt(L_InP.getText());
+            int pnb=Integer.parseInt(L_PnB.getText());
+            
+            if(pkt < pa){
+                pa-=pkt;
+                DataHelper.QuickEditQuantity(pa*inp,P_TSearch.getText(),true); Alerts.showInfoAlert("تم التعديل");}
+            else if(pkt > pa){
+                pkt-=pa;
+                DataHelper.QuickEditQuantity(pkt*inp,P_TSearch.getText(),false); Alerts.showInfoAlert("تم التعديل");
+            }else     Alerts.showInfoAlert("لا يوجد تغير فى الكمية");
+            P_Search();
+            quann();    
+            }catch(NumberFormatException e){Alerts.showErrorAlert("لقد ادخلت قيمة خاطئة");}
+        }
+        else {
+       Alerts.showErrorAlert("برجاء ادخال عدد الباكيت");
+       }
+    }
+    
+    
+    private void editBoxesProduct(){
+        if (!P_CQuantity.getText().equals(""))
+        {
+            try{
+           
+            int bo=Integer.parseInt(P_CQuantity.getText());
+
+            DataHelper.getQuanDetails(P_TSearch.getText(), L_InP, L_PnB);
+            int inp=Integer.parseInt(L_InP.getText());
+            int pnb=Integer.parseInt(L_PnB.getText());
+            
+            if(bx < bo){
+                    bo-=bx;
+                    DataHelper.QuickEditQuantity(bo*pnb*inp,P_TSearch.getText(),true); Alerts.showInfoAlert("تم التعديل");
+              }
+              else if(bx > bo){
+                    bx-=bo;
+                    DataHelper.QuickEditQuantity(bx*pnb*inp,P_TSearch.getText(),false); Alerts.showInfoAlert("تم التعديل");
+              }else     Alerts.showInfoAlert("لا يوجد تغير فى الكمية");
+            P_Search();
+            quann();    
+            }catch(NumberFormatException e){Alerts.showErrorAlert("لقد ادخلت قيمة خاطئة");}
+        }
+        else {
+       Alerts.showErrorAlert("برجاء ادخال عدد الوحدات");
+       }
     }
     
     
@@ -182,65 +261,34 @@ public class Manager_Product_QuantityController implements Initializable {
        }
     }
 
-    @FXML
-    private void AllowEditRadio(MouseEvent event) {
-        selectRadio();
-    }
-    private void selectRadio(){
-        if(R_item.isSelected()){
-            P_UQuantity.setEditable(true);
-            P_BQuantity.setEditable(false);
-            P_CQuantity.setEditable(false);
-        }
-        else if(R_packet.isSelected()){
-            P_UQuantity.setEditable(false);
-            P_BQuantity.setEditable(true);
-            P_CQuantity.setEditable(false);
-        }
-        else if(R_box.isSelected()){
-            P_UQuantity.setEditable(false);
-            P_BQuantity.setEditable(false);
-            P_CQuantity.setEditable(true);
-        }
-    }
 
 
     @FXML
-    private void EditByKey(KeyEvent event) {
-        
-        if(P_UQuantity.isFocused() && !R_item.isSelected()){
-            try{
-            if(event.getCode().equals(KeyCode.ENTER)) {
-                 R_item.setSelected(true);
-                 selectRadio();
-            }
-            }catch(Exception e){}
-        }
-        else if(P_BQuantity.isFocused() && !R_packet.isSelected()){
-            try{
-            if(event.getCode().equals(KeyCode.ENTER)) {
-                 R_packet.setSelected(true);
-                 selectRadio();
-            }
-            }catch(Exception e){}
-        }
-        else if(P_CQuantity.isFocused() && !R_box.isSelected()){
-            try{
-            if(event.getCode().equals(KeyCode.ENTER)) {
-                 R_box.setSelected(true);
-                 selectRadio();
-            }
-            }catch(Exception e){}
-        }
-        
-        else{
-        try{
-        if(event.getCode().equals(KeyCode.ENTER)) {
-             Edit_Product();
-        }
-        }catch(Exception e){}
-        }
-        
+    private void Edit_Product2(ActionEvent event) {
+        this.editPacketProduct();
+    }
+
+    @FXML
+    private void Edit_Product3(ActionEvent event) {
+        this.editBoxesProduct();
+    }
+
+    @FXML
+    private void editItemkey(KeyEvent event) {
+        if(event.getCode().equals(KeyCode.ENTER)) 
+             this.editItemProduct();
+    }
+
+    @FXML
+    private void editpaketkey(KeyEvent event) {
+        if(event.getCode().equals(KeyCode.ENTER)) 
+             this.editPacketProduct();
+    }
+
+    @FXML
+    private void editboxkey(KeyEvent event) {
+        if(event.getCode().equals(KeyCode.ENTER)) 
+             this.editBoxesProduct();
     }
 
 

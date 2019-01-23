@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="Product_Quantity" prefHeight="697.0" prefWidth="1366.0" styleClass="pane" stylesheets="@date.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Manager.date.DateController">
+   <children>
+      <Label fx:id="D_Quantity" layoutX="551.0" layoutY="26.0" prefHeight="45.0" prefWidth="184.0" text="تاريخ الصلاحية" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="D_TSearch" focusColor="#4aabc0" labelFloat="true" layoutX="548.0" layoutY="199.0" onKeyTyped="#AutoCompSearch" prefHeight="54.0" prefWidth="320.0" promptText="ادخل الباركود.." styleClass="field" stylesheets="@date.css" unFocusColor="WHITE">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </JFXTextField>
+      <JFXButton layoutX="338.0" layoutY="199.0" onAction="#SearhButton" prefHeight="25.0" prefWidth="160.0" styleClass="btn" stylesheets="@date.css" text="بحث" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </JFXButton>
+      <JFXDatePicker fx:id="D_Date" defaultColor="#35889a" layoutX="418.0" layoutY="471.0" prefHeight="45.0" prefWidth="260.0" style="-fx-background-color: #FFF;" />
+      <JFXButton layoutX="711.0" layoutY="558.0" onAction="#EditDate" prefHeight="65.0" prefWidth="184.0" styleClass="btn" stylesheets="@date.css" text="تعديل" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </JFXButton>
+      <Label fx:id="LName" layoutX="628.0" layoutY="291.0" textFill="#fff400">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Label>
+      <JFXButton layoutX="417.0" layoutY="558.0" onAction="#MainPage" prefHeight="65.0" prefWidth="184.0" styleClass="btn" stylesheets="@date.css" text="الرئيسية" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </JFXButton>
+      <JFXButton contentDisplay="RIGHT" layoutX="1165.0" layoutY="22.0" onAction="#Back" prefHeight="25.0" prefWidth="160.0" styleClass="back" stylesheets="@date.css" text="رجوع" textFill="WHITE">
+         <font>
+            <Font size="30.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="56.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/arrow.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <Label fx:id="D_Quantity1" layoutX="695.0" layoutY="389.0" prefHeight="45.0" prefWidth="200.0" text="تاريخ الصلاحية:" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="D_EXP" layoutX="478.0" layoutY="389.0" prefHeight="45.0" prefWidth="200.0" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="D_Quantity11" layoutX="703.0" layoutY="471.0" prefHeight="45.0" prefWidth="200.0" text="تحديد تاريخ صلاحية جديد" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

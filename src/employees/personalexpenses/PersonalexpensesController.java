@@ -85,6 +85,7 @@ public class PersonalexpensesController extends AccountController implements Ini
         }
     }*/
     private void add(){
+        try{
                 if (!reason.getText().equals("") && !value.getText().equals("")){
                 if (Double.parseDouble(value.getText())>0){
         
@@ -97,15 +98,17 @@ public class PersonalexpensesController extends AccountController implements Ini
                 e.setEmployeeId(EmpCode);
                 boolean result = DataHelper.insertNewPersonalExpences(e);
                 personal_table.getItems().add(e);
-                if(result)
-                    Alerts.showInfoAlert("تم اضافة المصاريف الشخصية");
+                if(result){
+                    clear();
+                    Alerts.showInfoAlert("تم اضافة المصاريف الشخصية");}
           
                 }else {
-                    Alerts.showInfoAlert("القيمة التي أدخلتها غير صحيحة");
+                    Alerts.showErrorAlert("القيمة التي أدخلتها غير صحيحة");
                 }
                 }else {
-                    Alerts.showInfoAlert("يرجى التأكد من ملئ جميع الحقول المطلوبة");
+                    Alerts.showErrorAlert("يرجى التأكد من ملئ جميع الحقول المطلوبة");
                 }
+        }catch(NumberFormatException e){Alerts.showErrorAlert("القيمة التي أدخلتها غير صحيحة");}
             }
     @FXML
     private void confirm(ActionEvent event) {

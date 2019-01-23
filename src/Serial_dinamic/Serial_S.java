@@ -16,9 +16,11 @@ import java.util.logging.Logger;
  * @author Walid
  */
 public class Serial_S extends NewSerial{
-    Timer timer;
+   public static Timer timer;
+   public static boolean stat;
     
     public Serial_S(int Hours) {
+        stat = true;
         timer = new Timer();
         timer.schedule(new RemindTask(), Hours*60*60*1000);
 	}

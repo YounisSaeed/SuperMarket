@@ -235,11 +235,11 @@ public class BuyingController  extends NewSerial implements Initializable {
                 Alerts.showInfoAlert("تم اضافة الفاتورة رقم  بنجاح !!");
                 clear();
             }
-            else
-                Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى");
-        }
+            else{
+                Alerts.showErrorAlert("لم تتم العملية بشكل صحيح  ");
+        }}
         else
-            Alerts.showErrorAlert("لم يتم ادخال البيانات بشكل صحيح!  .. يرجى التأكد من ملئ جميع الحقول المطلوبة");
+            Alerts.showErrorAlert("  يرجى ملئ جميع الحقول المطلوبة");
         }catch(Exception e){Alerts.showWorningAlert("خطأ .. ربما لم يحدد اسم المورد");}
     }
      
@@ -296,6 +296,8 @@ public class BuyingController  extends NewSerial implements Initializable {
             
         if(B_table.getItems().isEmpty()){
             Alerts.showErrorAlert("لا يوجد بيانات فى الجدول !!");
+        }else if (B_table.getSelectionModel().getSelectedItem() == null ){
+            Alerts.showErrorAlert("حدد عنصر أولا");
         }
         else{
             double c=B_table.getSelectionModel().getSelectedItem().getCost();
