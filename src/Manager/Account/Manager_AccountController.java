@@ -60,12 +60,12 @@ public class Manager_AccountController implements Initializable {
             if(validation()){
                 try {
                     Runtime.getRuntime().exec("xcopy D:\\walid\\Last2\\Supermarket_Management_System\\database D:\\walid\\Last2\\DB /s/h/e/k/f/c/y/r");
-                    Alerts.showInfoAlert("تم حفظ نسخة احتياطية من البرنامج");
+                    Alerts.showAlert("تم حفظ نسخة احتياطية من البرنامج",1);
                 } catch (IOException ex) {
                     Logger.getLogger(Manager_AccountController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }else Alerts.showErrorAlert("كلمة السر غير صحيحة");
-        }else Alerts.showErrorAlert("لم يتم ادخال كلمة السر");
+            }else Alerts.showAlert("كلمة السر غير صحيحة",3);
+        }else Alerts.showAlert("لم يتم ادخال كلمة السر",3);
     }
 
     @FXML
@@ -74,11 +74,11 @@ public class Manager_AccountController implements Initializable {
             if(validation()){
                 try {
                     Runtime.getRuntime().exec("xcopy D:\\walid\\Last2\\DB D:\\walid\\Last2\\Supermarket_Management_System\\database /s/h/e/k/f/c/y/r");
-                    Alerts.showInfoAlert("تم استرجاع بيانات النظام الى اخر نسخة محفوظة");
+                    Alerts.showAlert("تم استرجاع بيانات النظام الى اخر نسخة محفوظة",1);
                 } catch (IOException ex) {
                     Logger.getLogger(Manager_AccountController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }else Alerts.showErrorAlert("كلمة السر غير صحيحة");
+            }else Alerts.showAlert("كلمة السر غير صحيحة",3);
         }
     }
     

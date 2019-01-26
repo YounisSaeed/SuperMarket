@@ -220,17 +220,17 @@ public class RecallController extends NewSerial implements Initializable {
             if(s){
                 if(result){
                     R_table.getItems().add(R);
-                    Alerts.showInfoAlert("تمت الاضافة !!");
+                    Alerts.showAlert("تمت الاضافة !!",1);
                     clear();
                 }
                 else
-                Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. ");
+                Alerts.showAlert("لم تتم العملية بشكل صحيح .. ",3);
             }
-                }else{Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة !!");}
-            }catch(NumberFormatException e){Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة ");}
+                }else{Alerts.showAlert("لقد ادخلت قيمة غير صحيحة !!",3);}
+            }catch(NumberFormatException e){Alerts.showAlert("لقد ادخلت قيمة غير صحيحة ",3);}
         }
         else
-            Alerts.showErrorAlert("لم يتم ادخال البيانات بشكل صحيح ! .. يرجى التأكد من ملئ جميع الحقول المطلوبه");
+            Alerts.showAlert("لم يتم ادخال البيانات بشكل صحيح ! .. يرجى التأكد من ملئ جميع الحقول المطلوبه",3);
     
     }
     
@@ -277,7 +277,7 @@ public class RecallController extends NewSerial implements Initializable {
         try {
             Runtime.getRuntime().exec("calc");
         } catch (IOException ex) {
-            Alerts.showErrorAlert("حدث مشكلة اثناء فنح  الآلة الحاسبة, يرجى المحاولة لاحقا");
+            Alerts.showAlert("حدث مشكلة اثناء فنح  الآلة الحاسبة, يرجى المحاولة لاحقا",3);
         }
     }
 
@@ -286,10 +286,10 @@ public class RecallController extends NewSerial implements Initializable {
         
         if(R_table.getItems().isEmpty()){
             
-            Alerts.showErrorAlert("لا يوجد بيانات فى الجدول !!");
+            Alerts.showAlert("لا يوجد بيانات فى الجدول !!",3);
         }
         else if (R_table.getSelectionModel().getSelectedItem() == null ){
-            Alerts.showErrorAlert("حدد عنصر أولا");
+            Alerts.showAlert("حدد عنصر أولا",3);
         }
         else{
             Recalls R =R_table.getSelectionModel().getSelectedItem();
@@ -298,7 +298,7 @@ public class RecallController extends NewSerial implements Initializable {
                 if (result)
                     R_table.getItems().removeAll(R_table.getSelectionModel().getSelectedItem()); // delete item from ui table                    totalPrice.setText(TOTAL+"");
                 else 
-                    Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى");
+                    Alerts.showAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى",3);
             }
         }
     }

@@ -125,7 +125,7 @@ public class Sales extends Common_Properties{// Common_Methods is an Interface i
    
    public double CalcReminderMoney(double paid,double totalprice){
        if(paid<totalprice){
-           Alerts.showErrorAlert("القيمة المدفوعة اقل من سعر المشتريات");
+           Alerts.showAlert("القيمة المدفوعة اقل من سعر المشتريات",3);
            return 0;
        }else{
            return paid-totalprice;

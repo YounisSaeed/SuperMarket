@@ -147,18 +147,18 @@ public class Manager_SuppliersController implements Initializable {
                     
                     if(result){
                         S_Table.getItems().add(s);
-                        Alerts.showInfoAlert("تم الاضافة");
+                        Alerts.showAlert("تم الاضافة",1);
                         clear();
                     }
                     else 
-                        Alerts.showErrorAlert("خطأ فى الاضافة");
+                        Alerts.showAlert("خطأ فى الاضافة",3);
                    
         
         }else 
-                Alerts.showErrorAlert("برجاء التأكد من ملىء جميع الحقول المطلوبة ");
+                Alerts.showAlert("برجاء التأكد من ملىء جميع الحقول المطلوبة ",3);
           
          } catch (NullPointerException e){                   
-                Alerts.showErrorAlert("برجاء التأكد من ملىء جميع الحقول المطلوبة ");
+                Alerts.showAlert("برجاء التأكد من ملىء جميع الحقول المطلوبة ",3);
                  }
     }
     
@@ -185,16 +185,16 @@ public class Manager_SuppliersController implements Initializable {
                 boolean R=DataHelper.updateSupplier(S, oldCompName);
                 if(R)
                 {
-                    Alerts.showInfoAlert("تم التعديل");
+                    Alerts.showAlert("تم التعديل",1);
                     DataHelper.loadSuppliersData(S_Table);
                     clear();
                 }
             }
             catch (NumberFormatException es)
             {
-                Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة !!");
+                Alerts.showAlert("لقد ادخلت قيمة غير صحيحة !!",3);
             }
-        }else { Alerts.showErrorAlert("برجاء ملىء جميع الحقول المطلوبة");}
+        }else { Alerts.showAlert("برجاء ملىء جميع الحقول المطلوبة",3);}
     }
     
     
@@ -218,15 +218,15 @@ public class Manager_SuppliersController implements Initializable {
         if (Alerts.ConfirmAlert("هل تريد مسح"+":", S.getSupplierName())) {
                 Boolean result = DataHelper.deleteSupplier(S);
                 if (result) {
-                    Alerts.showInfoAlert("تم المسح !!");
+                    Alerts.showAlert("تم المسح !!",1);
                    S_Table.getItems().removeAll(S_Table.getSelectionModel().getSelectedItem());
                     clear();
                 }
                  else 
-                    Alerts.showErrorAlert("لم تتم العملية بشكل صحيح ");
+                    Alerts.showAlert("لم تتم العملية بشكل صحيح ",3);
             }
     }else {
-             Alerts.showErrorAlert("برجاءاختيار عنصر لمسحه");
+             Alerts.showAlert("برجاءاختيار عنصر لمسحه",3);
                 }
     
              
@@ -258,12 +258,12 @@ public class Manager_SuppliersController implements Initializable {
                 //yooooour coooode
             }catch (NumberFormatException es)
             {
-                Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة !!");
+                Alerts.showAlert("لقد ادخلت قيمة غير صحيحة !!",3);
             }
          }
           else 
         {  
-            Alerts.showErrorAlert("برجاء ادخال اسم المورد او التصنيف  ");
+            Alerts.showAlert("برجاء ادخال اسم المورد او التصنيف  ",3);
             
         }
     }
