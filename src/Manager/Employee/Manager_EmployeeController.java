@@ -1,4 +1,3 @@
-
 package Manager.Employee;
 
 import Classes.Alerts;
@@ -162,17 +161,17 @@ public class Manager_EmployeeController implements Initializable {
                     
                     if(result){
                         E_tables.getItems().add(E);
-                        Alerts.showInfoAlert("تمت الأضافة بنجاح");
+                        Alerts.showAlert("تمت الأضافة بنجاح",1);
                         clear();
                         
                     }
-             }else{  Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة!! ");  }
+             }else{  Alerts.showAlert("لقد ادخلت قيمة غير صحيحة!! ",3);  }
                 
              
-            } catch (NumberFormatException es){ Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة !!"); }
+            } catch (NumberFormatException es){ Alerts.showAlert("لقد ادخلت قيمة غير صحيحة !!",3); }
                  
              
-            } else {  Alerts.showErrorAlert("برجاء ملىء جميع الحقول المطلوبة"); }
+            } else {  Alerts.showAlert("برجاء ملىء جميع الحقول المطلوبة",3); }
                  
                 
 
@@ -215,18 +214,18 @@ public class Manager_EmployeeController implements Initializable {
                 boolean result=DataHelper.updateEmployee(e,oldBar);
                 
                 if(result){
-                    Alerts.showInfoAlert("تم تعديل بيانات :"+e.getEmployeeName());
+                    Alerts.showAlert("تم تعديل بيانات :"+e.getEmployeeName(),3);
                     DataHelper.loadEmployeesData(E_tables);
                     clear();
                     
                     
-                } else{ Alerts.showErrorAlert("لقد أدخلت قيما غير صحيحة"); }
+                } else{ Alerts.showAlert("لقد أدخلت قيما غير صحيحة",3); }
 
-               }  else{ Alerts.showErrorAlert("لقد أدخلت قيما غير صحيحة"); }   
+               }  else{ Alerts.showAlert("لقد أدخلت قيما غير صحيحة",3); }   
                         
-               } catch (NumberFormatException es) { Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة !!");}
+               } catch (NumberFormatException es) { Alerts.showAlert("لقد ادخلت قيمة غير صحيحة !!",3);}
    
-                } else { Alerts.showErrorAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة");}
+                } else { Alerts.showAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة",3);}
 
                 
 
@@ -252,13 +251,13 @@ public class Manager_EmployeeController implements Initializable {
                 Boolean result = DataHelper.deleteEmployee(G);
                 
                 if (result) {
-                    Alerts.showInfoAlert("تم المسح !!");
+                    Alerts.showAlert("تم المسح !!",1);
                     E_tables.getItems().removeAll(E_tables.getSelectionModel().getSelectedItem());
                     clear();
                 }
-                 else {  Alerts.showErrorAlert("لم تتم العملية بشكل صحيح ");}
+                 else {  Alerts.showAlert("لم تتم العملية بشكل صحيح ",3);}
             
-    } else {    Alerts.showErrorAlert("برجاءاختيار عنصر لمسحه"); }
+    } else {    Alerts.showAlert("برجاءاختيار عنصر لمسحه",3); }
         
     }    
     }

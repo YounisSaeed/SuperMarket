@@ -95,14 +95,14 @@ public class ExpensesController extends NewSerial implements Initializable {
      
         if(result){
            E_table.getItems().add(E);
-           Alerts.showInfoAlert("تم الاضافة !!");
+           Alerts.showAlert("تم الاضافة !!",1);
         }
         total();
         clear();
-            }else{  Alerts.showErrorAlert("لقد أدخلت قيما غير صحيحة");  }
+            }else{  Alerts.showAlert("لقد أدخلت قيما غير صحيحة",3);  }
                 
         
-        }catch(NumberFormatException e){   Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة .."); }
+        }catch(NumberFormatException e){   Alerts.showAlert("لقد ادخلت قيمة غير صحيحة ..",3); }
         
     }
     

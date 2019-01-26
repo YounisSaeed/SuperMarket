@@ -232,15 +232,15 @@ public class BuyingController  extends NewSerial implements Initializable {
             TOTAL=0;
             clear();
             if(result){
-                Alerts.showInfoAlert("تم اضافة الفاتورة رقم  بنجاح !!");
+                Alerts.showAlert("تم اضافة الفاتورة رقم  بنجاح !!",1);
                 clear();
             }
             else{
-                Alerts.showErrorAlert("لم تتم العملية بشكل صحيح  ");
+                Alerts.showAlert("لم تتم العملية بشكل صحيح  ",3);
         }}
         else
-            Alerts.showErrorAlert("  يرجى ملئ جميع الحقول المطلوبة");
-        }catch(Exception e){Alerts.showWorningAlert("خطأ .. ربما لم يحدد اسم المورد");}
+            Alerts.showAlert("  يرجى ملئ جميع الحقول المطلوبة",3);
+        }catch(Exception e){Alerts.showAlert("خطأ .. ربما لم يحدد اسم المورد",2);}
     }
      
     
@@ -274,20 +274,20 @@ public class BuyingController  extends NewSerial implements Initializable {
                     TOTAL+=B.getCost();
                     totalPrice.setText(TOTAL+"");
                     B_table.getItems().add(B);
-                    Alerts.showInfoAlert("تمت الاضافة !!");
+                    Alerts.showAlert("تمت الاضافة !!",1);
                     clearSome();
                     
                 }
                 else
-                Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. ");
+                Alerts.showAlert("لم تتم العملية بشكل صحيح .. ",1);
             }
             
             }catch(NumberFormatException es){
-                Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة !!");
+                Alerts.showAlert("لقد ادخلت قيمة غير صحيحة !!",3);
             }
         }
         else
-            Alerts.showErrorAlert("برجاء ملئ جميع الحقول المطلوبة");
+            Alerts.showAlert("برجاء ملئ جميع الحقول المطلوبة",3);
     }
     
 
@@ -295,9 +295,9 @@ public class BuyingController  extends NewSerial implements Initializable {
     private void deleteRow(){
             
         if(B_table.getItems().isEmpty()){
-            Alerts.showErrorAlert("لا يوجد بيانات فى الجدول !!");
+            Alerts.showAlert("لا يوجد بيانات فى الجدول !!",3);
         }else if (B_table.getSelectionModel().getSelectedItem() == null ){
-            Alerts.showErrorAlert("حدد عنصر أولا");
+            Alerts.showAlert("حدد عنصر أولا",3);
         }
         else{
             double c=B_table.getSelectionModel().getSelectedItem().getCost();
@@ -307,16 +307,16 @@ public class BuyingController  extends NewSerial implements Initializable {
                 if (result) {
                         boolean rs=DataHelper.InterAction_B_Sales__Products_DeleteQuan(S.getBarcodfiled(), S.getCurrentQuantity(),S.getQuantityKind());
                         if(rs)
-                            Alerts.showInfoAlert("تم المسح !!");
+                            Alerts.showAlert("تم المسح !!",1);
                         else
-                            Alerts.showErrorAlert("لم يتم المسح ");
+                            Alerts.showAlert("لم يتم المسح ",3);
 
                     B_table.getItems().removeAll(B_table.getSelectionModel().getSelectedItem()); // delete item from ui table
                     TOTAL-=c;
                     totalPrice.setText(TOTAL+"");
                     
                 } else {
-                    Alerts.showErrorAlert("لم تتم العملية بشكل صحيح ");
+                    Alerts.showAlert("لم تتم العملية بشكل صحيح ",3);
                 }
             }
         }
@@ -334,10 +334,10 @@ public class BuyingController  extends NewSerial implements Initializable {
                     boolean result=DataHelper.deleteAllRowsInBuyTV(getBuyingSerial());
                     if(result){
                         B_table.getItems().clear();
-                        Alerts.showInfoAlert("تم مسح جميع العناصر");
+                        Alerts.showAlert("تم مسح جميع العناصر",1);
                     }
                     else
-                        Alerts.showErrorAlert("لم تتم العملية بشكل صحيح");
+                        Alerts.showAlert("لم تتم العملية بشكل صحيح",3);
                 
            TOTAL=0;
         }
@@ -379,7 +379,7 @@ public class BuyingController  extends NewSerial implements Initializable {
          try {
             Runtime.getRuntime().exec("calc");
         } catch (IOException ex) {
-           Alerts.showErrorAlert("حدث مشكلة أثناء فتح الالة الحاسبة , يرجى اعادة المحاولة") ;
+           Alerts.showAlert("حدث مشكلة أثناء فتح الالة الحاسبة , يرجى اعادة المحاولة",3) ;
         }
     }
 

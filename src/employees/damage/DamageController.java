@@ -203,17 +203,17 @@ public class DamageController extends NewSerial implements Initializable {
                 if(result){
                     D_table.getItems().add(D1);
                     clear();
-                    Alerts.showInfoAlert("تمت الاضافة !!");
+                    Alerts.showAlert("تمت الاضافة !!",1);
                 }
                 else
-                Alerts.showErrorAlert("لم تتم العملية بشكل صحيح ");
+                Alerts.showAlert("لم تتم العملية بشكل صحيح ",3);
             }
-        }else  Alerts.showErrorAlert("البيانات الذي ادخلتها غير صحيحة");
+        }else  Alerts.showAlert("البيانات الذي ادخلتها غير صحيحة",3);
 //        else
 //            Alerts.showErrorAlert("لم يتم ادخال البيانات بشكل صحيح ! .. يرجى التأكد من ملئ جميع الحقول المطلوبه");
 //        
-    }else Alerts.showErrorAlert("يرجى التأكد من ملئ جميع الحقول المطلوبة");
-        }catch(NumberFormatException e){Alerts.showErrorAlert("القيمة التي أدخلتها غير صحيحة");}
+    }else Alerts.showAlert("يرجى التأكد من ملئ جميع الحقول المطلوبة",3);
+        }catch(NumberFormatException e){Alerts.showAlert("القيمة التي أدخلتها غير صحيحة",3);}
             
     }
     /*********************************************************************************************************/
@@ -275,7 +275,7 @@ public class DamageController extends NewSerial implements Initializable {
         try {
             Runtime.getRuntime().exec("calc");
         } catch (IOException ex) {
-            Alerts.showErrorAlert("حدث مشكلة اثناء فتح الآلة الحاسبة , يرجى المحاولة لاحقا");
+            Alerts.showAlert("حدث مشكلة اثناء فتح الآلة الحاسبة , يرجى المحاولة لاحقا",3);
         }
     }
 
@@ -283,10 +283,10 @@ public class DamageController extends NewSerial implements Initializable {
     private void DeleteItemButton(ActionEvent event) {
         if(D_table.getItems().isEmpty()){
             
-            Alerts.showErrorAlert("لا يوجد بيانات فى الجدول !!");
+            Alerts.showAlert("لا يوجد بيانات فى الجدول !!",3);
         }
         else if (D_table.getSelectionModel().getSelectedItem() == null ){
-            Alerts.showErrorAlert("حدد عنصر أولا");
+            Alerts.showAlert("حدد عنصر أولا",3);
         }
         else{
         Common_Properties S =D_table.getSelectionModel().getSelectedItem();
@@ -295,7 +295,7 @@ public class DamageController extends NewSerial implements Initializable {
                 if (result) {
                     D_table.getItems().removeAll(D_table.getSelectionModel().getSelectedItem()); // delete item from ui table
                 } else {
-                    Alerts.showErrorAlert("لم تتم العملية بشكل صحيح ");
+                    Alerts.showAlert("لم تتم العملية بشكل صحيح ",3);
                 }
             }
         }

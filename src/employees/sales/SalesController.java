@@ -363,10 +363,10 @@ public class SalesController extends NewSerial implements Initializable {
                     TOTAL=0;
                     paid.setText(gettTime()+"");
                     clear();
-                    Alerts.showInfoAlert("تم اضافة الفاتورة رقم  بنجاح !!");
+                    Alerts.showAlert("تم اضافة الفاتورة رقم  بنجاح !!",1);
                 }
                 else
-                    Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى");
+                    Alerts.showAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى",3);
             }catch(Exception e){}
         }
         
@@ -407,7 +407,7 @@ public class SalesController extends NewSerial implements Initializable {
                 System.out.println(k);
                 int qty=Integer.parseInt(Quntity.getText());
                 if(DataHelper.CheckQuan(productBarcode.getText()))
-                    Alerts.showWorningAlert("لقد وصلت كمية هذا المنتج الى الحد الادنى !!");
+                    Alerts.showAlert("لقد وصلت كمية هذا المنتج الى الحد الادنى !!",1);
                 boolean s= DataHelper.InterAction_B_Sales__Products_addQuan(productBarcode,qty,quntityComboBox.getValue());
                 if(s){
                     if(result){
@@ -418,16 +418,16 @@ public class SalesController extends NewSerial implements Initializable {
                      //   Alerts.showInfoAlert("تمت الاضافة !!");
                     }
                     else
-                        Alerts.showErrorAlert("لم تتم العملية بشكل صحيح ");
+                        Alerts.showAlert("لم تتم العملية بشكل صحيح ",3);
                 }
-                }else{Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة !!");}
+                }else{Alerts.showAlert("لقد ادخلت قيمة غير صحيحة !!",3);}
             }catch(NumberFormatException es){
-                Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة !!");
+                Alerts.showAlert("لقد ادخلت قيمة غير صحيحة !!",3);
             }
             
        
-    }else Alerts.showErrorAlert("أدخل الكمية");
-     }else Alerts.showErrorAlert("لايوجد منتج للأضافة");
+    }else Alerts.showAlert("أدخل الكمية",3);
+     }else Alerts.showAlert("لايوجد منتج للأضافة",3);
     
     }
     
@@ -440,14 +440,14 @@ public class SalesController extends NewSerial implements Initializable {
         Sales S=new Sales();
         try{
             if(paid.getText().equals(""))
-                {Alerts.showErrorAlert("يرجى ادخال المبلغ المدفوع");}
+                {Alerts.showAlert("يرجى ادخال المبلغ المدفوع",3);}
             else{
                 double reminder=S.CalcReminderMoney(Double.parseDouble(paid.getText()),
                              Double.parseDouble(totalPrice.getText()));
                 rest.setText(reminder+"");
             }
         }catch(NumberFormatException ex){
-            Alerts.showErrorAlert("لقد ادخلت قيمةغير صحيحة");
+            Alerts.showAlert("لقد ادخلت قيمةغير صحيحة",3);
         }
     }
     
@@ -458,10 +458,10 @@ public class SalesController extends NewSerial implements Initializable {
     private void DeleteRow(){
         if(SalesTabel.getItems().isEmpty()){
             
-            Alerts.showErrorAlert("لا يوجد بيانات فى الجدول !!");
+            Alerts.showAlert("لا يوجد بيانات فى الجدول !!",3);
         }
         else if (SalesTabel.getSelectionModel().getSelectedItem() == null ){
-            Alerts.showErrorAlert("حدد عنصر أولا");
+            Alerts.showAlert("حدد عنصر أولا",3);
         }
         else{
             double c=SalesTabel.getSelectionModel().getSelectedItem().getCost();
@@ -478,9 +478,9 @@ public class SalesController extends NewSerial implements Initializable {
                     {
                         boolean rs=DataHelper.InterAction_B_Sales__Products_DeleteQuan(S.getBarcodfiled(), S.getCurrentQuantity(),S.getQuantityKind());
                         if(rs)
-                            Alerts.showInfoAlert("تم المسح !!");
+                            Alerts.showAlert("تم المسح !!",1);
                         else
-                            Alerts.showErrorAlert("لم يتم المسح ");
+                            Alerts.showAlert("لم يتم المسح ",3);
                                    
                     }
                     
@@ -489,7 +489,7 @@ public class SalesController extends NewSerial implements Initializable {
                     totalPrice.setText(TOTAL+"");
                     
                 } else {
-                    Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .");
+                    Alerts.showAlert("لم تتم العملية بشكل صحيح .",3);
                 }
             }
         }
@@ -499,7 +499,7 @@ public class SalesController extends NewSerial implements Initializable {
     /********************************************* deleteAllRows _________*/
     private void deleteAllRows(){  
         if(SalesTabel.getItems().isEmpty() && T_Search.getText().equals("")){
-            Alerts.showErrorAlert("لا يوجد بيانات لتتم عملية المسح !!");
+            Alerts.showAlert("لا يوجد بيانات لتتم عملية المسح !!",3);
         }
         else{
                 if(Alerts.ConfirmAlert("هل تريد مسح جميع عناصر الجدول ؟","")){
@@ -509,10 +509,10 @@ public class SalesController extends NewSerial implements Initializable {
                     boolean result=DataHelper.deleteAllRowsInSalesTV(getSalesSerial());
                     if(result){
                         SalesTabel.getItems().clear();
-                        Alerts.showInfoAlert("تم مسح جميع العناصر");
+                        Alerts.showAlert("تم مسح جميع العناصر",3);
                     }
                     else
-                        Alerts.showErrorAlert("لم تتم العملية بشكل صحيح");
+                        Alerts.showAlert("لم تتم العملية بشكل صحيح",3);
                 }
            TOTAL=0;
         }
@@ -556,7 +556,7 @@ public class SalesController extends NewSerial implements Initializable {
         try {
             Runtime.getRuntime().exec("calc");
         } catch (IOException ex) {
-           Alerts.showErrorAlert("حدث مشكلة أثناء فتح الالة الحاسبة , يرجى اعادة المحاولة") ;
+           Alerts.showAlert("حدث مشكلة أثناء فتح الالة الحاسبة , يرجى اعادة المحاولة",3) ;
         }
     }
 

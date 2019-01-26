@@ -75,14 +75,14 @@ public class DateController implements Initializable {
         String da1=D_Date.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         boolean x=DataHelper.updateExpireDate(D_TSearch.getText(),da1);
         if(x){
-            Alerts.showInfoAlert("تم تعديل تاريخ الانتهاء");
+            Alerts.showAlert("تم تعديل تاريخ الانتهاء",1);
             DataHelper.fillSalesWithInfoOfProduct(D_TSearch.getText(),LName,D_EXP);// 
             clear();
         }
         else
-            Alerts.showErrorAlert("لم يتم التعديل");
+            Alerts.showAlert("لم يتم التعديل",3);
     }else 
-         Alerts.showErrorAlert("تأكد من ملئ جميع الحقول المطلوبة");  
+         Alerts.showAlert("تأكد من ملئ جميع الحقول المطلوبة",3);  
         
     }
 

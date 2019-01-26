@@ -89,7 +89,7 @@ public class AccountController implements Initializable {
             
         }
         else{
-            Alerts.showErrorAlert("كود خطأ");
+            Alerts.showAlert("كود خطأ",3);
         }    
         
     }

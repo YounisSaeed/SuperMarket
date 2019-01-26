@@ -1,20 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Login;
 
 
 import Classes.Alerts;
 import Classes.Login;
-
-
-
-
-
-
-
 
 import Classes.Alerts;
 import Classes.Login;
@@ -97,9 +86,9 @@ HomeController y = new HomeController();
                ;       
                 break;
             case 3: 
-                   Alerts.showErrorAlert("خطا ف كود الدخول او كلمة السر");
+                   Alerts.showAlert("خطا ف كود الدخول او كلمة السر",3);
                                       break;
-            default : Alerts.showErrorAlert("خطا ف كود الدخول او كلمة السر");
+            default : Alerts.showAlert("خطا ف كود الدخول او كلمة السر",3);
                     break;
     }
     

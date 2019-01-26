@@ -187,7 +187,7 @@ public class DataHelper {
                 list2.add(bar);
             }
         } catch (SQLException ex) {
-            Alerts.showInfoAlert("لا يوجد اصناف");
+            Alerts.showAlert("لا يوجد اصناف",1);
         }
         TV.setItems(list);
         TextFields.bindAutoCompletion(TF, list2);
@@ -213,7 +213,7 @@ public class DataHelper {
                 list.add(new Goods(name, bar, cate, sup, it, pa,box, Pi, Pp, Pb, mP));
             }
         } catch (SQLException ex) {
-            Alerts.showInfoAlert("لا يوجد اصناف");
+            Alerts.showAlert("لا يوجد اصناف",1);
         }
         return list;
     }
@@ -291,7 +291,7 @@ public class DataHelper {
                 
             }
         } catch (SQLException ex) {
-            Alerts.showInfoAlert("لا يوجد اصناف");
+            Alerts.showAlert("لا يوجد اصناف",1);
         }
         TV.setItems(list);
     }
@@ -312,6 +312,7 @@ public class DataHelper {
     /*****************************************_______EMPLOYEE_______*************************************************/
     
     public static boolean insertNewemployee(Employee emp) {
+<<<<<<< HEAD
         //New
         data =new HashMap<>();
         data.put("emp_id",emp.getEmployeeId());
@@ -340,6 +341,22 @@ public class DataHelper {
 //         Alerts.showErrorAlert("خطأ فى التسجيل .. ربما سجل هذا الموظف من قبل");
 //        }
 //        return false;
+=======
+        try {
+            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+                    "INSERT INTO employee1(emp_id,emp_name,emp_phone,emp_salary_hours,emp_address) VALUES(?,?,?,?,?)");
+            statement.setString(1, emp.getEmployeeId());
+            statement.setString(2, emp.getEmployeeName());
+            statement.setString(3, emp.getEmployeePhone());
+            statement.setDouble(4, emp.getEmployeeSalaryHours());
+            statement.setString(5, emp.getEmployeeAddress());
+            return statement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+         System.out.print("Employee doesn't be inserted");
+         Alerts.showAlert("خطأ فى التسجيل .. ربما سجل هذا الموظف من قبل",3);
+        }
+        return false;
+>>>>>>> a3f90118096c12c9d62178c15daf4a7bab6ed152
     }
     
     public static boolean updateEmployee(Employee E,String oldID )
@@ -487,7 +504,7 @@ public class DataHelper {
                 list.add(new Employee(id,name,phone,address,salary));
             }
         } catch (SQLException ex) {
-            Alerts.showInfoAlert("لا يوجد موظفين");
+            Alerts.showAlert("لا يوجد موظفين",1);
         }
         TV.setItems(list);
         
@@ -564,7 +581,7 @@ public static boolean isEmployeeisEXits(String id) {
                 list.add(new Employee(x1,x2));
             }
         } catch (SQLException ex) {
-            Alerts.showInfoAlert("لا يوجد مصاريفس");
+            Alerts.showAlert("لا يوجد مصاريفس",1);
         }
         
                 System.out.println("fdffdfsdsd");
@@ -665,7 +682,7 @@ public static boolean isEmployeeisEXits(String id) {
                 list.add(new Suppliers(name, pho,sup));
             }
         } catch (SQLException ex) {
-            Alerts.showInfoAlert("");
+            Alerts.showAlert("",1);
         }
         return list;
     }
@@ -746,7 +763,7 @@ public static boolean isEmployeeisEXits(String id) {
              //   list2.add(phone);
             }
         } catch (SQLException ex) {
-            Alerts.showInfoAlert("لا يوجد موردين");
+            Alerts.showAlert("لا يوجد موردين",1);
         }
         TV.setItems(list);
        // TextFields.bindAutoCompletion(TF, list2);
@@ -763,7 +780,7 @@ public static boolean isEmployeeisEXits(String id) {
                list.add(new Suppliers(name,phone,sales_name));
             }
         } catch (SQLException ex) {
-            Alerts.showInfoAlert("لا يوجد موردين");
+            Alerts.showAlert("لا يوجد موردين",1);
         }
         return list;
     }
@@ -910,7 +927,7 @@ public static boolean isEmployeeisEXits(String id) {
                 System.out.println("لسااااا");
            }
         } catch (SQLException ex) {
-            Alerts.showErrorAlert("لايوجد بيانات");
+            Alerts.showAlert("لايوجد بيانات",3);
         }
         return srl;
     }
@@ -933,7 +950,7 @@ public static boolean isEmployeeisEXits(String id) {
 //              Alerts.showInfoAlert("اول فواتير اليوم ..");
            }
         } catch (SQLException ex) {
-            Alerts.showErrorAlert("لايوجد بيانات");
+            Alerts.showAlert("لايوجد بيانات",3);
         }
         return num;
     }
@@ -1012,7 +1029,8 @@ public static boolean isEmployeeisEXits(String id) {
                 qu2="UPDATE product SET pro_All_qty= "+subQuan+" WHERE pro_bar = '"+bar+"'";
             if(DatabaseHandler.getInstance().execAction(qu2))
             return true;}
-            else {Alerts.showErrorAlert("لا توجد كمية كافية"); return false;}
+            else {Alerts.showAlert("لا توجد كمية كافية",3); 
+            return false;}
         }
         else if(kquan.equals("علبة")){
             if((allQuan- (XQuantity*iteminbox))>=0){
@@ -1020,7 +1038,7 @@ public static boolean isEmployeeisEXits(String id) {
             qu2="UPDATE product SET pro_All_qty= "+subQuan+" WHERE pro_bar = '"+bar+"'";
             if(DatabaseHandler.getInstance().execAction(qu2))
             return true;}
-            else{ Alerts.showErrorAlert("لا توجد كمية كافية"); return false;}
+            else{ Alerts.showAlert("لا توجد كمية كافية",3); return false;}
         }
         else{
             if((allQuan- (XQuantity*iteminbox*packetinbox) ) >= 0){
@@ -1029,7 +1047,7 @@ public static boolean isEmployeeisEXits(String id) {
             if(DatabaseHandler.getInstance().execAction(qu2))
             return true;}
             else
-            {Alerts.showErrorAlert("لا توجد كمية كافية"); return false;}
+            {Alerts.showAlert("لا توجد كمية كافية",3); return false;}
         }
 
         return false;
@@ -1194,7 +1212,7 @@ public static boolean isEmployeeisEXits(String id) {
                 System.out.println("لسااااا");
            }
         } catch (SQLException ex) {
-            Alerts.showErrorAlert("لايوجد بيانات");
+            Alerts.showAlert("لايوجد بيانات",3);
         }
         return srl;
     }    
@@ -1214,7 +1232,7 @@ public static boolean isEmployeeisEXits(String id) {
 //              Alerts.showInfoAlert("اول فواتير اليوم ..");
            }
         } catch (SQLException ex) {
-            Alerts.showErrorAlert("لايوجد بيانات");
+            Alerts.showAlert("لايوجد بيانات",3);
         }
         return num;
     }
@@ -1374,7 +1392,7 @@ public static boolean isEmployeeisEXits(String id) {
                 
             }
         } catch (SQLException ex) {
-            Alerts.showInfoAlert("لا يوجد اصناف");
+            Alerts.showAlert("لا يوجد اصناف",1);
         }
         TV.setItems(list);
     }
@@ -1394,7 +1412,7 @@ public static boolean isEmployeeisEXits(String id) {
 //              Alerts.showInfoAlert("اول فواتير اليوم ..");
            }
         } catch (SQLException ex) {
-            Alerts.showErrorAlert("لايوجد بيانات");
+            Alerts.showAlert("لايوجد بيانات",3);
         }
         return num;
     }
@@ -1455,7 +1473,7 @@ public static boolean isEmployeeisEXits(String id) {
                 list.add(new Expences(x1,x2));
             }
         } catch (SQLException ex) {
-            Alerts.showInfoAlert("لا يوجد اصناف");
+            Alerts.showAlert("لا يوجد اصناف",1);
         }
         TV.setItems(list);
     }
@@ -1531,7 +1549,7 @@ public static boolean isEmployeeisEXits(String id) {
                 list.add(new Recalls(x1, x2, x3, x4, x5, x6, x7, x8, x9,x10));
             }
         } catch (SQLException ex) {
-            Alerts.showInfoAlert("لا يوجد اصناف");
+            Alerts.showAlert("لا يوجد اصناف",1);
         }
         TV.setItems(list);
     }
@@ -1552,7 +1570,7 @@ public static boolean isEmployeeisEXits(String id) {
 //              Alerts.showInfoAlert("اول فواتير اليوم ..");
            }
         } catch (SQLException ex) {
-            Alerts.showErrorAlert("لايوجد بيانات");
+            Alerts.showAlert("لايوجد بيانات",3);
         }
         return num;
     }
@@ -1598,7 +1616,7 @@ public static boolean isEmployeeisEXits(String id) {
             }
             
         } catch (SQLException ex) {
-            Alerts.showInfoAlert("لا يوجد اصناف");
+            Alerts.showAlert("لا يوجد اصناف",1);
         }
         TV.setItems(list);
     }

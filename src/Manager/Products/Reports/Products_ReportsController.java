@@ -219,7 +219,7 @@ public class Products_ReportsController implements Initializable {
             document.add(table);
  
             /////////////////ِTo show that pdf is printed///////////////
-            Alerts.showInfoAlert("تمت طباعة التقرير");
+            Alerts.showAlert("تمت طباعة التقرير",1);
             
                    } catch(Exception e){
             System.out.println(e);
@@ -335,7 +335,7 @@ public class Products_ReportsController implements Initializable {
             document.add(table);
  
             /////////////////ِTo show that pdf is printed///////////////
-            Alerts.showInfoAlert("تمت طباعة التقرير");
+            Alerts.showAlert("تمت طباعة التقرير",1);
             
                    } catch(Exception e){
             System.out.println(e);

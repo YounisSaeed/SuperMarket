@@ -228,15 +228,15 @@ public class Sppliers_ReportsController implements Initializable {
             }
             document.add(table); 
             ////////////////ِTo show that pdf is printed///////////////
-            Alerts.showInfoAlert("تمت طباعة التقرير");
+            Alerts.showAlert("تمت طباعة التقرير",1);
             document.close();
          }else {
-              Alerts.showErrorAlert("تاريخ النهاية يسبق تاريخ البداية");
+              Alerts.showAlert("تاريخ النهاية يسبق تاريخ البداية",3);
           }
          
          }
          }catch(NullPointerException e){
-                 Alerts.showErrorAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة");
+                 Alerts.showAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة",3);
                  } catch (DocumentException ex) { 
             Logger.getLogger(Sppliers_ReportsController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
@@ -421,7 +421,7 @@ public class Sppliers_ReportsController implements Initializable {
                }
                
              
-                 Alerts.showInfoAlert("تمت طباعة التقرير");   
+                 Alerts.showAlert("تمت طباعة التقرير",1);   
             }
              
              
@@ -437,14 +437,14 @@ public class Sppliers_ReportsController implements Initializable {
             
          }
              else {
-              Alerts.showErrorAlert("تاريخ النهاية يسبق تاريخ البداية");
+              Alerts.showAlert("تاريخ النهاية يسبق تاريخ البداية",3);
           }
          }else
-             Alerts.showErrorAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة");
+             Alerts.showAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة",3);
              
         }
         catch(NullPointerException e){
-                 Alerts.showErrorAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة");
+                 Alerts.showAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة",3);
                  } catch (DocumentException ex) {
             Logger.getLogger(Sppliers_ReportsController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

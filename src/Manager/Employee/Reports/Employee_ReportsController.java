@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Manager.Employee.Reports;
 
 import Classes.Alerts;
@@ -98,7 +94,7 @@ public class Employee_ReportsController implements Initializable {
          }
          }
         catch(NullPointerException e){
-                 Alerts.showErrorAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة");
+                 Alerts.showAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة",3);
                  }
     }
 
@@ -111,7 +107,7 @@ public class Employee_ReportsController implements Initializable {
          }
          }
         catch(NullPointerException e){
-                 Alerts.showErrorAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة");
+                 Alerts.showAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة",3);
                  }
         
          
@@ -127,7 +123,7 @@ public class Employee_ReportsController implements Initializable {
          }
          }
         catch(NullPointerException e){
-                 Alerts.showErrorAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة");
+                 Alerts.showAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة",3);
                  }
     }
 
@@ -153,7 +149,7 @@ public static void fillComboBox(ComboBox C1){
                 list.add(Ename);
             }
         } catch (SQLException ex) {
-            Alerts.showInfoAlert("لا يوجد موردين");
+            Alerts.showAlert("لا يوجد موردين",1);
         }
         C1.setItems(list);
     }
@@ -330,7 +326,7 @@ public static void fillComboBox(ComboBox C1){
             }
             document.add(table); 
             ////////////////ِTo show that pdf is printed///////////////
-            Alerts.showInfoAlert("تمت طباعة التقرير");
+            Alerts.showAlert("تمت طباعة التقرير",1);
             document.close();
          
          
@@ -339,7 +335,7 @@ public static void fillComboBox(ComboBox C1){
 //                // Alerts.showErrorAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة");
               }        
 else {
-              Alerts.showErrorAlert("تاريخ النهاية يسبق تاريخ البداية");
+              Alerts.showAlert("تاريخ النهاية يسبق تاريخ البداية",3);
           }
          
 
@@ -638,7 +634,7 @@ else {
         System.out.println("Document Closed");
 
 }else {
-              Alerts.showErrorAlert("تاريخ النهاية يسبق تاريخ البداية");
+              Alerts.showAlert("تاريخ النهاية يسبق تاريخ البداية",3);
           }
     
     
@@ -769,7 +765,7 @@ else {
             
             
             /////////////////ِTo show that pdf is printed///////////////
-            Alerts.showInfoAlert("تمت طباعة التقرير");
+            Alerts.showAlert("تمت طباعة التقرير",1);
                    } catch(Exception e){
             System.out.println(e);
         }
@@ -778,7 +774,7 @@ else {
         System.out.println("Document Closed");
 
 }  else {
-              Alerts.showErrorAlert("تاريخ النهاية يسبق تاريخ البداية");
+              Alerts.showAlert("تاريخ النهاية يسبق تاريخ البداية",3);
           }
     }
 

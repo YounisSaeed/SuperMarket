@@ -84,7 +84,7 @@ public class Manager_Product_QuantityController implements Initializable {
             System.out.println(itm+"            "+pkt+"         "+bx);
         }
        else 
-            Alerts.showErrorAlert("برجاء ادخال الباكورد ..");
+            Alerts.showAlert("برجاء ادخال الباكورد ..",3);
        
     }
     @FXML
@@ -137,17 +137,17 @@ public class Manager_Product_QuantityController implements Initializable {
             
             if(itm <it ){
                 it-=itm;
-                DataHelper.QuickEditQuantity(it,P_TSearch.getText(),true);  Alerts.showInfoAlert("تم التعديل");}
+                DataHelper.QuickEditQuantity(it,P_TSearch.getText(),true);  Alerts.showAlert("تم التعديل",1);}
             else if(itm >it){
                 itm-=it;
-                DataHelper.QuickEditQuantity(itm,P_TSearch.getText(),false);  Alerts.showInfoAlert("تم التعديل");
-            }else     Alerts.showInfoAlert("لا يوجد تغير فى الكمية");
+                DataHelper.QuickEditQuantity(itm,P_TSearch.getText(),false);  Alerts.showAlert("تم التعديل",1);
+            }else     Alerts.showAlert("لا يوجد تغير فى الكمية",2);
             P_Search();
             quann();    
-            }catch(NumberFormatException e){Alerts.showErrorAlert("لقد ادخلت قيمة خاطئة");}
+            }catch(NumberFormatException e){Alerts.showAlert("لقد ادخلت قيمة خاطئة",3);}
         }
         else {
-       Alerts.showErrorAlert("برجاء ادخال عدد الكراتين");
+       Alerts.showAlert("برجاء ادخال عدد الكراتين",3);
        }
     }
     
@@ -164,17 +164,17 @@ public class Manager_Product_QuantityController implements Initializable {
             
             if(pkt < pa){
                 pa-=pkt;
-                DataHelper.QuickEditQuantity(pa*inp,P_TSearch.getText(),true); Alerts.showInfoAlert("تم التعديل");}
+                DataHelper.QuickEditQuantity(pa*inp,P_TSearch.getText(),true); Alerts.showAlert("تم التعديل",1);}
             else if(pkt > pa){
                 pkt-=pa;
-                DataHelper.QuickEditQuantity(pkt*inp,P_TSearch.getText(),false); Alerts.showInfoAlert("تم التعديل");
-            }else     Alerts.showInfoAlert("لا يوجد تغير فى الكمية");
+                DataHelper.QuickEditQuantity(pkt*inp,P_TSearch.getText(),false); Alerts.showAlert("تم التعديل",1);
+            }else     Alerts.showAlert("لا يوجد تغير فى الكمية",1);
             P_Search();
             quann();    
-            }catch(NumberFormatException e){Alerts.showErrorAlert("لقد ادخلت قيمة خاطئة");}
+            }catch(NumberFormatException e){Alerts.showAlert("لقد ادخلت قيمة خاطئة",3);}
         }
         else {
-       Alerts.showErrorAlert("برجاء ادخال عدد الباكيت");
+       Alerts.showAlert("برجاء ادخال عدد الباكيت",3);
        }
     }
     
@@ -192,18 +192,18 @@ public class Manager_Product_QuantityController implements Initializable {
             
             if(bx < bo){
                     bo-=bx;
-                    DataHelper.QuickEditQuantity(bo*pnb*inp,P_TSearch.getText(),true); Alerts.showInfoAlert("تم التعديل");
+                    DataHelper.QuickEditQuantity(bo*pnb*inp,P_TSearch.getText(),true); Alerts.showAlert("تم التعديل",1);
               }
               else if(bx > bo){
                     bx-=bo;
-                    DataHelper.QuickEditQuantity(bx*pnb*inp,P_TSearch.getText(),false); Alerts.showInfoAlert("تم التعديل");
-              }else     Alerts.showInfoAlert("لا يوجد تغير فى الكمية");
+                    DataHelper.QuickEditQuantity(bx*pnb*inp,P_TSearch.getText(),false); Alerts.showAlert("تم التعديل",1);
+              }else     Alerts.showAlert("لا يوجد تغير فى الكمية",1);
             P_Search();
             quann();    
-            }catch(NumberFormatException e){Alerts.showErrorAlert("لقد ادخلت قيمة خاطئة");}
+            }catch(NumberFormatException e){Alerts.showAlert("لقد ادخلت قيمة خاطئة",3);}
         }
         else {
-       Alerts.showErrorAlert("برجاء ادخال عدد الوحدات");
+       Alerts.showAlert("برجاء ادخال عدد الوحدات",3);
        }
     }
     
@@ -223,41 +223,41 @@ public class Manager_Product_QuantityController implements Initializable {
                   if(R_item.isSelected()){
                         if(itm <it ){
                             it-=itm;
-                            DataHelper.QuickEditQuantity(it,P_TSearch.getText(),true);  Alerts.showInfoAlert("تم التعديل");}
+                            DataHelper.QuickEditQuantity(it,P_TSearch.getText(),true);  Alerts.showAlert("تم التعديل",1);}
                         else if(itm >it){
                             itm-=it;
-                            DataHelper.QuickEditQuantity(itm,P_TSearch.getText(),false);  Alerts.showInfoAlert("تم التعديل");
-                        }else     Alerts.showInfoAlert("لا يوجد تغير فى الكمية");
+                            DataHelper.QuickEditQuantity(itm,P_TSearch.getText(),false);  Alerts.showAlert("تم التعديل",1);
+                        }else     Alerts.showAlert("لا يوجد تغير فى الكمية",1);
                   }
                   else if(R_packet.isSelected()){
                         if(pkt < pa){
                             pa-=pkt;
-                            DataHelper.QuickEditQuantity(pa*inp,P_TSearch.getText(),true); Alerts.showInfoAlert("تم التعديل");}
+                            DataHelper.QuickEditQuantity(pa*inp,P_TSearch.getText(),true); Alerts.showAlert("تم التعديل",1);}
                         else if(pkt > pa){
                             pkt-=pa;
-                            DataHelper.QuickEditQuantity(pkt*inp,P_TSearch.getText(),false); Alerts.showInfoAlert("تم التعديل");
-                        }else     Alerts.showInfoAlert("لا يوجد تغير فى الكمية");
+                            DataHelper.QuickEditQuantity(pkt*inp,P_TSearch.getText(),false); Alerts.showAlert("تم التعديل",1);
+                        }else     Alerts.showAlert("لا يوجد تغير فى الكمية",1);
                   }
                   else if(R_box.isSelected() && Integer.parseInt(P_CQuantity.getText()) != 0 ){
                       if(bx < bo){
                             bo-=bx;
-                            DataHelper.QuickEditQuantity(bo*pnb*inp,P_TSearch.getText(),true); Alerts.showInfoAlert("تم التعديل");
+                            DataHelper.QuickEditQuantity(bo*pnb*inp,P_TSearch.getText(),true); Alerts.showAlert("تم التعديل",1);
                       }
                       else if(bx > bo){
                             bx-=bo;
-                            DataHelper.QuickEditQuantity(bx*pnb*inp,P_TSearch.getText(),false); Alerts.showInfoAlert("تم التعديل");
-                      }else     Alerts.showInfoAlert("لا يوجد تغير فى الكمية");
+                            DataHelper.QuickEditQuantity(bx*pnb*inp,P_TSearch.getText(),false); Alerts.showAlert("تم التعديل",1);
+                      }else     Alerts.showAlert("لا يوجد تغير فى الكمية",1);
                   
                   }
                   P_Search();
                   quann();
               }
               else
-                  Alerts.showErrorAlert("لم يتم تحديد خلية محددة");
-            }catch(NumberFormatException e){Alerts.showErrorAlert("لقد ادخلت قيمة خاطئة");}
+                  Alerts.showAlert("لم يتم تحديد خلية محددة",3);
+            }catch(NumberFormatException e){Alerts.showAlert("لقد ادخلت قيمة خاطئة",3);}
         }
        else {
-       Alerts.showErrorAlert("برجاء التأكد من ملىء الحقول المطلوبة ..");
+       Alerts.showAlert("برجاء التأكد من ملىء الحقول المطلوبة ..",3);
        }
     }
 

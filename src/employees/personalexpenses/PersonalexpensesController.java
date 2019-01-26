@@ -100,15 +100,15 @@ public class PersonalexpensesController extends AccountController implements Ini
                 personal_table.getItems().add(e);
                 if(result){
                     clear();
-                    Alerts.showInfoAlert("تم اضافة المصاريف الشخصية");}
+                    Alerts.showAlert("تم اضافة المصاريف الشخصية",1);}
           
                 }else {
-                    Alerts.showErrorAlert("القيمة التي أدخلتها غير صحيحة");
+                    Alerts.showAlert("القيمة التي أدخلتها غير صحيحة",3);
                 }
                 }else {
-                    Alerts.showErrorAlert("يرجى التأكد من ملئ جميع الحقول المطلوبة");
+                    Alerts.showAlert("يرجى التأكد من ملئ جميع الحقول المطلوبة",3);
                 }
-        }catch(NumberFormatException e){Alerts.showErrorAlert("القيمة التي أدخلتها غير صحيحة");}
+        }catch(NumberFormatException e){Alerts.showAlert("القيمة التي أدخلتها غير صحيحة",3);}
             }
     @FXML
     private void confirm(ActionEvent event) {

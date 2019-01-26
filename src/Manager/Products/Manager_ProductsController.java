@@ -192,16 +192,16 @@ public class Manager_ProductsController implements Initializable {
                 boolean result=DataHelper.insertNewProduct(G);
                 if(result){
                     P_table.getItems().add(G);
-                    Alerts.showInfoAlert("تم اضافة المنتج !!");
+                    Alerts.showAlert("تم اضافة المنتج !!",1);
                     clear();
                 }
                 else
-                    Alerts.showInfoAlert("لم تتم العملية بشكل صحيح .");
+                    Alerts.showAlert("لم تتم العملية بشكل صحيح .",1);
                 
-            }catch(NumberFormatException e) {Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة ");}
+            }catch(NumberFormatException e) {Alerts.showAlert("لقد ادخلت قيمة غير صحيحة ",3);}
         }
         else 
-             Alerts.showErrorAlert("برجاء ملىء جميع الحقول المطلوبة");
+             Alerts.showAlert("برجاء ملىء جميع الحقول المطلوبة",3);
     } 
 
     
@@ -229,14 +229,14 @@ public class Manager_ProductsController implements Initializable {
 
                 boolean result=DataHelper.updateProductInfo(G,oldBar);
                 if(result){
-                    Alerts.showInfoAlert("تم تعديل بيانات :"+G.getProductName());
+                    Alerts.showAlert("تم تعديل بيانات :"+G.getProductName(),1);
                     clear();
                     DataHelper.loadProductsData(P_table,P_TSearch);
                 }
-            }catch (NumberFormatException e) {Alerts.showErrorAlert("لقد ادخلت قيمة غير صحيحة");}
+            }catch (NumberFormatException e) {Alerts.showAlert("لقد ادخلت قيمة غير صحيحة",3);}
         }
         else
-            Alerts.showErrorAlert("برجاء ملىء جميع الحقول المطلوبة"); 
+            Alerts.showAlert("برجاء ملىء جميع الحقول المطلوبة",3); 
     }
   
     
@@ -251,18 +251,18 @@ public class Manager_ProductsController implements Initializable {
                 if (Alerts.ConfirmAlert("هل تريد مسح"+":", G.getProductName())) {
                    Boolean result = DataHelper.deleteProduct(G);
                    if (result) {
-                       Alerts.showInfoAlert("تم المسح !!");
+                       Alerts.showAlert("تم المسح !!",1);
                        clear();
                        DataHelper.loadProductsData(P_table,P_TSearch);
                    }
                     else 
-                       Alerts.showErrorAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى");
+                       Alerts.showAlert("لم تتم العملية بشكل صحيح .. يرجى التواصل مع الدعم الفنى",3);
                 }
                 System.out.println(oldBar);
-            }catch(Exception e) {Alerts.showErrorAlert("لم يتم تحديد منتج من الجدول");}
+            }catch(Exception e) {Alerts.showAlert("لم يتم تحديد منتج من الجدول",3);}
         }
         else
-            Alerts.showErrorAlert("برجاء ملىء جميع الحقول المطلوبة");
+            Alerts.showAlert("برجاء ملىء جميع الحقول المطلوبة",3);
     }
     
     @FXML
@@ -344,7 +344,7 @@ public class Manager_ProductsController implements Initializable {
         try {
             Runtime.getRuntime().exec("calc");
         } catch (IOException ex) {
-            Alerts.showErrorAlert("حدث مشكلة اثناء فتح الآلة الحاسبة , يرجى المحاولة لاحقا");
+            Alerts.showAlert("حدث مشكلة اثناء فتح الآلة الحاسبة , يرجى المحاولة لاحقا",3);
         }
     } 
 

@@ -78,7 +78,7 @@ public class Financial_ReportsController implements Initializable {
          }
          }
         catch(NullPointerException e){
-                 Alerts.showErrorAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة");
+                 Alerts.showAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة",3);
                  }
     }
 
@@ -92,7 +92,7 @@ public class Financial_ReportsController implements Initializable {
          }
          }
         catch(NullPointerException e){
-                 Alerts.showErrorAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة");
+                 Alerts.showAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة",3);
                  }
     }
 
@@ -263,16 +263,16 @@ public class Financial_ReportsController implements Initializable {
             // document.add(table2);
 
             ////////////////ِTo show that pdf is printed///////////////
-            Alerts.showInfoAlert("تمت طباعة التقرير");
+            Alerts.showAlert("تمت طباعة التقرير",3);
             document.close();
          }
            else {
-              Alerts.showErrorAlert("تاريخ النهاية يسبق تاريخ البداية");
+              Alerts.showAlert("تاريخ النهاية يسبق تاريخ البداية",3);
           }
          }
          }
         catch(NullPointerException e){
-                 Alerts.showErrorAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة");
+                 Alerts.showAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة",3);
                  } catch (SQLException ex) {
             Logger.getLogger(Financial_ReportsController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
@@ -506,7 +506,7 @@ public class Financial_ReportsController implements Initializable {
                 }
                 
                 /////////////////ِTo show that pdf is printed///////////////
-                Alerts.showInfoAlert("تمت طباعة التقرير");
+                Alerts.showAlert("تمت طباعة التقرير",1);
 
              } catch(Exception e){
                  System.out.println(e);
@@ -518,7 +518,7 @@ public class Financial_ReportsController implements Initializable {
           
               }
         else {
-              Alerts.showErrorAlert("تاريخ النهاية يسبق تاريخ البداية");
+              Alerts.showAlert("تاريخ النهاية يسبق تاريخ البداية",3);
           }
             
          } catch (DocumentException ex) {
@@ -660,7 +660,7 @@ public class Financial_ReportsController implements Initializable {
             document.add(t3);
             
             /////////////////ِTo show that pdf is printed///////////////
-            Alerts.showInfoAlert("تمت طباعة التقرير");
+            Alerts.showAlert("تمت طباعة التقرير",1);
          
             
 
@@ -675,7 +675,7 @@ public class Financial_ReportsController implements Initializable {
         System.out.println("Document Closed");
     
               } else {
-              Alerts.showErrorAlert("تاريخ النهاية يسبق تاريخ البداية");
+              Alerts.showAlert("تاريخ النهاية يسبق تاريخ البداية",3);
           }
              }
 
