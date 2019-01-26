@@ -36,7 +36,7 @@ public class Common_Properties extends Quantity{
     }
 
     
-    public Common_Properties(String barcodfiled, String name, double UintPrice, int CurrentQuantity, String quantityKind, double cost,Date d, Time time,long num) { // this constructor for Damages Items
+    public Common_Properties(String barcodfiled, String name, double UintPrice, int CurrentQuantity, String quantityKind, double cost,Date d, Time time) { // this constructor for Damages Items
         // this constructor for Damages Items
         this.barcodfiled = barcodfiled; 
         this.name = name;
@@ -46,7 +46,6 @@ public class Common_Properties extends Quantity{
         this.quantityKind = quantityKind;
         this.time = time;
         this.Date=d;
-        this.number=num;
     }
 
     public int getSerial() {

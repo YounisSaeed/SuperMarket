@@ -32,7 +32,6 @@
     <table-entry name="suppliers1" col-data="
                         sup_name varchar(200) ,
                         sup_company_name varchar(200) primary key,
-                        sup_category varchar(200),
                         sup_phone varchar(200)
     "/>
     
@@ -52,7 +51,7 @@
                         unit_price double,
                         current_qty int,
                         cost double,
-                        t_time TIME,
+                        t_time DATE NOT NULL DEFAULT (datetime('now','localtime')),
                         s_bar varchar(200)
     "/>
 
@@ -82,7 +81,7 @@
                         unit_price double,
                         current_qty int,
                         cost double,
-                        t_time TIME,
+                        t_time DATE NOT NULL DEFAULT (datetime('now','localtime')),
                         b_bar varchar(200)
     "/>
     
@@ -96,7 +95,6 @@
                         cost double,
                         t_time TIME,
                         d_bar varchar(200),
-                        number BIGINT not null primary key
     "/>
     <table-entry name="recalls" col-data="
                         rec_date date,

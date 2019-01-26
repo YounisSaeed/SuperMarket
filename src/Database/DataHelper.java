@@ -7,6 +7,10 @@ import employees.sales.SalesController;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static javafx.application.Platform.exit;
@@ -21,6 +25,38 @@ import org.controlsfx.control.textfield.TextFields;
 public class DataHelper {
 
     
+    private static Map<String, Object> data;
+    public static boolean InsertInfo(String tableName,Map<String, Object> data){
+        
+        int i=0;
+        String dat_cols="";
+        Object[] dat_rows=new Object[data.size()];
+        
+        for(String key:data.keySet()){
+            dat_rows[i]=data.get(key);
+            if(i != data.size()-1)
+                dat_cols+=key+",";
+            else
+                dat_cols+=key;
+            i++;
+        }
+        
+        String dat="";
+        for(int j=0;j<dat_rows.length;j++){
+            if(!(dat_rows[j] instanceof Integer) && !(dat_rows[j] instanceof Double) && !(dat_rows[j] instanceof Long)){
+                dat_rows[j]="'"+dat_rows[j]+"'";
+            }
+            if(j != dat_rows.length-1)
+                dat+=dat_rows[j]+",";
+            else
+                dat+=dat_rows[j];
+        }
+        String qu="INSERT INTO "+tableName+"("+dat_cols+")"+" VALUES("+dat+")";
+        if(DatabaseHandler.getInstance().execAction(qu))
+            return true;
+        else
+            return false;
+    }
     
     /****************************************************************************************************************/
     /****************************************************************************************************************/
@@ -30,25 +66,42 @@ public class DataHelper {
     
     
     public static boolean insertNewProduct(Goods go) {
-        try {
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "INSERT INTO product(pro_bar,pro_name,pro_category,"
-                    + "pro_qty_item,pro_qty_packet,pro_box,pro_All_qty,pro_price_item,pro_price_packet,"
-                    + "pro_price_box,pro_minimum) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
-            statement.setString(1, go.getProductBarCode());
-            statement.setString(2, go.getProductName());
-            statement.setString(3, go.getProductCategory());
-            statement.setInt(4, go.getItemsInPacket());
-            statement.setInt(5, go.getPacketsInBox());
-            statement.setString(6, go.getBox());
-            statement.setLong(7, go.getAllQuantity());
-            statement.setDouble(8, go.getItemPrice());
-            statement.setDouble(9, go.getPacketPrice());
-            statement.setDouble(10, go.getBoxPrice());
-            statement.setInt(11, go.getProductMinQuantity());
-            return statement.executeUpdate() > 0;
-        } catch (SQLException ex) {}
-        return false;
+        data = new HashMap<>();
+        data.put("pro_bar",go.getProductBarCode());
+        data.put("pro_name", go.getProductName());
+        data.put("pro_category", go.getProductCategory());
+        data.put("pro_qty_item", go.getItemsInPacket());
+        data.put("pro_qty_packet", go.getPacketsInBox());
+        data.put("pro_box", go.getBox());
+        data.put("pro_All_qty", go.getAllQuantity());
+        data.put("pro_price_item", go.getItemPrice());
+        data.put("pro_price_packet", go.getPacketPrice());
+        data.put("pro_price_box", go.getBoxPrice());
+        data.put("pro_minimum", go.getProductMinQuantity());
+        if(InsertInfo("product", data))
+            return true;
+        else
+            return false;
+//            
+//        try {
+//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+//                    "INSERT INTO product(pro_bar,pro_name,pro_category,"
+//                    + "pro_qty_item,pro_qty_packet,pro_box,pro_All_qty,pro_price_item,pro_price_packet,"
+//                    + "pro_price_box,pro_minimum) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+//            statement.setString(1, go.getProductBarCode());
+//            statement.setString(2, go.getProductName());
+//            statement.setString(3, go.getProductCategory());
+//            statement.setInt(4, go.getItemsInPacket());
+//            statement.setInt(5, go.getPacketsInBox());
+//            statement.setString(6, go.getBox());
+//            statement.setLong(7, go.getAllQuantity());
+//            statement.setDouble(8, go.getItemPrice());
+//            statement.setDouble(9, go.getPacketPrice());
+//            statement.setDouble(10, go.getBoxPrice());
+//            statement.setInt(11, go.getProductMinQuantity());
+//            return statement.executeUpdate() > 0;
+//        } catch (SQLException ex) {}
+//        return false;
     }
     
     public static boolean updateProductInfo(Goods go,String bar) {
@@ -75,56 +128,7 @@ public class DataHelper {
         catch (SQLException ex) {}
         return false;
     }
-    
-    
-    //////////
-    
-//    public static boolean insertNewProduct(Goods go) {
-//        try {
-//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-//                    "INSERT INTO product(pro_bar,pro_name,pro_category,pro_supplier_name,"
-//                    + "pro_qty_item,pro_qty_packet,pro_All_qty,pro_price_item,pro_price_packet,"
-//                    + "pro_price_box,pro_minimum) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
-//            statement.setString(1, go.getProductBarCode());
-//            statement.setString(2, go.getProductName());
-//            statement.setString(3, go.getProductCategory());
-//            statement.setString(4, go.getProductSupplier());
-//            statement.setInt(5, go.getItemsInPacket());
-//            statement.setInt(6, go.getPacketsInBox());
-//            statement.setLong(7, go.getAllQuantity());
-//            statement.setDouble(8, go.getItemPrice());
-//            statement.setDouble(9, go.getPacketPrice());
-//            statement.setDouble(10, go.getBoxPrice());
-//            statement.setInt(11, go.getProductMinQuantity());
-//            return statement.executeUpdate() > 0;
-//        } catch (SQLException ex) {}
-//        return false;
-//    }
-    
-//    public static boolean updateProductInfo(Goods go,String bar) {
-//        try {
-//            
-//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-//                    "UPDATE product SET  pro_bar=?,pro_name=?,pro_category=?,pro_supplier_name=?,"
-//                            + "pro_qty_item=?,pro_qty_packet=?,pro_All_qty=?,pro_price_item=?,"
-//                            + "pro_price_packet=?,pro_price_box=?,pro_minimum=?  WHERE pro_bar= '"+bar+"' ");
-//            
-//            statement.setString(1, go.getProductBarCode());
-//            statement.setString(2, go.getProductName());
-//            statement.setString(3, go.getProductCategory());
-//            statement.setString(4, go.getProductSupplier());
-//            statement.setInt(5, go.getItemsInPacket());
-//            statement.setInt(6, go.getPacketsInBox());
-//            statement.setLong(7, go.getAllQuantity());
-//            statement.setDouble(8, go.getItemPrice());
-//            statement.setDouble(9, go.getPacketPrice());
-//            statement.setDouble(10, go.getBoxPrice());
-//            statement.setInt(11, go.getProductMinQuantity());
-//            return statement.executeUpdate() > 0;
-//        }
-//        catch (SQLException ex) {}
-//        return false;
-//    }
+
     public static boolean QuickEditQuantity(int quan,String bar,boolean supSum) {
         try {
             int alQ=0;
@@ -308,20 +312,34 @@ public class DataHelper {
     /*****************************************_______EMPLOYEE_______*************************************************/
     
     public static boolean insertNewemployee(Employee emp) {
-        try {
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "INSERT INTO employee1(emp_id,emp_name,emp_phone,emp_salary_hours,emp_address) VALUES(?,?,?,?,?)");
-            statement.setString(1, emp.getEmployeeId());
-            statement.setString(2, emp.getEmployeeName());
-            statement.setString(3, emp.getEmployeePhone());
-            statement.setDouble(4, emp.getEmployeeSalaryHours());
-            statement.setString(5, emp.getEmployeeAddress());
-            return statement.executeUpdate() > 0;
-        } catch (SQLException ex) {
-         System.out.print("Employee doesn't be inserted");
-         Alerts.showErrorAlert("خطأ فى التسجيل .. ربما سجل هذا الموظف من قبل");
-        }
-        return false;
+        //New
+        data =new HashMap<>();
+        data.put("emp_id",emp.getEmployeeId());
+        data.put("emp_name",emp.getEmployeeName());
+        data.put("emp_phone",emp.getEmployeePhone());
+        data.put("emp_salary_hours",emp.getEmployeeSalaryHours());
+        data.put("emp_address",emp.getEmployeeAddress());
+        if(InsertInfo("employee1", data))
+            return true;
+        else
+            return false;
+        
+        
+        //Old
+//        try {
+//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+//                    "INSERT INTO employee1(emp_id,emp_name,emp_phone,emp_salary_hours,emp_address) VALUES(?,?,?,?,?)");
+//            statement.setString(1, emp.getEmployeeId());
+//            statement.setString(2, emp.getEmployeeName());
+//            statement.setString(3, emp.getEmployeePhone());
+//            statement.setDouble(4, emp.getEmployeeSalaryHours());
+//            statement.setString(5, emp.getEmployeeAddress());
+//            return statement.executeUpdate() > 0;
+//        } catch (SQLException ex) {
+//         System.out.print("Employee doesn't be inserted");
+//         Alerts.showErrorAlert("خطأ فى التسجيل .. ربما سجل هذا الموظف من قبل");
+//        }
+//        return false;
     }
     
     public static boolean updateEmployee(Employee E,String oldID )
@@ -361,21 +379,31 @@ public class DataHelper {
     }
     
     public static boolean insertAttendence(Date d, String name,String id,Time start) {
-        try {
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "INSERT INTO emp_att(emp_date,emp_name,emp_id,emp_start_time) VALUES(?,?,?,?)");
-            statement.setDate(1,d);
-            statement.setString(2,name);
-            statement.setString(3,id);
-            statement.setTime(4,start);
-            
-            if(statement.executeUpdate() > 0){
-                System.out.println("att inserted 000000");
-                return true;}
-        } catch (SQLException ex) {
-            Logger.getLogger(DataHelper.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
+        data = new HashMap<>();
+        data.put("emp_date", d);
+        data.put("emp_name", name);
+        data.put("emp_id", id);
+        data.put("emp_start_time", start);
+        if(InsertInfo("emp_att", data))
+            return true;
+        else
+            return false;
+        //Old
+//        try {
+//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+//                    "INSERT INTO emp_att(emp_date,emp_name,emp_id,emp_start_time) VALUES(?,?,?,?)");
+//            statement.setDate(1,d);
+//            statement.setString(2,name);
+//            statement.setString(3,id);
+//            statement.setTime(4,start);
+//            
+//            if(statement.executeUpdate() > 0){
+//                System.out.println("att inserted 000000");
+//                return true;}
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DataHelper.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return false;
     }
     
     public static void checkattendance(String id,TextField fx,String d) {
@@ -391,36 +419,57 @@ public class DataHelper {
     }
     
     public static boolean insertleft(Date d, String name,String id,Time end) {
-        try {
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "INSERT INTO emp_left(emp_date,emp_name,emp_id,emp_start_time) VALUES(?,?,?,?)");
-            statement.setDate(1,d);
-            statement.setString(2,name);
-            statement.setString(3,id);
-            statement.setTime(4,end);
-            if(statement.executeUpdate() > 0){
-                System.out.println("Left inserted 000000");
-                return true;}
-        } catch (SQLException ex) {
-            Logger.getLogger(DataHelper.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
+        data=new HashMap<>();
+        data.put("", d);
+        data.put("", name);
+        data.put("", id);
+        data.put("", end);
+        if(InsertInfo("emp_left", data))
+            return true;
+        else
+            return false;
+        //Old
+//        try {
+//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+//                    "INSERT INTO emp_left(emp_date,emp_name,emp_id,emp_start_time) VALUES(?,?,?,?)");
+//            statement.setDate(1,d);
+//            statement.setString(2,name);
+//            statement.setString(3,id);
+//            statement.setTime(4,end);
+//            if(statement.executeUpdate() > 0){
+//                System.out.println("Left inserted 000000");
+//                return true;}
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DataHelper.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return false;
     }
     public static boolean insertWorkHours(Date d, String name,String id,int h) {
-        try {
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "INSERT INTO emp_hours(emp_date,emp_name,emp_id,emp_hours) VALUES(?,?,?,?)");
-            statement.setDate(1,d);
-            statement.setString(2,name);
-            statement.setString(3,id);
-            statement.setInt(4,h);
-            if(statement.executeUpdate() > 0){
-                System.out.println("num of h = "+h);
-                return true;}
-        } catch (SQLException ex) {
-            Logger.getLogger(DataHelper.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
+        data=new HashMap<>();
+        data=new HashMap<>();
+        data.put("", d);
+        data.put("", name);
+        data.put("", id);
+        data.put("", h);
+        if(InsertInfo("emp_hours", data))
+            return true;
+        else
+            return false;
+        //Old
+//        try {
+//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+//                    "INSERT INTO emp_hours(emp_date,emp_name,emp_id,emp_hours) VALUES(?,?,?,?)");
+//            statement.setDate(1,d);
+//            statement.setString(2,name);
+//            statement.setString(3,id);
+//            statement.setInt(4,h);
+//            if(statement.executeUpdate() > 0){
+//                System.out.println("num of h = "+h);
+//                return true;}
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DataHelper.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return false;
     }
     public static void loadEmployeesData(TableView TV) {
         ObservableList<Employee> list = FXCollections.observableArrayList();
@@ -472,21 +521,33 @@ public static boolean isEmployeeisEXits(String id) {
 
   public static boolean insertNewPersonalExpences(Employee E)
     {
-        try{
-        PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "INSERT INTO personal_expences (emp_name,emp_id,emp_price_product,emp_product,emp_date) VALUES(?,?,?,?,?)");
+        data =new HashMap<>();
+        data.put("emp_name", E.getEmployeeName());
+        data.put("emp_id", E.getEmployeeId());
+        data.put("emp_price_product", E.getEmployeeExpensesCost());
+        data.put("emp_product", E.getEmployeeExpensesReason());
+        data.put("emp_date", E.getDate());
         
-        statement.setString(1, E.getEmployeeName());
-        statement.setString(2, E.getEmployeeId());
-        statement.setDouble(3, E.getEmployeeExpensesCost());
-        statement.setString(4, E.getEmployeeExpensesReason());
-        statement.setDate(5, E.getDate());
-       
-        return statement.executeUpdate() > 0;
-        } catch (SQLException ex)
-        {
-        }
-        return false;
+        if(InsertInfo("personal_expences", data))
+            return true;
+        else
+            return false;
+        // Old
+//        try{
+//        PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+//                    "INSERT INTO personal_expences (emp_name,emp_id,emp_price_product,emp_product,emp_date) VALUES(?,?,?,?,?)");
+//        
+//        statement.setString(1, E.getEmployeeName());
+//        statement.setString(2, E.getEmployeeId());
+//        statement.setDouble(3, E.getEmployeeExpensesCost());
+//        statement.setString(4, E.getEmployeeExpensesReason());
+//        statement.setDate(5, E.getDate());
+//       
+//        return statement.executeUpdate() > 0;
+//        } catch (SQLException ex)
+//        {
+//        }
+//        return false;
     }
 
     public static void loadpersonalExpensesData(TableView TV,String date,String id) {
@@ -609,24 +670,33 @@ public static boolean isEmployeeisEXits(String id) {
         return list;
     }
     
-    
-    
     public static boolean insertNewSupplier(Suppliers s)
     {
-        try{
-        PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "INSERT INTO suppliers1 (sup_name,sup_company_name,sup_phone) VALUES(?,?,?)");
-        statement.setString(1, s.getSalespersonName());
-        statement.setString(2, s.getSupplierName());
-        statement.setString(3, s.getSupplierPhone());
-        
-        return statement.executeUpdate() > 0;
-        
-        } catch (SQLException ex)
-        {
-            System.out.print("Suppler doesn't insertse");
-        }
-        return false;
+        //New
+        data =new HashMap<>();
+        data.put("sup_name",s.getSalespersonName());
+        data.put("sup_company_name",s.getSupplierName());
+        data.put("sup_phone",s.getSupplierPhone());
+        if(InsertInfo("suppliers1", data))
+            return true;
+        else
+            return false;
+        //Old   
+//        
+//        try{
+//        PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+//                    "INSERT INTO suppliers1 (sup_name,sup_company_name,sup_phone) VALUES(?,?,?)");
+//        statement.setString(1, s.getSalespersonName());
+//        statement.setString(2, s.getSupplierName());
+//        statement.setString(3, s.getSupplierPhone());
+//        
+//        return statement.executeUpdate() > 0;
+//        
+//        } catch (SQLException ex)
+//        {
+//            System.out.print("Suppler doesn't insertsed");
+//        }
+//        return false;
     }
     
     public static boolean updateSupplier(Suppliers s ,String oldCompName)
@@ -728,48 +798,69 @@ public static boolean isEmployeeisEXits(String id) {
     /*****************************************_______SALES_______****************************************************/
 
     public static boolean insertNewSale(Sales sal){
-        try {
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "INSERT INTO sales (number,sale_id,sale_date,product_name,qty_kind,unit_price,current_qty,cost,t_time,s_bar) VALUES(?,?,?,?,?,?,?,?,?,?)");
-            statement.setLong(1, sal.getNumber());
-            statement.setInt(2,sal.getSerial());
-            statement.setDate(3,sal.getDate() );
-            statement.setString(4,sal.getName());
-            statement.setString(5,sal.getQuantityKind());
-            statement.setDouble(6,sal.getUintPrice());
-            statement.setInt(7,sal.getCurrentQuantity());
-            statement.setDouble(8,sal.getCost());
-            statement.setTime(9, sal.getTime());
-            statement.setString(10,sal.getBarcodfiled());
-            
-            return statement.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            
-        }
-        return false;
+        data =new HashMap<>();
+        data.put("number", sal.getNumber());
+        data.put("sale_id",sal.getSerial());
+        data.put("sale_date",sal.getDate() );
+        data.put("product_name",sal.getName());
+        data.put("qty_kind",sal.getQuantityKind());
+        data.put("unit_price",sal.getUintPrice());
+        data.put("current_qty",sal.getCurrentQuantity());
+        data.put("cost",sal.getCost());
+        data.put("s_bar",sal.getBarcodfiled());
+        if(InsertInfo("sales", data))
+            return true;
+        else
+            return false;
+        // Old
+//        try {
+//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+//                    "INSERT INTO sales (number,sale_id,sale_date,product_name,qty_kind,unit_price,current_qty,cost,s_bar) VALUES(?,?,?,?,?,?,?,?,?)");
+//            statement.setLong(1, sal.getNumber());
+//            statement.setInt(2,sal.getSerial());
+//            statement.setDate(3,sal.getDate() );
+//            statement.setString(4,sal.getName());
+//            statement.setString(5,sal.getQuantityKind());
+//            statement.setDouble(6,sal.getUintPrice());
+//            statement.setInt(7,sal.getCurrentQuantity());
+//            statement.setDouble(8,sal.getCost());
+//            statement.setString(9,sal.getBarcodfiled());
+//            
+//            return statement.executeUpdate() > 0;
+//        } catch (SQLException ex) {
+//            
+//        }
+//        return false;
     }
     public static boolean insertNewBill(Sales sal){
-        try {
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "INSERT INTO bills (sale_id,sale_date,t_time,total_price,paid_money,reminder_money) VALUES(?,?,?,?,?,?)");
-            
-            statement.setInt(1,sal.getSerial());
-            statement.setDate(2,sal.getDate() );
-            statement.setTime(3, sal.getTime());
-            statement.setDouble(4,sal.getTotalPrice());
-            statement.setDouble(5,sal.getPaid());
-            statement.setDouble(6,sal.getReminderMoney());
-            System.out.println( "@@@@@@@  " +sal.getSerial()+" @@@@@@@ XXXXXXXXXXXXXX ");
-            System.out.println( "@@@@@@@  " +sal.getDate() +" @@@@@@@ XXXXXXXXXXXXXX ");
-            System.out.println( "@@@@@@@  " +sal.getTime()+" @@@@@@@ XXXXXXXXXXXXXX ");
-            System.out.println( "@@@@@@@  " +sal.getTotalPrice()+" @@@@@@@ XXXXXXXXXXXXXX ");
-            System.out.println( "@@@@@@@  " +sal.getPaid()+" @@@@@@@ XXXXXXXXXXXXXX ");
-            System.out.println( "@@@@@@@  " +sal.getReminderMoney()+" @@@@@@@ XXXXXXXXXXXXXX ");
-            return statement.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            System.out.println( "@@@@@@@  " +sal.getTotalPrice()+" @@@@@@@");
-        }
-        return false;
+        data =new HashMap<>();
+        data.put("sale_id",sal.getSerial());
+        data.put("sale_date",sal.getDate() );
+        data.put("t_time",sal.getTime());
+        data.put("total_price",sal.getTotalPrice());
+        data.put("paid_money",sal.getPaid());
+        data.put("reminder_money",sal.getReminderMoney());
+        if(InsertInfo("bills", data))
+            return true;
+        else
+            return false;
+        
+//        Old
+//        try {
+//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+//                    "INSERT INTO bills (sale_id,sale_date,t_time,total_price,paid_money,reminder_money) VALUES(?,?,?,?,?,?)");
+//            
+//            statement.setInt(1,sal.getSerial());
+//            statement.setDate(2,sal.getDate() );
+//            statement.setTime(3, sal.getTime());
+//            statement.setDouble(4,sal.getTotalPrice());
+//            statement.setDouble(5,sal.getPaid());
+//            statement.setDouble(6,sal.getReminderMoney());
+//            return statement.executeUpdate() > 0;
+//        } catch (SQLException ex) {
+//            System.out.println( "@@@@@@@  " +sal.getTotalPrice()+" @@@@@@@");
+//        }
+//        return false;
     }
     /////////////////////////////////////
     ////////////////delete/////////////////////
@@ -806,7 +897,7 @@ public static boolean isEmployeeisEXits(String id) {
     ////////////////////////////////////////////////////
     ////////////////////////////////////////////////////
     public static int getLastSerialTodaySales(String D_date){
-        String qu="SELECT sale_id FROM sales where sale_date = '"+D_date+"'"+" ORDER BY sale_id DESC FETCH FIRST ROW ONLY ";
+        String qu="SELECT sale_id FROM sales where sale_date = '"+D_date+"'"+" ORDER BY sale_id DESC LIMIT 1 ";
         ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
         int srl=0;
         try {
@@ -828,7 +919,7 @@ public static boolean isEmployeeisEXits(String id) {
     /////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////
     public static long getLastOrderNumber(){
-        String qu="SELECT number FROM sales ORDER BY number DESC FETCH FIRST ROW ONLY"; 
+        String qu="SELECT number FROM sales ORDER BY number DESC LIMIT 1"; 
         ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
         long num = 0;
         try {
@@ -1023,46 +1114,74 @@ public static boolean isEmployeeisEXits(String id) {
     
     
     public static boolean insertBuyGoods(Buying buy){
-        try {
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "INSERT INTO buying (number,buy_id,buy_date,product_name,qty_kind,unit_price,current_qty,cost,t_time,b_bar) VALUES(?,?,?,?,?,?,?,?,?,?)");
-            statement.setLong(1, buy.getNumber());
-            statement.setInt(2,buy.getSerial());
-            statement.setDate(3,buy.getDate() );
-            statement.setString(4,buy.getName());
-            statement.setString(5,buy.getQuantityKind());
-            statement.setDouble(6,buy.getUintPrice());
-            statement.setInt(7,buy.getCurrentQuantity());
-            statement.setDouble(8,buy.getCost());
-            statement.setTime(9, buy.getTime());
-            statement.setString(10,buy.getBarcodfiled());
-            return statement.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            
-        }
-        return false;
+        data=new HashMap<>();
+        
+        data.put("number", buy.getNumber());
+        data.put("buy_id",buy.getSerial());
+        data.put("buy_date",buy.getDate() );
+        data.put("product_name",buy.getName());
+        data.put("qty_kind",buy.getQuantityKind());
+        data.put("unit_price",buy.getUintPrice());
+        data.put("current_qty",buy.getCurrentQuantity());
+        data.put("cost",buy.getCost());
+        data.put("b_bar",buy.getBarcodfiled());
+        if(InsertInfo("buying", data))
+            return true;
+        else
+            return false;
+        // Old
+//        try {
+//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+//                    "INSERT INTO buying (number,buy_id,buy_date,product_name,qty_kind,unit_price,current_qty,cost,b_bar) VALUES(?,?,?,?,?,?,?,?,?)");
+//            statement.setLong(1, buy.getNumber());
+//            statement.setInt(2,buy.getSerial());
+//            statement.setDate(3,buy.getDate() );
+//            statement.setString(4,buy.getName());
+//            statement.setString(5,buy.getQuantityKind());
+//            statement.setDouble(6,buy.getUintPrice());
+//            statement.setInt(7,buy.getCurrentQuantity());
+//            statement.setDouble(8,buy.getCost());
+//            statement.setString(9,buy.getBarcodfiled());
+//            return statement.executeUpdate() > 0;
+//        } catch (SQLException ex) {
+//            
+//        }
+//        return false;
     }
     
     public static boolean insertBuyGoodsNewBill(Buying buy){
-        try {
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "INSERT INTO buy_bills (bill_id,bill_date,t_time,supplier_name,total_price) VALUES(?,?,?,?,?)");
-            statement.setInt(1, buy.getSerial());
-            statement.setDate(2,buy.getDate());
-            statement.setTime(3,buy.getTime());
-            statement.setString(4,buy.getSupplier());
-            statement.setDouble(5, buy.getTotalPrice());
-            
-            return statement.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            
-        }
-        return false;
+        data=new HashMap<>();
+  
+        data.put("bill_id", buy.getSerial());
+        data.put("bill_date",buy.getDate());
+        data.put("t_time",buy.getTime());
+        data.put("supplier_name",buy.getSupplier());
+        data.put("total_price", buy.getTotalPrice());
+        if(InsertInfo("buy_bills", data))
+            return true;
+        else
+            return false;
+        
+//Old
+//        try {
+//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+//                    "INSERT INTO buy_bills (bill_id,bill_date,t_time,supplier_name,total_price) VALUES(?,?,?,?,?)");
+//            statement.setInt(1, buy.getSerial());
+//            statement.setDate(2,buy.getDate());
+//            statement.setTime(3,buy.getTime());
+//            statement.setString(4,buy.getSupplier());
+//            statement.setDouble(5, buy.getTotalPrice());
+//            
+//            return statement.executeUpdate() > 0;
+//        } catch (SQLException ex) {
+//            
+//        }
+//        return false;
     }
     
     
     public static int getLastSerialTodayBuying(String D_date){
-        String qu="SELECT buy_id FROM buying where buy_date = '"+D_date+"'"+" ORDER BY buy_id DESC FETCH FIRST ROW ONLY ";
+        String qu="SELECT buy_id FROM buying where buy_date = '"+D_date+"'"+" ORDER BY buy_id DESC LIMIT 1 ";
         ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
         int srl=0;
         try {
@@ -1081,7 +1200,7 @@ public static boolean isEmployeeisEXits(String id) {
     }    
     
     public static long getLastOrderNumberBuying(){
-        String qu="SELECT number FROM buying ORDER BY number DESC FETCH FIRST ROW ONLY"; 
+        String qu="SELECT number FROM buying ORDER BY number DESC LIMIT 1"; 
         ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
         long num = 0;
         try {
@@ -1156,24 +1275,41 @@ public static boolean isEmployeeisEXits(String id) {
     /****************************************************************************************************************/    
     
     public static boolean insertDamages(Common_Properties dam){
-        try {
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "INSERT INTO damages (dam_date,t_time,d_bar,product_name,unit_price,qty_kind,current_qty,cost,number) VALUES(?,?,?,?,?,?,?,?,?)");
-            statement.setDate(1,dam.getDate());
-            statement.setTime(2,dam.getTime());
-            statement.setString(3, dam.getBarcodfiled());
-            statement.setString(4,dam.getName());
-            statement.setDouble(5, dam.getUintPrice());
-            statement.setString(6,dam.getQuantityKind());
-            statement.setDouble(7, dam.getCurrentQuantity());
-            statement.setDouble(8, dam.getCost());
-            statement.setLong(9, dam.getNumber());
-            
-            return statement.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            
-        }
-        return false;
+        data=new HashMap<>();
+        
+        data.put("dam_date",dam.getDate());
+        data.put("t_time",dam.getTime());
+        data.put("d_bar", dam.getBarcodfiled());
+        data.put("product_name",dam.getName());
+        data.put("unit_price", dam.getUintPrice());
+        data.put("qty_kind",dam.getQuantityKind());
+        data.put("current_qty", dam.getCurrentQuantity());
+        data.put("cost", dam.getCost());
+        data.put("number", dam.getNumber());      
+        if(InsertInfo("damages", data))
+            return true;
+        else
+            return false;
+        
+        //Old
+//        try {
+//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+//                    "INSERT INTO damages (dam_date,t_time,d_bar,product_name,unit_price,qty_kind,current_qty,cost,number) VALUES(?,?,?,?,?,?,?,?,?)");
+//            statement.setDate(1,dam.getDate());
+//            statement.setTime(2,dam.getTime());
+//            statement.setString(3, dam.getBarcodfiled());
+//            statement.setString(4,dam.getName());
+//            statement.setDouble(5, dam.getUintPrice());
+//            statement.setString(6,dam.getQuantityKind());
+//            statement.setDouble(7, dam.getCurrentQuantity());
+//            statement.setDouble(8, dam.getCost());
+//            statement.setLong(9, dam.getNumber());
+//            
+//            return statement.executeUpdate() > 0;
+//        } catch (SQLException ex) {
+//            
+//        }
+//        return false;
     }
 
     
@@ -1220,7 +1356,7 @@ public static boolean isEmployeeisEXits(String id) {
 
     public static void loadDamageData(TableView TV,String dat) {
         ObservableList<Common_Properties> list = FXCollections.observableArrayList();
-        list.clear();
+//        list.clear();
         String qu = "SELECT * FROM damages WHERE dam_date ='"+dat+"'";
         ResultSet rs =DatabaseHandler.getInstance().execQuery(qu);
         try {
@@ -1233,8 +1369,8 @@ public static boolean isEmployeeisEXits(String id) {
                 double x6 =rs.getDouble("cost");
                 Date x7=rs.getDate("dam_date");
                 Time x8=rs.getTime("t_time");
-                long x9=rs.getLong("number");
-                list.add(new Common_Properties(x1,x2,x3,x4,x5,x6,x7,x8,x9));
+                System.out.println("_______________+ "+x1+x2+x3+x4);
+                list.add(new Common_Properties(x1,x2,x3,x4,x5,x6,x7,x8));
                 
             }
         } catch (SQLException ex) {
@@ -1244,7 +1380,7 @@ public static boolean isEmployeeisEXits(String id) {
     }
 
         public static long getLastOrderNumberDamage(){
-        String qu="SELECT number FROM damages ORDER BY number DESC FETCH FIRST ROW ONLY"; 
+        String qu="SELECT number FROM damages ORDER BY number DESC LIMIT 1"; 
         ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
         long num = 0;
         try {
@@ -1281,18 +1417,28 @@ public static boolean isEmployeeisEXits(String id) {
     /******************************************_______EXPENSES_______************************************************/
     public static boolean insertNewExpences(Expences E)
     {
-        try{
-        PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "INSERT INTO expenses (exp_date,e_reason,e_cost) VALUES(?,?,?)");
-        statement.setDate(1, E.getDate());
-        statement.setString(2, E.getReason());
-        statement.setDouble(3, E.getCost());
-
-        return statement.executeUpdate() > 0;
-        } catch (SQLException ex)
-        {
-        }
-        return false;
+        data=new HashMap<>();
+       
+        data.put("exp_date", E.getDate());
+        data.put("e_reason", E.getReason());
+        data.put("e_cost", E.getCost());
+        if(InsertInfo("expenses", data))
+            return true;
+        else
+            return false;
+        // Old
+//        try{
+//        PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+//                    "INSERT INTO expenses (exp_date,e_reason,e_cost) VALUES(?,?,?)");
+//        statement.setDate(1, E.getDate());
+//        statement.setString(2, E.getReason());
+//        statement.setDouble(3, E.getCost());
+//
+//        return statement.executeUpdate() > 0;
+//        } catch (SQLException ex)
+//        {
+//        }
+//        return false;
     }
 
     public static void loadExpensesData(TableView TV,String dat) {
@@ -1328,23 +1474,40 @@ public static boolean isEmployeeisEXits(String id) {
     /**************************************______RECALLS______*****************************************************/
     public static boolean insertNewRecall(Recalls R)
     {
-        try{
-        PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "INSERT INTO recalls (rec_date,t_time,r_bar,product_name,unit_price,current_qty,qty_kind,cost,source,number) VALUES(?,?,?,?,?,?,?,?,?,?)");
-        statement.setDate(1, R.getDate());
-        statement.setTime(2, R.getTime());
-        statement.setString(3, R.getBarcodfiled());
-        statement.setString(4, R.getName());
-        statement.setDouble(5, R.getUintPrice());
-        statement.setDouble(6, R.getCurrentQuantity());
-        statement.setString(7, R.getQuantityKind());
-        statement.setDouble(8, R.getCost());
-        statement.setString(9, R.getSource());
-        statement.setLong(10, R.getNumber());
-        return statement.executeUpdate() > 0;
-        } catch (SQLException ex)
-        {}
-        return false;
+        data =new HashMap<>();
+        data.put("rec_date", R.getDate());
+        data.put("t_time", R.getTime());
+        data.put("r_bar", R.getBarcodfiled());
+        data.put("product_name", R.getName());
+        data.put("unit_price", R.getUintPrice());
+        data.put("current_qty", R.getCurrentQuantity());
+        data.put("qty_kind", R.getQuantityKind());
+        data.put("cost", R.getCost());
+        data.put("source", R.getSource());
+        data.put("number", R.getNumber());   
+        if(InsertInfo("recalls", data))
+            return true;
+        else
+            return false;
+        //Old
+//        
+//        try{
+//        PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+//                    "INSERT INTO recalls (rec_date,t_time,r_bar,product_name,unit_price,current_qty,qty_kind,cost,source,number) VALUES(?,?,?,?,?,?,?,?,?,?)");
+//        statement.setDate(1, R.getDate());
+//        statement.setTime(2, R.getTime());
+//        statement.setString(3, R.getBarcodfiled());
+//        statement.setString(4, R.getName());
+//        statement.setDouble(5, R.getUintPrice());
+//        statement.setDouble(6, R.getCurrentQuantity());
+//        statement.setString(7, R.getQuantityKind());
+//        statement.setDouble(8, R.getCost());
+//        statement.setString(9, R.getSource());
+//        statement.setLong(10, R.getNumber());
+//        return statement.executeUpdate() > 0;
+//        } catch (SQLException ex)
+//        {}
+//        return false;
     }
     
     
@@ -1375,7 +1538,7 @@ public static boolean isEmployeeisEXits(String id) {
     
     
     public static long getLastOrderNumberRecall(){
-        String qu="SELECT number FROM recalls ORDER BY number DESC FETCH FIRST ROW ONLY"; 
+        String qu="SELECT number FROM recalls ORDER BY number DESC LIMIT 1"; 
         ResultSet rs=DatabaseHandler.getInstance().execQuery(qu);
         long num = 0;
         try {

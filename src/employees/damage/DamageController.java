@@ -190,10 +190,10 @@ public class DamageController extends NewSerial implements Initializable {
             UintPrice=pri.getBoxPrice();
             cost=D.CalcCostOfSoldItem(pri.getBoxPrice(),Double.parseDouble(Quntity.getText()));
             }
-            long k=DataHelper.getLastOrderNumberDamage();
+            //long k=DataHelper.getLastOrderNumberDamage();
             
             //boolean result = DataHelper.insertDamages(D);
-            D1 =new Common_Properties(barcodfiled, name, UintPrice, CurrentQuantity, QuantityKind, cost, JDBC_Date, time,k);
+            D1 =new Common_Properties(barcodfiled, name, UintPrice, CurrentQuantity, QuantityKind, cost, JDBC_Date, time);
             boolean result = DataHelper.insertDamages(D1);
             
             int qty=Integer.parseInt(Quntity.getText());

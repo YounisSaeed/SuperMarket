@@ -24,7 +24,7 @@ public class DatabaseHandler {
 
     private static DatabaseHandler handler = null;
 
-    private static final String DB_URL = "jdbc:derby:database;create=true";
+    private static final String DB_URL = "jdbc:sqlite:schooldb.sqlite";
     private static Connection conn = null;
     private static Statement stmt = null;
 
@@ -74,7 +74,7 @@ public class DatabaseHandler {
 
     private static void createConnection() {
         try {
-            Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
+            Class.forName("org.sqlite.JDBC").newInstance();
             conn = DriverManager.getConnection(DB_URL);
         }
         catch (Exception e) {
