@@ -2,6 +2,7 @@
 package employees.expenses;
 
 
+import Classes.Additional;
 import com.jfoenix.controls.JFXButton;
 import employees.main.EmployeesController;
 import java.net.URL;
@@ -98,7 +99,7 @@ public class ExpensesController extends NewSerial implements Initializable {
            Alerts.showAlert("تم الاضافة !!",1);
         }
         total();
-        clear();
+       Additional.clearTextfieldContent(value,reasonBox);
             }else{  Alerts.showAlert("لقد أدخلت قيما غير صحيحة",3);  }
                 
         
@@ -137,10 +138,12 @@ public class ExpensesController extends NewSerial implements Initializable {
        
     }
     //Method to clear Data from Text Fields
-    private void clear(){
-        value.clear();
-        reasonBox.clear();
-    }
+//    private void clear(){
+//        value.clear();
+//        reasonBox.clear();
+//        
+//        
+//    }
     
 
 

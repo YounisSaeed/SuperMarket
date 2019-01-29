@@ -1,6 +1,7 @@
 
 package employees.damage;
 
+import Classes.Additional;
 import Classes.Common_Properties;
 import Classes.Alerts;
 import Classes.Price;
@@ -202,7 +203,8 @@ public class DamageController extends NewSerial implements Initializable {
             if(s){
                 if(result){
                     D_table.getItems().add(D1);
-                    clear();
+                    Additional.clearTextfieldContent(SearchField,Quntity);
+                    Additional.clearLabelContent(productPrice, productBarcode,productName);
                     Alerts.showAlert("تمت الاضافة !!",1);
                 }
                 else
@@ -230,17 +232,20 @@ public class DamageController extends NewSerial implements Initializable {
     {
         if(Alerts.ConfirmAlert("هل تريد مسح كل العناصر",""))
         {
-           clear();
+           Additional.clearTextfieldContent(SearchField,Quntity);
+            Additional.clearLabelContent(productPrice, productBarcode,productName);
         }
     }
     
-    private void clear(){
-        SearchField.clear();
-        productName.setText("");
-        productPrice.setText("");
-        productBarcode.setText("");
-        Quntity.clear();
-    }
+//    private void clear(){
+//        SearchField.clear();
+//        productName.setText("");
+//        productPrice.setText("");
+//        productBarcode.setText("");
+//        Quntity.clear();
+//           
+//            
+//    }
     
     /**********************************************************************************************/
     /**********************************************************************************************/
@@ -272,11 +277,7 @@ public class DamageController extends NewSerial implements Initializable {
     }
     @FXML
     private void calcButton(ActionEvent event) {
-        try {
-            Runtime.getRuntime().exec("calc");
-        } catch (IOException ex) {
-            Alerts.showAlert("حدث مشكلة اثناء فتح الآلة الحاسبة , يرجى المحاولة لاحقا",3);
-        }
+         Additional.openCalculator();
     }
 
     @FXML

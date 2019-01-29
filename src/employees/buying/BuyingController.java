@@ -1,9 +1,11 @@
 
 package employees.buying;
 
+import Classes.Additional;
 import Classes.Buying;
 import Classes.Alerts;
 import Classes.Price;
+import Classes.Validations;
 import Serial_dinamic.*;
 import static Serial_dinamic.NewSerial.getSalesSerial;
 import Serial_dinamic.Time_Out;
@@ -196,7 +198,10 @@ public class BuyingController  extends NewSerial implements Initializable {
         if(Alerts.ConfirmAlert("هل تريد مسج جميع عناصر فاتورة الشراء؟",""))
         {
          deleteAllRows();
-         clear();   
+            Additional.clearTextfieldContent(B_searchField,Quntity,totalPrice,BuuPrice);
+            Additional.clearLabelContent(productPrise, productBarcode,productName);
+            Additional.clearComboBoxContent(supplier);
+            Additional.clearTableContent(B_table);   
         }
     }
     ////////////// ???????????????????????????????????????
@@ -230,10 +235,16 @@ public class BuyingController  extends NewSerial implements Initializable {
             billNumber.setText(getSalesSerial()+"");
             System.out.println(getSalesSerial());
             TOTAL=0;
-            clear();
+            Additional.clearTextfieldContent(B_searchField,Quntity,totalPrice,BuuPrice);
+            Additional.clearLabelContent(productPrise, productBarcode,productName);
+            Additional.clearComboBoxContent(supplier);
+            Additional.clearTableContent(B_table);
             if(result){
                 Alerts.showAlert("تم اضافة الفاتورة رقم  بنجاح !!",1);
-                clear();
+            Additional.clearTextfieldContent(B_searchField,Quntity,totalPrice,BuuPrice);
+            Additional.clearLabelContent(productPrise, productBarcode,productName);
+            Additional.clearComboBoxContent(supplier);
+            Additional.clearTableContent(B_table);
             }
             else{
                 Alerts.showAlert("لم تتم العملية بشكل صحيح  ",3);
@@ -247,7 +258,8 @@ public class BuyingController  extends NewSerial implements Initializable {
     /********************************************* addQuntity _________*/
     private void addQuntity()
     {
-        if(!Quntity.getText().equals("")  && !BuuPrice.getText().equals("") &&  !productBarcode.getText().equals(""))
+      
+        if(Validations.textInputNotEmpty(productBarcode,Quntity,Quntity))
         {
             
             Buying B=new Buying();
@@ -275,7 +287,8 @@ public class BuyingController  extends NewSerial implements Initializable {
                     totalPrice.setText(TOTAL+"");
                     B_table.getItems().add(B);
                     Alerts.showAlert("تمت الاضافة !!",1);
-                    clearSome();
+                    Additional.clearTextfieldContent(Quntity,BuuPrice);
+                    Additional.clearLabelContent(productPrise, productBarcode,productName);
                     
                 }
                 else
@@ -324,7 +337,10 @@ public class BuyingController  extends NewSerial implements Initializable {
     /************************************Delete all rows ________________*/
     private void deleteAllRows(){  
         if(B_table.getItems().isEmpty()){
-            clear();
+            Additional.clearTextfieldContent(B_searchField,Quntity,totalPrice,BuuPrice);
+            Additional.clearLabelContent(productPrise, productBarcode,productName);
+            Additional.clearComboBoxContent(supplier);
+            Additional.clearTableContent(B_table);
         }
         else{
                     B_table.getItems().forEach((t) -> {
@@ -343,24 +359,29 @@ public class BuyingController  extends NewSerial implements Initializable {
         }
     }
     /************************************CLEAR DATA FROM FIELDS _________*/
-    private void clear(){
-        B_searchField.clear();
-        B_table.getItems().clear();
-        productBarcode.setText("");
-        productName.setText("");
-        productPrise.setText("");
-        supplier.setValue("");
-        Quntity.clear();
-        totalPrice.clear();
-        BuuPrice.clear();
-    }
-    private void clearSome(){
-       productPrise.setText("");
-       Quntity.clear();
-       BuuPrice.clear();
-       productBarcode.setText("");
-       productName.setText("");
-    }
+//    private void clear(){
+//        B_searchField.clear();
+//        B_table.getItems().clear();
+//        productBarcode.setText("");
+//        productName.setText("");
+//        productPrise.setText("");
+//        supplier.setValue("");
+//        Quntity.clear();
+//        totalPrice.clear();
+//        BuuPrice.clear();
+//       
+//        
+//        
+//    }
+//    private void clearSome(){
+//       productPrise.setText("");
+//       Quntity.clear();
+//       BuuPrice.clear();
+//       productBarcode.setText("");
+//       productName.setText("");
+//        
+//
+//    }
     
 
     
@@ -376,11 +397,7 @@ public class BuyingController  extends NewSerial implements Initializable {
 
     @FXML
     private void calcButton(ActionEvent event) {
-         try {
-            Runtime.getRuntime().exec("calc");
-        } catch (IOException ex) {
-           Alerts.showAlert("حدث مشكلة أثناء فتح الالة الحاسبة , يرجى اعادة المحاولة",3) ;
-        }
+         Additional.openCalculator();
     }
 
     

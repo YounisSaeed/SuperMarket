@@ -7,9 +7,11 @@ package employees.recall;
 
 
 
+import Classes.Additional;
 import Classes.Alerts;
 import Classes.Price;
 import Classes.Recalls;
+import Classes.Validations;
 import Serial_dinamic.NewSerial;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
@@ -179,7 +181,9 @@ public class RecallController extends NewSerial implements Initializable {
     
     
     private void addRecall(){
-        if(!Quntity.getText().equals("") && !productBarcode.getText().equals("")){
+        if(!Quntity.getText().equals("") && !productBarcode.getText().equals(""))
+        
+        {
             Recalls R=new Recalls();
             try{
                 if(Double.parseDouble(Quntity.getText())>0){
@@ -256,12 +260,15 @@ public class RecallController extends NewSerial implements Initializable {
     
     /************************************CLEAR DATA FROM FIELDS _________*/
     private void clear(){
-        R_SearchField.clear();
+        
         quntityComboBox.setValue("قطعة");
-        Quntity.clear();
-        productBarcode.setText("");
-        productName.setText("");
-        productPrice.setText("");
+//        R_SearchField.clear();
+//        Quntity.clear();
+//        productBarcode.setText("");
+//        productName.setText("");
+//        productPrice.setText("");
+         Additional.clearTextfieldContent(R_SearchField,Quntity);
+         Additional.clearLabelContent(productBarcode,productName,productPrice);
     }
 
 
@@ -274,11 +281,7 @@ public class RecallController extends NewSerial implements Initializable {
 
     @FXML
     private void calcButton(ActionEvent event) {
-        try {
-            Runtime.getRuntime().exec("calc");
-        } catch (IOException ex) {
-            Alerts.showAlert("حدث مشكلة اثناء فنح  الآلة الحاسبة, يرجى المحاولة لاحقا",3);
-        }
+        Additional.openCalculator();
     }
 
     @FXML

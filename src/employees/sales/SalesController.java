@@ -1,10 +1,12 @@
 
 package employees.sales;
 
+import Classes.Additional;
 import Serial_dinamic.*;
 import Classes.Sales;
 import Classes.Alerts;
 import Classes.Price;
+import Classes.Validations;
 import static Serial_dinamic.NewSerial.getSalesSerial;
 import static Serial_dinamic.NewSerial.increment_Sales;
 import database.*;
@@ -188,7 +190,9 @@ public class SalesController extends NewSerial implements Initializable {
 
     @FXML
     private void searchButton(ActionEvent event) {
-        clear();
+         Additional.clearLabelContent(productName,productPrice,productBarcode);
+        Additional.clearTextfieldContent(T_Search,Quntity,totalPrice,paid,rest);
+        Additional.clearTableContent(SalesTabel);
         searrch();
         
     }
@@ -300,7 +304,9 @@ public class SalesController extends NewSerial implements Initializable {
     private void cancelBill(ActionEvent event) {
         if (Alerts.ConfirmAlert("هل تريد مسح جميع عناصر الفاتورة ؟!!","")) {
         deleteAllRows();
-        clear();
+         Additional.clearLabelContent(productName,productPrice,productBarcode);
+        Additional.clearTextfieldContent(T_Search,Quntity,totalPrice,paid,rest);
+        Additional.clearTableContent(SalesTabel);
         }
     }
     
@@ -341,7 +347,9 @@ public class SalesController extends NewSerial implements Initializable {
     
     /********************************************* AddNewBill _________*/
     private void AddNewBill(){
-        if(!totalPrice.getText().equals("")&&!this.paid.getText().equals("") && !this.rest.getText().equals("")){
+      
+        if(Validations.textInputNotEmpty(totalPrice,this.paid,this.rest))
+        {
             try{
                 billNumber.setText(getSalesSerial()+"");
                 Sales S=new Sales();
@@ -362,7 +370,9 @@ public class SalesController extends NewSerial implements Initializable {
                     System.out.println(getSalesSerial());
                     TOTAL=0;
                     paid.setText(gettTime()+"");
-                    clear();
+                    Additional.clearLabelContent(productName,productPrice,productBarcode);
+                    Additional.clearTextfieldContent(T_Search,Quntity,totalPrice,paid,rest);
+                    Additional.clearTableContent(SalesTabel);
                     Alerts.showAlert("تم اضافة الفاتورة رقم  بنجاح !!",1);
                 }
                 else
@@ -414,7 +424,8 @@ public class SalesController extends NewSerial implements Initializable {
                         SalesTabel.getItems().add(S);
                         TOTAL+=S.getCost();
                         totalPrice.setText(TOTAL+"");
-                        clearSome();
+                       Additional.clearLabelContent(productName,productPrice,productBarcode);
+                       Additional.clearTextfieldContent(T_Search,Quntity);
                      //   Alerts.showInfoAlert("تمت الاضافة !!");
                     }
                     else
@@ -519,25 +530,27 @@ public class SalesController extends NewSerial implements Initializable {
     }
     
     /************************************CLEAR DATA FROM FIELDS _________*/
-    private void clear(){
-        T_Search.clear();
-        productName.setText("");
-        productPrice.setText("");
-        productBarcode.setText("");
-        Quntity.clear();
-        totalPrice.clear();
-        paid.clear();
-        rest.clear();
-        SalesTabel.getItems().clear();
-    }
+//    private void clear(){
+//        T_Search.clear();
+//        productName.setText("");
+//        productPrice.setText("");
+//        productBarcode.setText("");
+//        Quntity.clear();
+//        totalPrice.clear();
+//        paid.clear();
+//        rest.clear();
+//        SalesTabel.getItems().clear();
+//       
+//    }
     
-    private void clearSome(){
-        T_Search.clear();
-        productName.setText("");
-        productPrice.setText("");
-        productBarcode.setText(""); 
-        Quntity.clear();
-    }
+//    private void clearSome(){
+//        T_Search.clear();
+//        productName.setText("");
+//        productPrice.setText("");
+//        productBarcode.setText(""); 
+//        Quntity.clear();
+//        
+//    }
     
     /**********************_____________END OF IMPELMTNTAION______________************************/
     
@@ -553,11 +566,7 @@ public class SalesController extends NewSerial implements Initializable {
 
     @FXML
     private void calcButton(ActionEvent event) {
-        try {
-            Runtime.getRuntime().exec("calc");
-        } catch (IOException ex) {
-           Alerts.showAlert("حدث مشكلة أثناء فتح الالة الحاسبة , يرجى اعادة المحاولة",3) ;
-        }
+        Additional.openCalculator();
     }
 
     /***************************_____________THE END______________********************************/    
