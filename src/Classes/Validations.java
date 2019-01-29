@@ -26,7 +26,10 @@ public class Validations {
             
     }
      
-      //textInputNotEmpty METHOD USED FOR CHECK TEXTFEILD OR TEXT AREA  AND COMBOBOX EMPTY OR NOT
+     
+     
+     
+     //textInputNotEmpty METHOD USED FOR CHECK TEXTFEILD OR TEXT AREA  AND COMBOBOX EMPTY OR NOT
      // OVERRIDE OF U PASS COMBOBOX AND TEXTFIELD
      public static boolean textInputNotEmpty(ComboBox c,TextInputControl... f){   //TextInputControl parent of textfeild and textarea class 
                                                                                   // U SHOULD PASS COMBOBOX FIRST
@@ -44,6 +47,9 @@ public class Validations {
         return false;   
             
     }
+     
+     
+     
      
      
       //textInputNotEmpty METHOD USED FOR CHECK TEXTFEILD OR TEXT AREA  AND LABEL EMPTY OR NOT
@@ -66,4 +72,19 @@ public class Validations {
     }
      
      
+      public static boolean isPositive(TextInputControl... f){   
+                                                                                 
+        for(TextInputControl t:f){
+        if( Double.parseDouble(t.getText())<=0  ) {  
+           Alerts.showAlert("لقدأدخلت قيمة خاطئة ",3);   
+           return false; 
+        }}
+        return true;
+    
+      }
+
+
+
 }
+     
+

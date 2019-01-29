@@ -1,6 +1,7 @@
 package Manager.Employee;
 
 import Classes.Additional;
+
 import Classes.Alerts;
 import Classes.Employee;
 import Classes.Validations;
@@ -149,12 +150,11 @@ public class Manager_EmployeeController implements Initializable {
     
     
     private void AddEmployee() throws SQLException{
-//         if ( !E_Tname.getText().equals("") && !E_Tcode.getText().equals("") && !E_Tphone.getText().equals("") 
-//                 && !E_Taddress.getText().equals("") && !E_Tsalary.getText().equals("")  ){                    //TO check of text fields is empty
+
              if(Validations.textInputNotEmpty(E_Tname,E_Tcode,E_Tphone,E_Tsalary,E_Taddress)){
              try{
-             if (Double.parseDouble(E_Tsalary.getText())>0  ){ //to make sure that salary is  a posutive number
-                   
+             if ( Validations.isPositive(E_Tsalary)){ //to make sure that salary is  a posutive number
+                  
                     Employee E =new Employee();
                     E.setEmployeeName(E_Tname.getText().trim());
                     E.setEmployeeId(E_Tcode.getText().trim());
@@ -169,7 +169,8 @@ public class Manager_EmployeeController implements Initializable {
                         Additional.clearTextfieldContent(E_Tname,E_Tcode,E_Tphone,E_Tsalary,E_Taddress);
                         
                     }
-             }else{  Alerts.showAlert("لقد ادخلت قيمة غير صحيحة!! ",3);  }
+             }
+//             else{  Alerts.showAlert("لقد ادخلت قيمة غير صحيحة!! ",3);  }
                 
              
             } catch (NumberFormatException es){ Alerts.showAlert("لقد ادخلت قيمة غير صحيحة !!",3); }
@@ -206,7 +207,7 @@ public class Manager_EmployeeController implements Initializable {
                
                
             try{   
-            if (Double.parseDouble(E_Tsalary.getText())>0  ){
+            if (Validations.isPositive(E_Tsalary)  ){
                  String name=E_Tname.getText().trim();
                   String phone=E_Tphone.getText().trim();
                   String id =E_Tcode.getText().trim();
@@ -223,8 +224,8 @@ public class Manager_EmployeeController implements Initializable {
                     
                     
                 } else{ Alerts.showAlert("لقد أدخلت قيما غير صحيحة",3); }
-
-               }  else{ Alerts.showAlert("لقد أدخلت قيما غير صحيحة",3); }   
+            }
+//               }  else{ Alerts.showAlert("لقد أدخلت قيما غير صحيحة",3); }   
                         
                } catch (NumberFormatException es) { Alerts.showAlert("لقد ادخلت قيمة غير صحيحة !!",3);}
    

@@ -2,6 +2,7 @@
 package Manager.Product.Quantity;
 
 import Classes.Alerts;
+import Classes.Validations;
 import Manager.Main.HomeController;
 import com.jfoenix.controls.JFXTextField;
 import database.*;
@@ -79,7 +80,8 @@ public class Manager_Product_QuantityController implements Initializable {
     @FXML
     private void P_Search(ActionEvent event) {
          
-        if (!P_TSearch.getText().equals("")){
+        if ( Validations.textInputNotEmpty(P_TSearch)){
+           
             this.P_Search();quann();
             System.out.println(itm+"            "+pkt+"         "+bx);
         }
