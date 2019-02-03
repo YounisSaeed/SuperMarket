@@ -1,8 +1,10 @@
 
 package Manager.Suppliers;
 
+import Classes.Additional;
 import Classes.Alerts;
 import Classes.Suppliers;
+import Classes.Validations;
 import Manager.Main.HomeController;
 import database.DataHelper;
 import database.DatabaseHandler;
@@ -135,7 +137,7 @@ public class Manager_SuppliersController implements Initializable {
     private void AddSupplier()
     {
         try {
-        if ( !S_Tname.getText().equals("") && !S_TPhone.getText().equals("") && !S_TSaller.getText().equals(""))
+        if(Validations.textInputNotEmpty(S_Tname,S_TPhone,S_TSaller))
         {
            
                     Suppliers s =new Suppliers();
@@ -148,14 +150,13 @@ public class Manager_SuppliersController implements Initializable {
                     if(result){
                         S_Table.getItems().add(s);
                         Alerts.showAlert("تم الاضافة",1);
-                        clear();
+                        Additional.clearTextfieldContent(S_Tname,S_TPhone,S_TSaller);
                     }
                     else 
                         Alerts.showAlert("خطأ فى الاضافة",3);
                    
         
-        }else 
-                Alerts.showAlert("برجاء التأكد من ملىء جميع الحقول المطلوبة ",3);
+        }
           
          } catch (NullPointerException e){                   
                 Alerts.showAlert("برجاء التأكد من ملىء جميع الحقول المطلوبة ",3);
@@ -176,7 +177,7 @@ public class Manager_SuppliersController implements Initializable {
     
      private void Edit_Supplier() {
          
-        if ( !S_Tname.getText().equals("") && !S_TPhone.getText().equals("") && !S_TSaller.getText().equals("")){  
+        if ( Validations.textInputNotEmpty(S_Tname,S_TPhone,S_TSaller)){  
             try{
                 String name=S_Tname.getText();
                 String phone=S_TPhone.getText();
@@ -187,14 +188,14 @@ public class Manager_SuppliersController implements Initializable {
                 {
                     Alerts.showAlert("تم التعديل",1);
                     DataHelper.loadSuppliersData(S_Table);
-                    clear();
+                     Additional.clearTextfieldContent(S_Tname,S_TPhone,S_TSaller);
                 }
             }
             catch (NumberFormatException es)
             {
                 Alerts.showAlert("لقد ادخلت قيمة غير صحيحة !!",3);
             }
-        }else { Alerts.showAlert("برجاء ملىء جميع الحقول المطلوبة",3);}
+        }
     }
     
     
@@ -220,7 +221,7 @@ public class Manager_SuppliersController implements Initializable {
                 if (result) {
                     Alerts.showAlert("تم المسح !!",1);
                    S_Table.getItems().removeAll(S_Table.getSelectionModel().getSelectedItem());
-                    clear();
+                     Additional.clearTextfieldContent(S_Tname,S_TPhone,S_TSaller);
                 }
                  else 
                     Alerts.showAlert("لم تتم العملية بشكل صحيح ",3);
@@ -344,11 +345,13 @@ public class Manager_SuppliersController implements Initializable {
     }
     /***************************************************TO clear what in TextFields*************************************************/
     
-    private void clear()
-    {
-        S_Tname.setText("");
-        S_TPhone.setText("");
-        S_TSaller.setText("");
-    }
+//    private void clear()
+//    {
+//        S_Tname.setText("");
+//        S_TPhone.setText("");
+//        S_TSaller.setText("");
+//       
+//        
+//    }
 }
 

@@ -324,6 +324,25 @@ public class DataHelper extends Database.Mdification{
 //         Alerts.showAlert("خطأ فى التسجيل .. ربما سجل هذا الموظف من قبل",3);
 //        }
 //        return false;
+<<<<<<< HEAD
+=======
+
+//        try {
+//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+//                    "INSERT INTO employee1(emp_id,emp_name,emp_phone,emp_salary_hours,emp_address) VALUES(?,?,?,?,?)");
+//            statement.setString(1, emp.getEmployeeId());
+//            statement.setString(2, emp.getEmployeeName());
+//            statement.setString(3, emp.getEmployeePhone());
+//            statement.setDouble(4, emp.getEmployeeSalaryHours());
+//            statement.setString(5, emp.getEmployeeAddress());
+//            return statement.executeUpdate() > 0;
+//        } catch (SQLException ex) {
+//         System.out.print("Employee doesn't be inserted");
+//         Alerts.showAlert("خطأ فى التسجيل .. ربما سجل هذا الموظف من قبل",3);
+//        }
+//        return false;
+
+>>>>>>> f5a0f3eec61b0871f2da074b1cc53256c64fd46d
     }
     
     public static boolean updateEmployee(Employee E,String oldID )

@@ -8,7 +8,11 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+<<<<<<< HEAD
     <jar href="Supermarket_Management_System.jar" size="476293" download="eager" />
+=======
+    <jar href="Supermarket_Management_System.jar" size="477260" download="eager" />
+>>>>>>> f5a0f3eec61b0871f2da074b1cc53256c64fd46d
     <jar href="lib\commons-codec-1.11.jar" size="335042" download="eager" />
     <jar href="lib\controlsfx-8.40.14.jar" size="1215643" download="eager" />
     <jar href="lib\derby.jar" size="3224708" download="eager" />

@@ -3,6 +3,9 @@ package Manager.Products;
 
 import Classes.Goods;
 import Classes.Alerts;
+import Classes.Validations;
+import Classes.Additional;
+
 import database.*;
 import Manager.Main.HomeController;
 import database.DatabaseHandler;
@@ -172,10 +175,9 @@ public class Manager_ProductsController implements Initializable {
     
     
     private void Add_Product() {
-        if(!P_Tname.getText().equals("") && !P_Tcode.getText().equals("") && !P_Ctype.getValue().equals("")
-                && !Q_item.getText().equals("") && !Q_packet.getText().equals("")
-                && !P_TUprice.getText().equals("") && !P_TBprice.getText().equals("") && !P_TCprice.getText().equals("")
-                && !P_Tminimun.getText().equals("")){
+
+            
+            if(Validations.textInputNotEmpty(P_Ctype,P_Tname,P_Tcode,Q_item,Q_packet,P_TUprice,P_TBprice,P_TCprice,P_Tminimun)){
             try {
                 Goods G=new Goods();
                 G.setProductName(P_Tname.getText());
@@ -193,25 +195,22 @@ public class Manager_ProductsController implements Initializable {
                 if(result){
                     P_table.getItems().add(G);
                     Alerts.showAlert("تم اضافة المنتج !!",1);
-                    clear();
+                    Additional.clearTextfieldContent(P_Tname,P_TCprice,P_TUprice,P_TBprice,P_TBprice,P_Tcode,Q_packet,Q_item,P_Tminimun);
+                    Additional.clearComboBoxContent(P_Ctype);
                 }
                 else
                     Alerts.showAlert("لم تتم العملية بشكل صحيح .",1);
                 
             }catch(NumberFormatException e) {Alerts.showAlert("لقد ادخلت قيمة غير صحيحة ",3);}
         }
-        else 
-             Alerts.showAlert("برجاء ملىء جميع الحقول المطلوبة",3);
+
     } 
 
     
 
     private void Edit_Product() {
         
-        if(!P_Tname.getText().equals("") && !P_Tcode.getText().equals("") && !P_Ctype.getValue().equals("")
-                && !Q_item.getText().equals("") && !Q_packet.getText().equals("")
-                && !P_TUprice.getText().equals("") && !P_TBprice.getText().equals("") && !P_TCprice.getText().equals("")
-                && !P_Tminimun.getText().equals("")){
+        if(Validations.textInputNotEmpty(P_Ctype,P_Tname,P_Tcode,Q_item,Q_packet,P_TUprice,P_TBprice,P_TCprice,P_Tminimun)){
             try {
                 String name=P_Tname.getText();
                 String bar=P_Tcode.getText();
@@ -230,21 +229,18 @@ public class Manager_ProductsController implements Initializable {
                 boolean result=DataHelper.updateProductInfo(G,oldBar);
                 if(result){
                     Alerts.showAlert("تم تعديل بيانات :"+G.getProductName(),1);
-                    clear();
+                   Additional.clearTextfieldContent(P_Tname,P_TCprice,P_TUprice,P_TBprice,P_TBprice,P_Tcode,Q_packet,Q_item,P_Tminimun);
+                     Additional.clearComboBoxContent(P_Ctype);
                     DataHelper.loadProductsData(P_table,P_TSearch);
                 }
             }catch (NumberFormatException e) {Alerts.showAlert("لقد ادخلت قيمة غير صحيحة",3);}
         }
-        else
-            Alerts.showAlert("برجاء ملىء جميع الحقول المطلوبة",3); 
+        
     }
   
     
     private void Delete_Product() {
-        if(!P_Tname.getText().equals("") && !P_Tcode.getText().equals("") && !P_Ctype.getValue().equals("")
-                && !Q_item.getText().equals("") && !Q_packet.getText().equals("")
-                && !P_TUprice.getText().equals("") && !P_TBprice.getText().equals("") && !P_TCprice.getText().equals("")
-                && !P_Tminimun.getText().equals("")){
+        if(Validations.textInputNotEmpty(P_Ctype,P_Tname,P_Tcode,Q_item,Q_packet,P_TUprice,P_TBprice,P_TCprice,P_Tminimun)){
             try{
                 Goods G=P_table.getSelectionModel().getSelectedItem();
 
@@ -252,7 +248,8 @@ public class Manager_ProductsController implements Initializable {
                    Boolean result = DataHelper.deleteProduct(G);
                    if (result) {
                        Alerts.showAlert("تم المسح !!",1);
-                       clear();
+                      Additional.clearTextfieldContent(P_Tname,P_TCprice,P_TUprice,P_TBprice,P_TBprice,P_Tcode,Q_packet,Q_item,P_Tminimun);
+                      Additional.clearComboBoxContent(P_Ctype);
                        DataHelper.loadProductsData(P_table,P_TSearch);
                    }
                     else 
@@ -261,25 +258,25 @@ public class Manager_ProductsController implements Initializable {
                 System.out.println(oldBar);
             }catch(Exception e) {Alerts.showAlert("لم يتم تحديد منتج من الجدول",3);}
         }
-        else
-            Alerts.showAlert("برجاء ملىء جميع الحقول المطلوبة",3);
+       
     }
     
     @FXML
     private void Product_Search(ActionEvent event) { // Search Button 
     }
     
-    private void clear(){
-        P_Tname.clear();
-        P_TCprice.clear();
-        P_TUprice.clear();
-        P_TBprice.clear();
-        P_Tcode.clear();
-        Q_packet.clear();
-        Q_item.clear();
-        P_Tminimun.clear();
-        P_Ctype.setValue("");
-    }
+//    private void clear(){
+//        P_Tname.clear();
+//        P_TCprice.clear();
+//        P_TUprice.clear();
+//        P_TBprice.clear();
+//        P_Tcode.clear();
+//        Q_packet.clear();
+//        Q_item.clear();
+//        P_Tminimun.clear();
+//        P_Ctype.setValue("");
+//        
+//    }
 
     @FXML
     private void selectFromTable(MouseEvent event) {
@@ -325,7 +322,8 @@ public class Manager_ProductsController implements Initializable {
 
     @FXML
     private void ClearNew(ActionEvent event){
-        clear();
+       Additional.clearTextfieldContent(P_Tname,P_TCprice,P_TUprice,P_TBprice,P_TBprice,P_Tcode,Q_packet,Q_item,P_Tminimun);
+        Additional.clearComboBoxContent(P_Ctype);
     } 
 
     @FXML
@@ -341,11 +339,7 @@ public class Manager_ProductsController implements Initializable {
 
     @FXML
     private void calcButton(ActionEvent event) {
-        try {
-            Runtime.getRuntime().exec("calc");
-        } catch (IOException ex) {
-            Alerts.showAlert("حدث مشكلة اثناء فتح الآلة الحاسبة , يرجى المحاولة لاحقا",3);
-        }
+       Additional.openCalculator();
     } 
 
     @FXML

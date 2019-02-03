@@ -1,8 +1,10 @@
 
 package employees.personalexpenses;
 
+import Classes.Additional;
 import Classes.Alerts;
 import Classes.Employee;
+import Classes.Validations;
 import Serial_dinamic.NewSerial;
 import static Serial_dinamic.NewSerial.gettDate;
 import database.*;
@@ -86,7 +88,9 @@ public class PersonalexpensesController extends AccountController implements Ini
     }*/
     private void add(){
         try{
-                if (!reason.getText().equals("") && !value.getText().equals("")){
+               
+                if(Validations.textInputNotEmpty(reason,value))
+                {
                 if (Double.parseDouble(value.getText())>0){
         
                 Employee e = new Employee();
@@ -99,7 +103,7 @@ public class PersonalexpensesController extends AccountController implements Ini
                 boolean result = DataHelper.insertNewPersonalExpences(e);
                 personal_table.getItems().add(e);
                 if(result){
-                    clear();
+                     Additional.clearTextfieldContent(value,reason);
                     Alerts.showAlert("تم اضافة المصاريف الشخصية",1);}
           
                 }else {
@@ -115,10 +119,11 @@ public class PersonalexpensesController extends AccountController implements Ini
         this.add();
     }
     
-     private void clear(){
-      value.setText("");
-      reason.setText("");
-     }
+//     private void clear(){
+//      value.setText("");
+//      reason.setText("");
+//     
+//     }
      
    @FXML
     private void Key_pressed(KeyEvent event) {

@@ -1,7 +1,10 @@
 package Manager.Employee;
 
+import Classes.Additional;
+
 import Classes.Alerts;
 import Classes.Employee;
+import Classes.Validations;
 import Manager.Main.HomeController;
 import database.DataHelper;
 import database.DatabaseHandler;
@@ -85,6 +88,8 @@ public class Manager_EmployeeController implements Initializable {
      DataHelper.loadEmployeesData(E_tables);  
     }    
     
+   
+    
     
     
     
@@ -145,12 +150,11 @@ public class Manager_EmployeeController implements Initializable {
     
     
     private void AddEmployee() throws SQLException{
-         if ( !E_Tname.getText().equals("") && !E_Tcode.getText().equals("") && !E_Tphone.getText().equals("") 
-                 && !E_Taddress.getText().equals("") && !E_Tsalary.getText().equals("")  ){                    //TO check of text fields is empty
-             
+
+             if(Validations.textInputNotEmpty(E_Tname,E_Tcode,E_Tphone,E_Tsalary,E_Taddress)){
              try{
-             if (Double.parseDouble(E_Tsalary.getText())>0  ){ //to make sure that salary is  a posutive number
-                   
+             if ( Validations.isPositive(E_Tsalary)){ //to make sure that salary is  a posutive number
+                  
                     Employee E =new Employee();
                     E.setEmployeeName(E_Tname.getText().trim());
                     E.setEmployeeId(E_Tcode.getText().trim());
@@ -162,16 +166,17 @@ public class Manager_EmployeeController implements Initializable {
                     if(result){
                         E_tables.getItems().add(E);
                         Alerts.showAlert("تمت الأضافة بنجاح",1);
-                        clear();
+                        Additional.clearTextfieldContent(E_Tname,E_Tcode,E_Tphone,E_Tsalary,E_Taddress);
                         
                     }
-             }else{  Alerts.showAlert("لقد ادخلت قيمة غير صحيحة!! ",3);  }
+             }
+//             else{  Alerts.showAlert("لقد ادخلت قيمة غير صحيحة!! ",3);  }
                 
              
             } catch (NumberFormatException es){ Alerts.showAlert("لقد ادخلت قيمة غير صحيحة !!",3); }
-                 
+             }  
              
-            } else {  Alerts.showAlert("برجاء ملىء جميع الحقول المطلوبة",3); }
+//            } else {  Alerts.showAlert("برجاء ملىء جميع الحقول المطلوبة",3); }
                  
                 
 
@@ -191,8 +196,7 @@ public class Manager_EmployeeController implements Initializable {
     
     @FXML
     private void Edit_Employee(ActionEvent event) throws SQLException {
-         if ( !E_Tname.getText().equals("") && !E_Tcode.getText().equals("") && !E_Tphone.getText().equals("") 
-             && !E_Taddress.getText().equals("") && !E_Tsalary.getText().equals("")  ){   //TO check of text fields is empty
+         if ( Validations.textInputNotEmpty(E_Tname,E_Tcode,E_Tphone,E_Tsalary,E_Taddress)  ){   //TO check of text fields is empty
             
              //TO ckef if there another Employee with same ID 
 //               while(rs.next()){
@@ -203,7 +207,7 @@ public class Manager_EmployeeController implements Initializable {
                
                
             try{   
-            if (Double.parseDouble(E_Tsalary.getText())>0  ){
+            if (Validations.isPositive(E_Tsalary)  ){
                  String name=E_Tname.getText().trim();
                   String phone=E_Tphone.getText().trim();
                   String id =E_Tcode.getText().trim();
@@ -216,16 +220,17 @@ public class Manager_EmployeeController implements Initializable {
                 if(result){
                     Alerts.showAlert("تم تعديل بيانات :"+e.getEmployeeName(),3);
                     DataHelper.loadEmployeesData(E_tables);
-                    clear();
+                    Additional.clearTextfieldContent(E_Tname,E_Tcode,E_Tphone,E_Tsalary,E_Taddress);
                     
                     
                 } else{ Alerts.showAlert("لقد أدخلت قيما غير صحيحة",3); }
-
-               }  else{ Alerts.showAlert("لقد أدخلت قيما غير صحيحة",3); }   
+            }
+//               }  else{ Alerts.showAlert("لقد أدخلت قيما غير صحيحة",3); }   
                         
                } catch (NumberFormatException es) { Alerts.showAlert("لقد ادخلت قيمة غير صحيحة !!",3);}
    
-                } else { Alerts.showAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة",3);}
+                } 
+//         else { Alerts.showAlert("برجاءالتأكد من  ملىء جميع الحقول المطلوبة",3);}
 
                 
 
@@ -253,7 +258,7 @@ public class Manager_EmployeeController implements Initializable {
                 if (result) {
                     Alerts.showAlert("تم المسح !!",1);
                     E_tables.getItems().removeAll(E_tables.getSelectionModel().getSelectedItem());
-                    clear();
+                    Additional.clearTextfieldContent(E_Tname,E_Tcode,E_Tphone,E_Tsalary,E_Taddress);
                 }
                  else {  Alerts.showAlert("لم تتم العملية بشكل صحيح ",3);}
             
@@ -299,17 +304,8 @@ public class Manager_EmployeeController implements Initializable {
     }
     
 
-   /****************************************TO clear what in TextFields*************************************************/
-    
-    private void clear()
-    {
-        E_Tname.setText("");
-        E_Tcode.setText("");
-        E_Tphone.setText("");
-        E_Tsalary.setText("");
-        E_Taddress.setText("");
-    }
 
+   
    
 
 
