@@ -76,6 +76,7 @@ public class DatabaseHandler {
         try {
             Class.forName("org.sqlite.JDBC").newInstance();
             conn = DriverManager.getConnection(DB_URL);
+            System.out.println("Connected + "+conn);
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Cant load database", "Database Error", JOptionPane.ERROR_MESSAGE);

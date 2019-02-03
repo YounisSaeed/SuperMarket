@@ -290,7 +290,7 @@ public class Manager_EmployeeController implements Initializable {
     private void selectFromTable(MouseEvent event) {
          Employee emp=E_tables.getSelectionModel().getSelectedItem();
          
-         E_Tname.setText(emp.getEmployeeName());
+        E_Tname.setText(emp.getEmployeeName());
         E_Tcode.setText(emp.getEmployeeId());
         E_Tphone.setText(emp.getEmployeePhone());
         E_Tsalary.setText(emp.getEmployeeSalaryHours()+"");

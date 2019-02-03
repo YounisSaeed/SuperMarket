@@ -22,48 +22,16 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import org.controlsfx.control.textfield.TextFields;
 
-public class DataHelper {
+public class DataHelper extends Database.Mdification{
 
     
-    private static Map<String, Object> data;
-    public static boolean InsertInfo(String tableName,Map<String, Object> data){
-        
-        int i=0;
-        String dat_cols="";
-        Object[] dat_rows=new Object[data.size()];
-        
-        for(String key:data.keySet()){
-            dat_rows[i]=data.get(key);
-            if(i != data.size()-1)
-                dat_cols+=key+",";
-            else
-                dat_cols+=key;
-            i++;
-        }
-        
-        String dat="";
-        for(int j=0;j<dat_rows.length;j++){
-            if(!(dat_rows[j] instanceof Integer) && !(dat_rows[j] instanceof Double) && !(dat_rows[j] instanceof Long)){
-                dat_rows[j]="'"+dat_rows[j]+"'";
-            }
-            if(j != dat_rows.length-1)
-                dat+=dat_rows[j]+",";
-            else
-                dat+=dat_rows[j];
-        }
-        String qu="INSERT INTO "+tableName+"("+dat_cols+")"+" VALUES("+dat+")";
-        if(DatabaseHandler.getInstance().execAction(qu))
-            return true;
-        else
-            return false;
-    }
+    
     
     /****************************************************************************************************************/
     /****************************************************************************************************************/
     /****************************************************************************************************************/
     /****************************************_______PRODUCTS_______**************************************************/
     /////leda add
-    
     
     public static boolean insertNewProduct(Goods go) {
         data = new HashMap<>();
@@ -105,28 +73,42 @@ public class DataHelper {
     }
     
     public static boolean updateProductInfo(Goods go,String bar) {
-        try {
-            
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "UPDATE product SET  pro_bar=?,pro_name=?,pro_category=?,"
-                            + "pro_qty_item=?,pro_qty_packet=?,pro_box=?,pro_All_qty=?,pro_price_item=?,"
-                            + "pro_price_packet=?,pro_price_box=?,pro_minimum=?  WHERE pro_bar= '"+bar+"' ");
-            
-            statement.setString(1, go.getProductBarCode());
-            statement.setString(2, go.getProductName());
-            statement.setString(3, go.getProductCategory());
-            statement.setInt(4, go.getItemsInPacket());
-            statement.setInt(5, go.getPacketsInBox());
-            statement.setString(6, go.getBox());
-            statement.setLong(7, go.getAllQuantity());
-            statement.setDouble(8, go.getItemPrice());
-            statement.setDouble(9, go.getPacketPrice());
-            statement.setDouble(10, go.getBoxPrice());
-            statement.setInt(11, go.getProductMinQuantity());
-            return statement.executeUpdate() > 0;
-        }
-        catch (SQLException ex) {}
-        return false;
+        data = new HashMap<>();
+        data.put("pro_bar", go.getProductBarCode());
+        data.put("pro_name", go.getProductName());
+        data.put("pro_category", go.getProductCategory());
+        data.put("pro_qty_item", go.getItemsInPacket());
+        data.put("pro_qty_packet", go.getPacketsInBox());
+        data.put("pro_box", go.getBox());
+        data.put("pro_All_qty", go.getAllQuantity());
+        data.put("pro_price_item", go.getItemPrice());
+        data.put("pro_price_packet", go.getPacketPrice());
+        data.put("pro_price_box", go.getBoxPrice());
+        data.put("pro_minimum", go.getProductMinQuantity());
+        
+        return UpdateInfo("product", data, "pro_bar", bar);
+//        try {
+//            
+//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+//                    "UPDATE product SET  pro_bar=?,pro_name=?,pro_category=?,"
+//                            + "pro_qty_item=?,pro_qty_packet=?,pro_box=?,pro_All_qty=?,pro_price_item=?,"
+//                            + "pro_price_packet=?,pro_price_box=?,pro_minimum=?  WHERE pro_bar= '"+bar+"' ");
+//            
+//            statement.setString(1, go.getProductBarCode());
+//            statement.setString(2, go.getProductName());
+//            statement.setString(3, go.getProductCategory());
+//            statement.setInt(4, go.getItemsInPacket());
+//            statement.setInt(5, go.getPacketsInBox());
+//            statement.setString(6, go.getBox());
+//            statement.setLong(7, go.getAllQuantity());
+//            statement.setDouble(8, go.getItemPrice());
+//            statement.setDouble(9, go.getPacketPrice());
+//            statement.setDouble(10, go.getBoxPrice());
+//            statement.setInt(11, go.getProductMinQuantity());
+//            return statement.executeUpdate() > 0;
+//        }
+//        catch (SQLException ex) {}
+//        return false;
     }
 
     public static boolean QuickEditQuantity(int quan,String bar,boolean supSum) {
@@ -151,16 +133,17 @@ public class DataHelper {
     }
     
     public static boolean deleteProduct(Goods go) {
-        try {
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement( 
-                    "DELETE FROM product WHERE pro_bar = ?");
-            
-            statement.setString(1, go.getProductBarCode());
-            return statement.executeUpdate() > 0;
-        }
-        catch (SQLException ex) {//    
-        }
-        return false;
+        return DeleteInfo("product", "pro_bar", go.getProductBarCode());
+//        try {
+//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement( 
+//                    "DELETE FROM product WHERE pro_bar = ?");
+//            
+//            statement.setString(1, go.getProductBarCode());
+//            return statement.executeUpdate() > 0;
+//        }
+//        catch (SQLException ex) {//    
+//        }
+//        return false;
     }
     
     public static void loadProductsData(TableView TV,TextField TF) {
@@ -312,7 +295,7 @@ public class DataHelper {
     /*****************************************_______EMPLOYEE_______*************************************************/
     
     public static boolean insertNewemployee(Employee emp) {
-<<<<<<< HEAD
+
         //New
         data =new HashMap<>();
         data.put("emp_id",emp.getEmployeeId());
@@ -338,61 +321,53 @@ public class DataHelper {
 //            return statement.executeUpdate() > 0;
 //        } catch (SQLException ex) {
 //         System.out.print("Employee doesn't be inserted");
-//         Alerts.showErrorAlert("خطأ فى التسجيل .. ربما سجل هذا الموظف من قبل");
+//         Alerts.showAlert("خطأ فى التسجيل .. ربما سجل هذا الموظف من قبل",3);
 //        }
 //        return false;
-=======
-        try {
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "INSERT INTO employee1(emp_id,emp_name,emp_phone,emp_salary_hours,emp_address) VALUES(?,?,?,?,?)");
-            statement.setString(1, emp.getEmployeeId());
-            statement.setString(2, emp.getEmployeeName());
-            statement.setString(3, emp.getEmployeePhone());
-            statement.setDouble(4, emp.getEmployeeSalaryHours());
-            statement.setString(5, emp.getEmployeeAddress());
-            return statement.executeUpdate() > 0;
-        } catch (SQLException ex) {
-         System.out.print("Employee doesn't be inserted");
-         Alerts.showAlert("خطأ فى التسجيل .. ربما سجل هذا الموظف من قبل",3);
-        }
-        return false;
->>>>>>> a3f90118096c12c9d62178c15daf4a7bab6ed152
     }
     
     public static boolean updateEmployee(Employee E,String oldID )
     {
-        try {
-            
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "UPDATE Employee1 SET  emp_id=?,emp_name=?,emp_phone=?,emp_address=?,emp_salary_hours= ? WHERE emp_id = '" +oldID+"'");
-            statement.setString(1, E.getEmployeeId());
-            statement.setString(2, E.getEmployeeName());
-            statement.setString(3, E.getEmployeePhone());
-            statement.setString(4, E.getEmployeeAddress());
-            statement.setDouble(5, E.getEmployeeSalaryHours());
-          
-            return statement.executeUpdate() > 0;
-        }
-        catch (SQLException ex) {
-            System.out.print("data does't update");
-        }
-        return false;
+        data =new HashMap<>();
+        data.put("emp_id",E.getEmployeeId() );
+        data.put("emp_name",E.getEmployeeName() );
+        data.put("emp_phone",E.getEmployeePhone() );
+        data.put("emp_address",E.getEmployeeAddress() );
+        data.put("emp_salary_hours",E.getEmployeeSalaryHours() );
+        return UpdateInfo("Employee1", data, "emp_id", oldID);
+//        try {
+//            
+//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+//                    "UPDATE Employee1 SET  emp_id=?,emp_name=?,emp_phone=?,emp_address=?,emp_salary_hours= ? WHERE emp_id = '" +oldID+"'");
+//            statement.setString(1, E.getEmployeeId());
+//            statement.setString(2, E.getEmployeeName());
+//            statement.setString(3, E.getEmployeePhone());
+//            statement.setString(4, E.getEmployeeAddress());
+//            statement.setDouble(5, E.getEmployeeSalaryHours());
+//          
+//            return statement.executeUpdate() > 0;
+//        }
+//        catch (SQLException ex) {
+//            System.out.print("data does't update");
+//        }
+//        return false;
     }
     
         public static boolean deleteEmployee(Employee emp) {
-        try {
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement( 
-                    "DELETE FROM employee1 WHERE emp_id = ?");
-            
-            statement.setString(1, emp.getEmployeeId());
-            int res = statement.executeUpdate();
-            if (res == 1) {
-                return true;
-            }
-        }
-        catch (SQLException ex) {//    
-        }
-        return false;
+        return DeleteInfo("employee1", "emp_id", emp.getEmployeeId());
+//            try {
+//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement( 
+//                    "DELETE FROM employee1 WHERE emp_id = ?");
+//            
+//            statement.setString(1, emp.getEmployeeId());
+//            int res = statement.executeUpdate();
+//            if (res == 1) {
+//                return true;
+//            }
+//        }
+//        catch (SQLException ex) {//    
+//        }
+//        return false;
     }
     
     public static boolean insertAttendence(Date d, String name,String id,Time start) {
@@ -507,16 +482,8 @@ public class DataHelper {
             Alerts.showAlert("لا يوجد موظفين",1);
         }
         TV.setItems(list);
-        
-       
-        
         //TextFields.bindAutoCompletion(TF, list2);
 
-        
-        
-        
-        
-        
     }
    ///////////////////////////////////////////////////////
 public static boolean isEmployeeisEXits(String id) {
@@ -718,34 +685,40 @@ public static boolean isEmployeeisEXits(String id) {
     
     public static boolean updateSupplier(Suppliers s ,String oldCompName)
     {
-        try {
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "UPDATE suppliers1 SET  sup_company_name=?,sup_phone=?,sup_name=? WHERE sup_company_name='"+oldCompName+"'");
-            
-            statement.setString(1, s.getSupplierName());
-            statement.setString(2, s.getSupplierPhone());
-            statement.setString(3, s.getSalespersonName());
-           
-            return statement.executeUpdate() > 0;
-        }
-        catch (SQLException ex) {
-        }
-        return false;
+        data =new HashMap<>();
+        data.put("sup_company_name", s.getSupplierName());
+        data.put("sup_phone", s.getSupplierPhone());
+        data.put("sup_name", s.getSalespersonName());
+        return UpdateInfo("suppliers1", data, "sup_company_name", oldCompName);
+//        try {
+//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+//                    "UPDATE suppliers1 SET  sup_company_name=?,sup_phone=?,sup_name=? WHERE sup_company_name='"+oldCompName+"'");
+//            
+//            statement.setString(1, s.getSupplierName());
+//            statement.setString(2, s.getSupplierPhone());
+//            statement.setString(3, s.getSalespersonName());
+//           
+//            return statement.executeUpdate() > 0;
+//        }
+//        catch (SQLException ex) {
+//        }
+//        return false;
     }
     
     public static boolean deleteSupplier(Suppliers sup) {
-        try {
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement( 
-                    "DELETE FROM suppliers1 WHERE sup_company_name =?");
-            statement.setString(1, sup.getSupplierName());
-            int res = statement.executeUpdate();
-            if (res == 1) {
-                return true;
-            }
-        }
-        catch (SQLException ex) {//    
-        }
-        return false;
+        return DeleteInfo("suppliers1", "sup_company_name", sup.getSupplierName());
+//        try {
+//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement( 
+//                    "DELETE FROM suppliers1 WHERE sup_company_name =?");
+//            statement.setString(1, sup.getSupplierName());
+//            int res = statement.executeUpdate();
+//            if (res == 1) {
+//                return true;
+//            }
+//        }
+//        catch (SQLException ex) {//    
+//        }
+//        return false;
     }
     
     public static void loadSuppliersData(TableView TV) {
@@ -883,18 +856,19 @@ public static boolean isEmployeeisEXits(String id) {
     ////////////////delete/////////////////////
     //////////////////////////////////////////
     public static boolean deleteSale(Sales sal) {
-        try {
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement( 
-                    "DELETE FROM sales WHERE number = ?");
-            statement.setLong(1, sal.getNumber());
-            int res = statement.executeUpdate();
-            if (res == 1) {
-                return true;
-            }
-        }
-        catch (SQLException ex) {//    
-        }
-        return false;
+        return DeleteInfo("sales", "number", sal.getNumber());
+//        try {
+//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement( 
+//                    "DELETE FROM sales WHERE number = ?");
+//            statement.setLong(1, sal.getNumber());
+//            int res = statement.executeUpdate();
+//            if (res == 1) {
+//                return true;
+//            }
+//        }
+//        catch (SQLException ex) {//    
+//        }
+//        return false;
     }
     
     
@@ -903,11 +877,12 @@ public static boolean isEmployeeisEXits(String id) {
     ////////////////////////////////////////////////
     ///////////////////////////////////////////////
     public static boolean deleteAllRowsInSalesTV(int serial) {
-        String qu = "DELETE FROM sales WHERE sale_id ="+serial+""; //
-        if(DatabaseHandler.getInstance().execAction(qu)){
-            return true;
-        }
-        return false;
+        return DeleteInfo("sales", "sale_id", serial);
+//        String qu = "DELETE FROM sales WHERE sale_id ="+serial+""; //
+//        if(DatabaseHandler.getInstance().execAction(qu)){
+//            return true;
+//        }
+//        return false;
     }
     
     /////////////////////////////////////////////////////
@@ -1237,19 +1212,20 @@ public static boolean isEmployeeisEXits(String id) {
         return num;
     }
     public static boolean deleteBuyRow(Buying buy) {
-        try {
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement( 
-                    "DELETE FROM buying WHERE number = ?");
-
-            statement.setLong(1, buy.getNumber());
-            int res = statement.executeUpdate();
-            if (res == 1) {
-                return true;
-            }
-        }
-        catch (SQLException ex) {//    
-        }
-        return false;
+        return DeleteInfo("buying", "number", buy.getNumber());
+//        try {
+//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement( 
+//                    "DELETE FROM buying WHERE number = ?");
+//
+//            statement.setLong(1, buy.getNumber());
+//            int res = statement.executeUpdate();
+//            if (res == 1) {
+//                return true;
+//            }
+//        }
+//        catch (SQLException ex) {//    
+//        }
+//        return false;
     }
     
     public static ObservableList<String> checkDataSupp(){
@@ -1375,9 +1351,11 @@ public static boolean isEmployeeisEXits(String id) {
     public static void loadDamageData(TableView TV,String dat) {
         ObservableList<Common_Properties> list = FXCollections.observableArrayList();
 //        list.clear();
-        String qu = "SELECT * FROM damages WHERE dam_date ='"+dat+"'";
+        String qu = "SELECT d_bar FROM damages";
+        //String qu = "SELECT * FROM damages WHERE dam_date ='"+dat+"'";
         ResultSet rs =DatabaseHandler.getInstance().execQuery(qu);
         try {
+            
             while (rs.next()) {
                 String x1 =rs.getString("d_bar");
                 String x2 =rs.getString("product_name");
@@ -1387,8 +1365,9 @@ public static boolean isEmployeeisEXits(String id) {
                 double x6 =rs.getDouble("cost");
                 Date x7=rs.getDate("dam_date");
                 Time x8=rs.getTime("t_time");
+                long x9=rs.getLong("number");
                 System.out.println("_______________+ "+x1+x2+x3+x4);
-                list.add(new Common_Properties(x1,x2,x3,x4,x5,x6,x7,x8));
+                list.add(new Common_Properties(x1,x2,x3,x4,x5,x6,x7,x8,x9));
                 
             }
         } catch (SQLException ex) {
@@ -1418,8 +1397,9 @@ public static boolean isEmployeeisEXits(String id) {
     }
         
         public static boolean deletedamage(long sal) {
-            String qu="DELETE FROM damages WHERE number = "+sal+"";
-            return DatabaseHandler.getInstance().execAction(qu);
+            return DeleteInfo("damages", "number", sal);
+//            String qu="DELETE FROM damages WHERE number = "+sal+"";
+//            return DatabaseHandler.getInstance().execAction(qu);
         }
     /*******************************************END OF DAMAGES*******************************************************/
 
@@ -1576,19 +1556,20 @@ public static boolean isEmployeeisEXits(String id) {
     }
     
     public static boolean deleteRCallRow(Recalls Rcal) {
-        try {
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement( 
-                    "DELETE FROM recalls WHERE number = ?");
-
-            statement.setLong(1, Rcal.getNumber());
-            int res = statement.executeUpdate();
-            if (res == 1) {
-                return true;
-            }
-        }
-        catch (SQLException ex) {//    
-        }
-        return false;
+        return DeleteInfo("recalls", "number", Rcal.getNumber());
+//        try {
+//            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement( 
+//                    "DELETE FROM recalls WHERE number = ?");
+//
+//            statement.setLong(1, Rcal.getNumber());
+//            int res = statement.executeUpdate();
+//            if (res == 1) {
+//                return true;
+//            }
+//        }
+//        catch (SQLException ex) {//    
+//        }
+//        return false;
     }
     /****************************************END OF RECALLS********************************************************/
     /**************************************************************************************************************/
